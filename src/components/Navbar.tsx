@@ -11,7 +11,7 @@ function Navbar() {
           </div>
 
           <div className="flex items-center">
-            {token ? <a href="/dashboard" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Dashboard</a> : ''}
+            {token ? <a href="/dashboard/mydecks" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Dashboard</a> : ''}
             <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Home</a>
             <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">About</a>
             <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Contact</a>
