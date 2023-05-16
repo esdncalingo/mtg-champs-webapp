@@ -8,6 +8,7 @@ import Navbar from './components/Navbar'
 import { Route, Routes } from 'react-router-dom'
 import SignUpForm from './components/SignUpForm'
 import Toasty from './components/popupmsg/Toasty'
+import Dashboard from './components/Dashboard'
 
 function App() {
   const [accessData, setAccessData] = useState<string>('')
@@ -19,6 +20,7 @@ function App() {
         <Toasty/>
         <Routes>
           <Route path='/' element={<Container/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/signin' element={<LoginForm/>}/>
           <Route path='/signup' element={<SignUpForm/>}/>
         </Routes>

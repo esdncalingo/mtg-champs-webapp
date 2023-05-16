@@ -22,9 +22,9 @@ const SignUpForm = () => {
     }
 
     if (password === confirmPassword) {
-      // await userSignUp(body)
+      await userSignUp(body)
       toasty('new user signup', false)
-      // navigate('/signin', {replace: true})
+      navigate('/signin', {replace: true})
     }
   }
 
