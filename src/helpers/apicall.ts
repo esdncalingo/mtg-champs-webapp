@@ -36,7 +36,7 @@ export const userSignUp = async (params:any) => {
 }
 
 // GET decklist
-export const fetchDeck = async (access_token:any) => {
+export const fetchDeckList = async (access_token:any) => {
   try {
     const response = await axios.get(`${BASE_URL}deck?token=${TOKEN}`, {
       headers: {
@@ -47,5 +47,24 @@ export const fetchDeck = async (access_token:any) => {
   } catch(error) {
     console.error('Error fetching decks', error)
   }
-  
+}
+
+// POST create deck
+export const saveDeck = async (access_token:any, params: any) => {
+  const headers = {
+    Authorization: access_token
+  }
+  const body = {
+    name: params.name,
+    cards: params.cards,
+    // sideboard: params.sideboard,
+    game_format: params.game_format
+  }
+
+  try {
+    const response = await axios.post(`${BASE_URL}deck?token=${TOKEN}`, body, { headers })
+    return response.data
+  } catch(error) {
+    console.error('Error creating deck', error)
+  }
 }

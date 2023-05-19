@@ -24,8 +24,8 @@ function App() {
           <Route path='/' element={<Container/>}/>
           <Route path='/dashboard' element={<Dashboard/>}>
             <Route path='mydecks' element={<MyDecks/>}/>
-            <Route path='build_deck' element={<BuildDeck/>}/>
           </Route>
+          <Route path='/build_deck' element={<BuildDeck/>}/>
           <Route path='/signin' element={<LoginForm/>}/>
           <Route path='/signup' element={<SignUpForm/>}/>
         </Routes>
