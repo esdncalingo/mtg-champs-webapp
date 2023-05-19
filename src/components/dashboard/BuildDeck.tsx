@@ -54,12 +54,19 @@ export default function BuildDeck() {
   const handleIncrement = (index: number) => {
     setDeck(prevDeck => {
       const updatedDeck = [...prevDeck];
-      if (BASIC_LANDS.includes(updatedDeck[index].name) ? '' : updatedDeck[index].quantity < 4) {
+      const card = updatedDeck[index];
+
+      if (BASIC_LANDS.includes(card.name)) {
         updatedDeck[index] = {
-          ...updatedDeck[index],
-          quantity: updatedDeck[index].quantity + 1
+          ...card,
+          quantity: card.quantity + 1
         };
-      }
+      } else if (card.quantity < 4) {
+        updatedDeck[index] = {
+          ...card,
+          quantity: card.quantity + 1
+        };
+      }    
       return updatedDeck;
     });
   };
@@ -81,7 +88,7 @@ export default function BuildDeck() {
     setDeckName(event.currentTarget.value)
   }
   
-  const handleSaveButton = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSave = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const game_format:any = document.getElementById('game-mode-select') as HTMLSelectElement
     const params:any = {
@@ -166,7 +173,7 @@ export default function BuildDeck() {
 
       {/* Save Deck Button */}
       <div className="flex mt-4">
-        <button className="bg-blue-500 text-white px-4 py-2 ml-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600" onClick={handleSaveButton}>Save</button>
+        <button className="bg-blue-500 text-white px-4 py-2 ml-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600" onClick={handleSave}>Save</button>
       </div>
       
     </form>

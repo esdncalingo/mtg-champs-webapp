@@ -19,7 +19,7 @@ export default function MyDecks() {
     <main className="flex-grow p-4">
       <h2 className="text-2xl font-semibold mb-4 text-gray-700">My Decks</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {decks.map((deck, index) => (<Deck key={index}/>))}
+        {decks.map((deck, index) => (<Deck key={index} deck={deck}/>))}
         <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-center">
           <a href="/build_deck" className="text-blue-500 hover:underline">Add New Deck</a>
         </div>
