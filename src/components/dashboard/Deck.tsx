@@ -50,7 +50,7 @@ export default function Deck({ deck }: Props) {
       <div className="p-1">
         <img src={mainImg}/>
       </div>
-      <div className="flex flex-col p-3">
+      <div className="flex flex-col p-2">
         <h3 className="text-lg font-semibold mb-2 text-gray-700">{ deck.name }</h3>
         <span className="text-gray-700 flex gap-[2px]">{colors.map((color, index) => (<div key={index} className="w-[15px]"><img src={`https://svgs.scryfall.io/card-symbols/${color}.svg`} alt="" /></div>))}</span>
         <span className="text-gray-600 font-semibold mt-2">{deck.game_format.toUpperCase()}</span>
