@@ -19,7 +19,6 @@ export default function Cards({ cards }: Props) {
   }, [cards])
 
   const loadInfo = () => {
-    console.log(cards)
     let creatures:any = []
     let spells:any = []
     let artifacts:any = []
@@ -48,7 +47,7 @@ export default function Cards({ cards }: Props) {
   }
 
   return (
-    <div className="flex flex-col bg-[#3B3B3B] mt-4 border rounded-md p-4 min-w-[50rem]">
+    <div className="flex flex-col bg-[#3B3B3B] border rounded-md p-4 min-w-[50rem]">
       {/* Creatures */}
       <span className="text-xl font-bold">Creatures</span>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">

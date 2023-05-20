@@ -20,7 +20,6 @@ export const userSignIn = async (email:string,password:string) => {
 
 // POST signup
 export const userSignUp = async (params:any) => {
-  console.log(params)
   try {
     const response = await axios.post(`${BASE_URL}auth?token=${TOKEN}`, {
       auth: {
