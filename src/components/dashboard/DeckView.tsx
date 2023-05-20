@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { fetchDeck } from "../../helpers/apicall"
 import { useSearchParams } from "react-router-dom"
-import DeckInfo from "./decks/DeckInfo";
+import Cards from "./deck/Cards";
 
 export default function DeckView() {
 
@@ -25,7 +25,7 @@ export default function DeckView() {
 
   return (
     <div className="flex flex-grow bg-gray-100">
-      <DeckInfo cards={cards}/>
+      <Cards cards={cards}/>
     </div>
   )
 }

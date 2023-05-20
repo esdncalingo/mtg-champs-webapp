@@ -1,7 +1,7 @@
 // import { useEffect, useState } from "react"
 // import { fetchDeck } from "../../helpers/apicall"
 
-function Card(props: any) {
+function RandomCard(props: any) {
 
   // const [ deck, setDeck ] = useState([])
 
@@ -20,4 +20,4 @@ function Card(props: any) {
     </div>
   )
 }
-export default Card
+export default RandomCard

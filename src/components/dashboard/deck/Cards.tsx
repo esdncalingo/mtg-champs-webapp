@@ -4,7 +4,7 @@ type Props = {
   cards: any
 }
 
-export default function DeckInfo({ cards }: Props) {
+export default function Cards({ cards }: Props) {
 
   // ---------- Card Types ----------
   const [creatures, setCreatures] = useState([])
@@ -48,13 +48,13 @@ export default function DeckInfo({ cards }: Props) {
   }
 
   return (
-    <div className="flex flex-col bg-[#3B3B3B] mt-4 border rounded-md px-4 py-2 min-w-[50rem]">
+    <div className="flex flex-col bg-[#3B3B3B] mt-4 border rounded-md p-4 min-w-[50rem]">
       {/* Creatures */}
       <span className="text-xl font-bold">Creatures</span>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">
         {creatures.map((card:any, index:number) => (
-          <div key={index}  className="">
-            <img src={card.image_uris['small']}/>
+          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
+            <img src={card.image_uris['normal']}/>
           </div>
         ))}
       </div>
@@ -62,8 +62,8 @@ export default function DeckInfo({ cards }: Props) {
       <span className="text-xl font-bold">Spells</span>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">
         {spells.map((card:any, index:number) => (
-          <div key={index}  className="">
-            <img src={card.image_uris['small']}/>
+          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
+            <img src={card.image_uris['normal']}/>
           </div>
         ))}
       </div>
@@ -71,8 +71,8 @@ export default function DeckInfo({ cards }: Props) {
       <span className="text-xl font-bold">Artifacts</span>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">
         {artifacts.map((card:any, index:number) => (
-          <div key={index}  className="">
-            <img src={card.image_uris['small']}/>
+          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
+            <img src={card.image_uris['normal']}/>
           </div>
         ))}
       </div>
@@ -80,8 +80,8 @@ export default function DeckInfo({ cards }: Props) {
       <span className="text-xl font-bold">Enchantments</span>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">
         {enchantments.map((card:any, index:number) => (
-          <div key={index}  className="">
-            <img src={card.image_uris['small']}/>
+          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
+            <img src={card.image_uris['normal']}/>
           </div>
         ))}
       </div>
@@ -89,8 +89,8 @@ export default function DeckInfo({ cards }: Props) {
       <span className="text-xl font-bold">Lands</span>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">
         {lands.map((card:any, index:number) => (
-          <div key={index}  className="">
-            <img src={card.image_uris['small']}/>
+          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
+            <img src={card.image_uris['normal']}/>
           </div>
         ))}
       </div>

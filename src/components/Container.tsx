@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { fetchRandomCard } from "../helpers/apiscryfall"
 
-import Card from "./card/Card"
+import RandomCard from "./randomcard/RandomCard"
 
 function Container() {
   const [cards, setCards] = useState([]);
@@ -25,7 +25,7 @@ function Container() {
       <div className="container mx-auto px-4 mt-12">
       <span className="text-gray-700 text-4xl font-bold">Champ Feature Cards</span>
         <div className="grid grid-cols-1 mt-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {cards.map((card, index) => (<Card key={index} cardurl={card}/>))}
+          {cards.map((card, index) => (<RandomCard key={index} cardurl={card}/>))}
         </div>
       </div>
     </div>
