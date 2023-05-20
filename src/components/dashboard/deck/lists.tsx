@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { fetchSymbols } from "../../../helpers/apiscryfall";
 
 type Props = {
   cards: any
@@ -7,6 +8,7 @@ type Props = {
 export default function Lists({ cards }: Props) {
 
   const [cardsTotal, setCardsTotal] = useState('');
+  const [cardManaSymbol, setCardManaSymbol] = useState([]);
 
   // ---------- Card Types ----------
   const [creatures, setCreatures] = useState([])
@@ -18,6 +20,7 @@ export default function Lists({ cards }: Props) {
 
   useEffect(() => {
     loadInfo()
+    loadSymbols()
     countCards(cards)
   }, [cards])
 
@@ -29,7 +32,8 @@ export default function Lists({ cards }: Props) {
     let lands:any = []
 
     cards.forEach((card:any) => {
-      let card_type: any = card.type_line.toLowerCase()
+      let card_type: any = card.type_line.toLowerCase()    
+      console.log(card['mana_cost'])
       card['mana_cost'] = manaCost(card['mana_cost'])
       
       if (card_type.includes('creature')) {
@@ -51,6 +55,11 @@ export default function Lists({ cards }: Props) {
     setLands(sortByCMC(lands))
   }
 
+  const loadSymbols = async () => {
+    let data = await fetchSymbols()
+    setCardManaSymbol(data.data)
+  }
+
   const countCards = (cards:any) => {
     const total = cards.reduce((count: number, card: any) => count + card.quantity, 0);
     setCardsTotal(total || 0)
@@ -63,7 +72,7 @@ export default function Lists({ cards }: Props) {
 
   const manaCost = (mana_cost: any): string[] => {
     if (typeof mana_cost === 'string') {
-      const colorArray = mana_cost.split(/\{|\}/).filter(Boolean);
+      const colorArray = mana_cost.match(/{.+?}/g) || [];
       return colorArray;
     } else {
       return [];
@@ -76,11 +85,11 @@ export default function Lists({ cards }: Props) {
         <span>Total:</span>
         <span>{cardsTotal}</span>
       </div>
-      <CardType cardtype={creatures} name="Creatures"/>
-      <CardType cardtype={spells} name="Spells"/>
-      <CardType cardtype={artifacts} name="Artifacts"/>
-      <CardType cardtype={enchantments} name="Enchantments"/>
-      <CardType cardtype={lands} name="Lands"/>   
+      <CardType cardtype={creatures} manasymbols={cardManaSymbol} name="Creatures"/>
+      <CardType cardtype={spells} manasymbols={cardManaSymbol} name="Spells"/>
+      <CardType cardtype={artifacts} manasymbols={cardManaSymbol} name="Artifacts"/>
+      <CardType cardtype={enchantments} manasymbols={cardManaSymbol} name="Enchantments"/>
+      <CardType cardtype={lands} manasymbols={cardManaSymbol} name="Lands"/>   
     </div>
   )
 }
@@ -89,8 +98,16 @@ export default function Lists({ cards }: Props) {
 type CardTypeLine = {
   cardtype: any
   name: string
+  manasymbols: any
 }
-const CardType = ({cardtype, name}: CardTypeLine) => {
+const CardType = ({cardtype, name, manasymbols}: CardTypeLine) => {
+
+  const manaSymbol = (mana: string) => {
+    const match:any = manasymbols.find((data: any) => data.symbol === mana)
+    const svgUri = match?.svg_uri || "";
+    return svgUri
+  }
+
   return (
     <>
       <span className="font-bold">{name}</span>
@@ -101,7 +118,7 @@ const CardType = ({cardtype, name}: CardTypeLine) => {
             <span className="flex flex-2 gap-[2px] justify-center items-center">
             {typeof card.mana_cost === 'string' ? card.mana_cost : card.mana_cost.map((mana:string, index: number) => (
               <div key={index} className="w-[14px]">
-                <img src={`https://svgs.scryfall.io/card-symbols/${mana}.svg`}/>
+                <img src={manaSymbol(mana)}/>
               </div>
             ))}
             </span>

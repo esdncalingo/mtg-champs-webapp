@@ -30,3 +30,13 @@ export const fetchExactCard = async (name:string) => {
     console.error(e)
   }
 }
+
+// GET symbols
+export const fetchSymbols = async () => {
+  try {
+    const response = await axios.get('https://api.scryfall.com/symbology')
+    return response.data
+  } catch(e) {
+    console.error(e)
+  }
+}
