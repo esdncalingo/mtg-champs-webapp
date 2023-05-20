@@ -6,6 +6,8 @@ type Props = {
 
 export default function Lists({ cards }: Props) {
 
+  const [cardsTotal, setCardsTotal] = useState('');
+
   // ---------- Card Types ----------
   const [creatures, setCreatures] = useState([])
   const [spells, setSpells] = useState([])
@@ -16,6 +18,7 @@ export default function Lists({ cards }: Props) {
 
   useEffect(() => {
     loadInfo()
+    countCards(cards)
   }, [cards])
 
   const loadInfo = () => {
@@ -27,6 +30,8 @@ export default function Lists({ cards }: Props) {
 
     cards.forEach((card:any) => {
       let card_type: any = card.type_line.toLowerCase()
+      card['mana_cost'] = manaCost(card['mana_cost'])
+      
       if (card_type.includes('creature')) {
         creatures = [...creatures, card]
       } else if (card_type.includes('instant') || card_type.includes('sorcery')) {
@@ -39,60 +44,70 @@ export default function Lists({ cards }: Props) {
         lands = [...lands, card]
       }
     })
-    setCreatures(creatures)
-    setSpells(spells)
-    setArifacts(artifacts)
-    setEnchantments(enchantments)
-    setLands(lands)
+    setCreatures(sortByCMC(creatures))
+    setSpells(sortByCMC(spells))
+    setArifacts(sortByCMC(artifacts))
+    setEnchantments(sortByCMC(enchantments))
+    setLands(sortByCMC(lands))
   }
 
+  const countCards = (cards:any) => {
+    const total = cards.reduce((count: number, card: any) => count + card.quantity, 0);
+    setCardsTotal(total || 0)
+  }
+
+  const sortByCMC = (cards: any) => {
+    cards.sort((a: any, b: any) => a.cmc - b.cmc);
+    return cards
+  }
+
+  const manaCost = (mana_cost: any): string[] => {
+    if (typeof mana_cost === 'string') {
+      const colorArray = mana_cost.split(/\{|\}/).filter(Boolean);
+      return colorArray;
+    } else {
+      return [];
+    }
+  };
+
   return (
-      <div className="flex flex-col bg-[#3B3B3B] border rounded-md px-4 py-2 min-w-[20rem] max-w-[30rem]">
-        {/* Creatures */}
-        <span>Creatures</span>
-        {creatures.map((card:any, index:number) => (
-          <div key={index} className="flex gap-3 ml-4">
-            <span>{card.quantity}</span>
-            <span>{card.name}</span>
-            <span>{`- ${card.color_identity}`}</span>
-          </div>
-        ))}
-        {/* Spells */}
-        <span>Spells</span>
-        {spells.map((card:any, index:number) => (
-          <div key={index} className="flex gap-3 ml-4">
-            <span>{card.quantity}</span>
-            <span>{card.name}</span>
-            <span>{`- ${card.color_identity}`}</span>
-          </div>
-        ))}
-        {/* Artifacts */}
-        <span>Artifacts</span>
-        {artifacts.map((card:any, index:number) => (
-          <div key={index} className="flex gap-3 ml-4">
-            <span>{card.quantity}</span>
-            <span>{card.name}</span>
-            <span>{`- ${card.color_identity}`}</span>
-          </div>
-        ))}
-        {/* Enchantments */}
-        <span>Enchantments</span>
-        {enchantments.map((card:any, index:number) => (
-          <div key={index} className="flex gap-3 ml-4">
-            <span>{card.quantity}</span>
-            <span>{card.name}</span>
-            <span>{`- ${card.color_identity}`}</span>
-          </div>
-        ))}
-        {/* Lands */}
-        <span>Lands</span>
-        {lands.map((card:any, index:number) => (
-          <div key={index} className="flex gap-3 ml-4">
-            <span>{card.quantity}</span>
-            <span>{card.name}</span>
-            <span>{`- ${card.color_identity}`}</span>
-          </div>
-        ))}
+    <div className="flex flex-col bg-[#3B3B3B] border rounded-md px-4 py-2 min-w-[20rem] max-w-[30rem]">
+      <div className="flex gap-5 text-xl font-bold">
+        <span>Total:</span>
+        <span>{cardsTotal}</span>
+      </div>
+      <CardType cardtype={creatures} name="Creatures"/>
+      <CardType cardtype={spells} name="Spells"/>
+      <CardType cardtype={artifacts} name="Artifacts"/>
+      <CardType cardtype={enchantments} name="Enchantments"/>
+      <CardType cardtype={lands} name="Lands"/>   
     </div>
   )
 }
+
+// --------------- CardType Component ----------------
+type CardTypeLine = {
+  cardtype: any
+  name: string
+}
+const CardType = ({cardtype, name}: CardTypeLine) => {
+  return (
+    <>
+      <span className="font-bold">{name}</span>
+        {cardtype.map((card:any, index:number) => (
+          <div key={index} className="flex gap-3">
+            <span className="w-5">{card.quantity}</span>
+            <span className="flex-1">{card.name}</span>
+            <span className="flex flex-2 gap-[2px] justify-center items-center">
+            {typeof card.mana_cost === 'string' ? card.mana_cost : card.mana_cost.map((mana:string, index: number) => (
+              <div key={index} className="w-[14px]">
+                <img src={`https://svgs.scryfall.io/card-symbols/${mana}.svg`}/>
+              </div>
+            ))}
+            </span>
+          </div>
+        ))}
+    </>
+  )
+}
+//  ------------------------------------------------

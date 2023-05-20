@@ -65,8 +65,8 @@ type CardTypeLine = {
 const CardType = ({cardtype, name}: CardTypeLine) => {
   return (
     <>
-      <span className="text-xl font-bold mt-4">{name}</span>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4 mt-2">
+      <span className="text-xl font-bold mt-2">{name}</span>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 ml-4 mt-2">
         {cardtype.map((card:any, index:number) => (
           <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
             <img src={card.image_uris['png']}/>
