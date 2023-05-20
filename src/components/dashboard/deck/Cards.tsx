@@ -48,51 +48,32 @@ export default function Cards({ cards }: Props) {
 
   return (
     <div className="flex flex-col bg-[#3B3B3B] border rounded-md p-4 min-w-[50rem]">
-      {/* Creatures */}
-      <span className="text-xl font-bold">Creatures</span>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">
-        {creatures.map((card:any, index:number) => (
-          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
-            <img src={card.image_uris['normal']}/>
-          </div>
-        ))}
-      </div>
-      {/* Spells */}
-      <span className="text-xl font-bold">Spells</span>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">
-        {spells.map((card:any, index:number) => (
-          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
-            <img src={card.image_uris['normal']}/>
-          </div>
-        ))}
-      </div>
-      {/* Artifacts */}
-      <span className="text-xl font-bold">Artifacts</span>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">
-        {artifacts.map((card:any, index:number) => (
-          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
-            <img src={card.image_uris['normal']}/>
-          </div>
-        ))}
-      </div>
-      {/* Enchantments */}
-      <span className="text-xl font-bold">Enchantments</span>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">
-        {enchantments.map((card:any, index:number) => (
-          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
-            <img src={card.image_uris['normal']}/>
-          </div>
-        ))}
-      </div>
-      {/* Lands */}
-      <span className="text-xl font-bold">Lands</span>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4">
-        {lands.map((card:any, index:number) => (
-          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
-            <img src={card.image_uris['normal']}/>
-          </div>
-        ))}
-      </div>
+      <CardType cardtype={creatures} name={'Creatures'}/>
+      <CardType cardtype={spells} name={'Spells'}/>
+      <CardType cardtype={artifacts} name={'Artifacts'}/>
+      <CardType cardtype={enchantments} name={'Enchantments'}/>
+      <CardType cardtype={lands} name={'Lands'}/>
     </div>
   )
 }
+
+// --------------- CardType Component ----------------
+type CardTypeLine = {
+  cardtype: any
+  name: string
+}
+const CardType = ({cardtype, name}: CardTypeLine) => {
+  return (
+    <>
+      <span className="text-xl font-bold mt-4">{name}</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 ml-4 mt-2">
+        {cardtype.map((card:any, index:number) => (
+          <div key={index}  className="transition-all duration-200 ease-in hover:scale-105">
+            <img src={card.image_uris['png']}/>
+          </div>
+        ))}
+      </div>
+    </>
+  )
+}
+//  ------------------------------------------------

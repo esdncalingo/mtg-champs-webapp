@@ -41,7 +41,7 @@ export default function DeckView() {
         <span className="font-bold">Deck Date: {dateString(deck.updated_at)}</span>
       </div>
 
-      <div className="flex mt-2 gap-2">
+      <div className="flex mt-2 gap-2 px-1">
         <Lists cards={cards}/>
         <Cards cards={cards}/>
       </div>
