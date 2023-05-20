@@ -3,7 +3,7 @@ import { fetchSearchCard, fetchExactCard } from "../../helpers/apiscryfall"
 import { saveDeck } from "../../helpers/apicall"
 import { useToasty } from "../popupmsg/Toasty";
 
-export default function BuildDeck() {
+export default function DeckBuilder() {
 
   const [deck, setDeck] = useState<any[]>([])
   const [deckName, setDeckName] = useState('')
@@ -42,7 +42,6 @@ export default function BuildDeck() {
   }
 
   const loadDeck = () => {
-    // type_line: creature, instant&sorcery, artifact, enchantment, land
     let creatures:any = []
     let spells:any = []
     let artifacts:any = []
@@ -223,8 +222,6 @@ export default function BuildDeck() {
               ))
             }
           </div>
-
-                 
         </form>
 
         {/* Deck View */}
@@ -235,6 +232,7 @@ export default function BuildDeck() {
               <div key={index} className="flex gap-3 ml-4">
                 <span>{card.quantity}</span>
                 <span>{card.name}</span>
+                <span>{`- ${card.color_identity}`}</span>
               </div>
             ))}
             {/* Spells */}
@@ -243,6 +241,7 @@ export default function BuildDeck() {
               <div key={index} className="flex gap-3 ml-4">
                 <span>{card.quantity}</span>
                 <span>{card.name}</span>
+                <span>{`- ${card.color_identity}`}</span>
               </div>
             ))}
             {/* Artifacts */}
@@ -251,6 +250,7 @@ export default function BuildDeck() {
               <div key={index} className="flex gap-3 ml-4">
                 <span>{card.quantity}</span>
                 <span>{card.name}</span>
+                <span>{`- ${card.color_identity}`}</span>
               </div>
             ))}
             {/* Enchantments */}
@@ -259,6 +259,7 @@ export default function BuildDeck() {
               <div key={index} className="flex gap-3 ml-4">
                 <span>{card.quantity}</span>
                 <span>{card.name}</span>
+                <span>{`- ${card.color_identity}`}</span>
               </div>
             ))}
             {/* Lands */}
@@ -267,6 +268,7 @@ export default function BuildDeck() {
               <div key={index} className="flex gap-3 ml-4">
                 <span>{card.quantity}</span>
                 <span>{card.name}</span>
+                <span>{`- ${card.color_identity}`}</span>
               </div>
             ))}
         </div>

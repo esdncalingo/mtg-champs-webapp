@@ -68,3 +68,16 @@ export const saveDeck = async (access_token:any, params: any) => {
     console.error('Error creating deck', error)
   }
 }
+
+// GET Deck
+export const fetchDeck = async (access_token:any, id: any) => {
+  const headers = {
+    Authorization: access_token
+  }
+  try {
+    const response = await axios.get(`${BASE_URL}deck/${id}/view?token=${TOKEN}`, { headers } )
+    return response.data
+  } catch(error) {
+    console.log(error)
+  }
+}

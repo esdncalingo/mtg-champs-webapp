@@ -55,7 +55,7 @@ export default function Deck({ deck }: Props) {
         <span className="text-gray-700 flex gap-[2px]">{colors.map((color, index) => (<div key={index} className="w-[15px]"><img src={`https://svgs.scryfall.io/card-symbols/${color}.svg`} alt="" /></div>))}</span>
         <span className="text-gray-600 font-semibold mt-2">{deck.game_format.toUpperCase()}</span>
         <span className="text-gray-600">Number of Cards: {cardsTotal}</span>
-        <a href="#" className="text-blue-500 hover:underline mt-2">View Details</a>
+        <a href={`/deck?id=${deck.id}`} className="text-blue-500 hover:underline mt-2">View Details</a>
       </div>
     </div>
   )

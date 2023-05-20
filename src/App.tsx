@@ -10,7 +10,8 @@ import SignUpForm from './components/SignUpForm'
 import Toasty from './components/popupmsg/Toasty'
 import Dashboard from './components/Dashboard'
 import MyDecks from './components/dashboard/MyDecks'
-import BuildDeck from './components/dashboard/BuildDeck'
+import DeckBuilder from './components/dashboard/DeckBuilder'
+import DeckView from './components/dashboard/DeckView'
 
 function App() {
   const [accessData, setAccessData] = useState<string>('')
@@ -25,7 +26,8 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>}>
             <Route path='mydecks' element={<MyDecks/>}/>
           </Route>
-          <Route path='/build_deck' element={<BuildDeck/>}/>
+          <Route path='/build_deck' element={<DeckBuilder/>}/>
+          <Route path='/deck' element={<DeckView/>}/>
           <Route path='/signin' element={<LoginForm/>}/>
           <Route path='/signup' element={<SignUpForm/>}/>
         </Routes>
