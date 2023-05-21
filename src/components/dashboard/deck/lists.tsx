@@ -32,8 +32,7 @@ export default function Lists({ cards }: Props) {
     let lands:any = []
 
     cards.forEach((card:any) => {
-      let card_type: any = card.type_line.toLowerCase()    
-      console.log(card['mana_cost'])
+      let card_type: any = card.type_line.toLowerCase()
       card['mana_cost'] = manaCost(card['mana_cost'])
       
       if (card_type.includes('creature')) {
@@ -104,8 +103,7 @@ const CardType = ({cardtype, name, manasymbols}: CardTypeLine) => {
 
   const manaSymbol = (mana: string) => {
     const match:any = manasymbols.find((data: any) => data.symbol === mana)
-    const svgUri = match?.svg_uri || "";
-    return svgUri
+    return match?.svg_uri || ""
   }
 
   return (
