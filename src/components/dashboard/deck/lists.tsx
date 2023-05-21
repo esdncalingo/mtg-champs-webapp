@@ -33,7 +33,10 @@ export default function Lists({ cards }: Props) {
 
     cards.forEach((card:any) => {
       let card_type: any = card.type_line.toLowerCase()
-      card['mana_cost'] = manaCost(card['mana_cost'])
+
+      if (typeof card['mana_cost'] === 'string') {
+       card['mana_cost'] = manaCost(card['mana_cost'])
+      }
       
       if (card_type.includes('creature')) {
         creatures = [...creatures, card]
