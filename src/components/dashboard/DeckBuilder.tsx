@@ -1,15 +1,37 @@
-import React, { ChangeEvent, useState } from "react"
-import { saveDeck } from "../../helpers/apicall"
+import React, { ChangeEvent, useEffect, useState } from "react"
+import { fetchDeck, updateDeck } from "../../helpers/apicall"
+import { createDeck } from "../../helpers/apicall"
 import { useToasty } from "../popupmsg/Toasty";
 import Lists from "./deck/lists";
 import DeckCardList from "./deck/DeckCardList";
 import CardSearch from "./deck/CardSearch";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function DeckBuilder() {
 
   const [deck, setDeck] = useState<any[]>([])
+  const [cards, setCards] = useState<any[]>([])
   const [deckName, setDeckName] = useState('')
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const toasty = useToasty();
+
+  useEffect(() => {
+    try {
+      editDeck()
+    } catch(error) {
+      //  error
+    }
+  },[])
+
+  const editDeck = async () => {
+    if (searchParams.get('id')) {
+      let data = await fetchDeck(sessionStorage.getItem('token'), searchParams.get('id'))
+      setDeckName(data.deck.name)
+      setDeck(data.deck)
+      setCards(JSON.parse(data.deck.cards))
+    }
+  }
 
   const handleOnChangeDeckName = (event: ChangeEvent<HTMLInputElement>) => {
     setDeckName(event.currentTarget.value)
@@ -19,13 +41,15 @@ export default function DeckBuilder() {
     event.preventDefault();
     const game_format:any = document.getElementById('game-mode-select') as HTMLSelectElement
     const params:any = {
+      id: searchParams.get('id'),
       name: deckName,
-      cards: JSON.stringify(deck),
+      cards: searchParams.get('id') ? JSON.stringify(cards) : JSON.stringify(deck),
       // sideboard: params.sideboard,
       game_format: game_format.value
     }
-    await saveDeck(sessionStorage.getItem('token'), params)
+    await searchParams.get('id') ? updateDeck(sessionStorage.getItem('token'), params) : createDeck(sessionStorage.getItem('token'), params)
     toasty(`${deckName} is newly created`, false)
+    navigate('/dashboard/mydecks')
   }
 
   return (
@@ -61,12 +85,12 @@ export default function DeckBuilder() {
           </div>
 
           
-          <Lists cards={deck}/>
+          <Lists cards={cards}/>
         </form>
         {/* Deck cards lists*/}
         <div className="flex flex-col">
-          <CardSearch deck={deck} setDeck={setDeck}/>
-          <DeckCardList deck={deck} setDeck={setDeck}/>
+          <CardSearch deck={cards} setDeck={setCards}/>
+          <DeckCardList deck={cards} setDeck={setCards}/>
         </div>
       </div>
 

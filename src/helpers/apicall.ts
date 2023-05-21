@@ -49,7 +49,7 @@ export const fetchDeckList = async (access_token:any) => {
 }
 
 // POST create deck
-export const saveDeck = async (access_token:any, params: any) => {
+export const createDeck = async (access_token:any, params: any) => {
   const headers = {
     Authorization: access_token
   }
@@ -62,6 +62,27 @@ export const saveDeck = async (access_token:any, params: any) => {
 
   try {
     const response = await axios.post(`${BASE_URL}deck?token=${TOKEN}`, body, { headers })
+    return response.data
+  } catch(error) {
+    console.error('Error creating deck', error)
+  }
+}
+
+// PATCH deck
+export const updateDeck =async (access_token: any ,params: any) => {
+  const headers = {
+    Authorization: access_token
+  }
+  const body = {
+    id: params.id,
+    name: params.name,
+    cards: params.cards,
+    // sideboard: params.sideboard,
+    game_format: params.game_format
+  }
+
+  try {
+    const response = await axios.patch(`${BASE_URL}deck?token=${TOKEN}`, body, { headers })
     return response.data
   } catch(error) {
     console.error('Error creating deck', error)

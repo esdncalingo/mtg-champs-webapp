@@ -1,4 +1,4 @@
-import { useEffect, useState, ChangeEvent } from "react";
+import { useEffect, useState, ChangeEvent, useTransition } from "react";
 import { fetchSearchCard, fetchExactCard } from "../../../helpers/apiscryfall";
 
 type DeckCardListProps = {
@@ -10,6 +10,7 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
   const [searchInput, setSearchInput] = useState('')
   const [searchList, setSearchList] = useState([])
   const [searchSelectionShowing, setSearchSelectionShowing] = useState(false);
+  const [isListing, startTransition] = useTransition();
 
   useEffect(() => {
     loadSearchList();
@@ -27,7 +28,9 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
   }
 
   const handleOnChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(event.target.value)
+    startTransition(() => {
+      setSearchInput(event.target.value)
+    })
   }
 
   const handleOnClick = async (event:any) => {
@@ -39,7 +42,7 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
     }
   }
   return (
-    <>
+    <div>
       {/* Search */}
       <div className="flex items-center mt-2">
       <input type="hidden" id="multiverse_id"/>
@@ -54,7 +57,7 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
       {/* <button className="bg-blue-500 text-white px-4 py-2 ml-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Add</button> */}
       </div>
       {/* Searchlist */}
-      {searchSelectionShowing && (<div className="flex flex-col bg-[#3B3B3B] p-2 rounded mt-1 overflow-auto max-h-[25rem] max-w-[20rem]">
+      {searchSelectionShowing && (<div className="flex  absolute z-20 flex-col bg-[#3B3B3B] p-2 rounded mt-1 overflow-auto max-h-[25rem] max-w-[20rem]">
         {searchList.map((card:any, index:number) => (
             <span 
               key={index}
@@ -66,6 +69,6 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
           ))
         }
       </div>)}
-    </>
+    </div>
   )
 }

@@ -22,6 +22,14 @@
   @apply flex flex-col min-h-screen;
 }
 
+.btn-card {
+  @apply flex justify-center items-center bg-gray-800 hover:bg-sky-800 active:bg-slate-700
+}
+
+.btn-card-delete {
+  @apply flex bg-gray-800 h-4 w-[3rem] rounded-t-xl
+}
+
 .card {
   @apply shadow-xl p-[1px] rounded-lg hover:scale-105 cursor-pointer transition-all duration-100 ease-in;
 }
