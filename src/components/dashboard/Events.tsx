@@ -1,10 +1,52 @@
+import { useEffect, useState } from "react";
+import { postEvent, fetchEvent } from "../../helpers/api/api_events"
+import { useToasty } from "../popupmsg/Toasty"
+import { dateString } from "../../helpers/services/dateformats";
 
 export default function Events() {
+  const [eventlist, setEventList] = useState<any[]>([]);
+  const toasty = useToasty();
+
+  useEffect(() => {
+    showEvents()
+  }, [])
+
+  const showEvents = async () => {
+    let data = await fetchEvent(sessionStorage.getItem('token'))
+    console.log(data)
+    setEventList(data)
+  }
+
+  const handleCreateEvent = async () => {
+    const title = document.getElementById('event-title') as HTMLInputElement
+    const description = document.getElementById('event-description') as HTMLInputElement
+    const schedule = document.getElementById('event-schedule') as HTMLInputElement
+    const game_format = document.getElementById('game-mode-select') as HTMLSelectElement
+    
+    const params:any = {
+      title: title.value,
+      description: description.value,
+      schedule: schedule.value,
+      game_format: game_format.value
+    }
+    let data = await postEvent(sessionStorage.getItem('token'), params)
+    if (data.error) {
+      if (data.error['title']) {
+        data.error['title'].map((err: any) => toasty(`title ${err}`));
+      } else if (data.error['schedule']) {
+        data.error['schedule'].map((err: any) => toasty(`schedule ${err}`))
+      }
+    } else {
+      setEventList((prev: any) => [data.event, ...prev])
+      toasty(`${title.value} has been posted.`, false)
+    }
+  }
+
   return (
-    <div className="flex flex-grow text-gray-700 p-4">
+    <div className="flex flex-col flex-grow text-gray-700 p-4">
       {/* Buttons Create and Join */}
       <div>
-        <button className="btn-card p-2 rounded-lg">Create Event</button>
+        <button className="btn-card p-2 rounded-lg" onClick={handleCreateEvent}>Create Event</button>
         <button className="btn-card p-2 rounded-lg">Join Event</button>
       </div>
 
@@ -31,9 +73,27 @@ export default function Events() {
 
         <div className="flex flex-col">
           <label htmlFor="event-schedule">Schedule</label>
-          <input type="date" id="event-schedule" name="event-schedule" className="input-primary"/>
+          <input type="datetime-local" id="event-schedule" name="event-schedule" className="input-primary"/>
         </div>
       </form>
+
+      {/* Event Created Lists */}
+      <div className="flex flex-col gap-[1px] text-gray-300 mt-4">
+        <div className="flex bg-zinc-900 p-2 rounded-t-md">
+          <span className="flex-1">Schedule</span>
+          <span className="flex-1">Name</span>
+          <span className="flex-1">Format</span>
+          <span className="flex-1 text-right">Toggle Event</span>
+        </div>
+        {eventlist.map((event: any, index: number) => (
+          <div key={index} className={`${index % 2 === 0 ? 'bg-[#424242]' : 'bg-[#686868]' } p-4 flex`}>
+            <span className="flex-1">{dateString(event.schedule)}</span>
+            <span className="flex-1 underline text-blue-400 hover:text-blue-500 cursor-pointer">{event.title}</span>
+            <span className="flex-1">{event.game_format}</span>
+            <span className="flex-1 text-right text-green-500 hover:text-green-600 cursor-pointer">Expand</span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

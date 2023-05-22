@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react"
-import { fetchDeck, updateDeck } from "../../../helpers/api/api_decks"
-import { createDeck } from "../../../helpers/api/api_decks"
+import { fetchDeck, updateDeck, createDeck } from "../../../helpers/api/api_decks"
 import { useToasty } from "../../popupmsg/Toasty";
 import Lists from "./lists";
 import DeckCardList from "./DeckCardList";

@@ -5,7 +5,7 @@ type Props = {}
 export default function Dashboard({}: Props) {
   return (
     <div className="flex flex-grow bg-gray-100">
-      <div className="flex">
+      <div className="flex w-full">
         {/* <!-- Sidebar --> */}
         <aside className="bg-gray-800 text-white p-4 min-w-[12rem]">
           <h2 className="text-2xl font-semibold mb-4">Deck Builder</h2>
