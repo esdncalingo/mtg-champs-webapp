@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react"
-import { fetchDeck, updateDeck } from "../../helpers/apicall"
-import { createDeck } from "../../helpers/apicall"
-import { useToasty } from "../popupmsg/Toasty";
-import Lists from "./deck/lists";
-import DeckCardList from "./deck/DeckCardList";
-import CardSearch from "./deck/CardSearch";
+import { fetchDeck, updateDeck } from "../../../helpers/apicall"
+import { createDeck } from "../../../helpers/apicall"
+import { useToasty } from "../../popupmsg/Toasty";
+import Lists from "./lists";
+import DeckCardList from "./DeckCardList";
+import CardSearch from "./CardSearch";
 import { useSearchParams } from "react-router-dom";
 
 export default function DeckBuilder() {
@@ -62,13 +62,13 @@ export default function DeckBuilder() {
     <div className="flex flex-col flex-grow p-4 bg-gray-100">
     <span className="text-2xl font-bold mb-4 text-gray-700">Deck Builder</span>
     <div className="flex gap-4">
-      <form>      
+      <form className="space-y-2">      
         {/* Deck Name */}
         <InputComponent name={'Deck Name'} value={deckName} onchange={handleOnChangeDeckName}/>
 
         {/* Game Format */}
         <div className="flex flex-col">
-          <label htmlFor="game-mode-select" className="mr-2 text-gray-700">Format</label>
+          <label htmlFor="game-mode-select" className="text-gray-700">Format</label>
           <select id="game-mode-select" className="border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500">
             <option value="standard">Standard</option>
             <option value="commander">Commander</option>
@@ -106,7 +106,7 @@ type InputData = {
 const InputComponent = ({name, suffix, value, onchange} :InputData) => {
   return (
     <div className="flex flex-col">
-      <label htmlFor={`deck-${name.toLowerCase()}`} className="mr-2 text-gray-700">{name} {suffix}</label>
+      <label htmlFor={`deck-${name.toLowerCase()}`} className="text-gray-700">{name} {suffix}</label>
       <input 
         type="text" 
         id={`deck-${name.toLowerCase()}`} 

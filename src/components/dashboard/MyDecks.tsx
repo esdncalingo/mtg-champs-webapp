@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { fetchDeckList } from '../../helpers/apicall'
-import Deck from './Deck'
+import Deck from './mydecks/Deck'
 
 export default function MyDecks() {
 

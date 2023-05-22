@@ -10,8 +10,8 @@ import SignUpForm from './components/SignUpForm'
 import Toasty from './components/popupmsg/Toasty'
 import Dashboard from './components/Dashboard'
 import MyDecks from './components/dashboard/MyDecks'
-import DeckBuilder from './components/dashboard/DeckBuilder'
-import DeckView from './components/dashboard/DeckView'
+import DeckBuilder from './components/dashboard/mydecks/DeckBuilder'
+import DeckView from './components/dashboard/mydecks/DeckView'
 
 function App() {
   const [accessData, setAccessData] = useState<string>('')
