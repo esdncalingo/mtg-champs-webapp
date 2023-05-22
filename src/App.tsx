@@ -12,6 +12,7 @@ import Dashboard from './components/Dashboard'
 import MyDecks from './components/dashboard/MyDecks'
 import DeckBuilder from './components/dashboard/mydecks/DeckBuilder'
 import DeckView from './components/dashboard/mydecks/DeckView'
+import Events from './components/dashboard/Events'
 
 function App() {
   const [accessData, setAccessData] = useState<string>('')
@@ -25,6 +26,7 @@ function App() {
           <Route path='/' element={<Container/>}/>
           <Route path='/dashboard' element={<Dashboard/>}>
             <Route path='mydecks' element={<MyDecks/>}/>
+            <Route path='events' element={<Events/>}/>
           </Route>
           <Route path='/build_deck' element={<DeckBuilder/>}/>
           <Route path='/deck' element={<DeckView/>}/>

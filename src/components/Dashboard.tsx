@@ -12,7 +12,7 @@ export default function Dashboard({}: Props) {
           <ul className="space-y-2">
             <li><a href="#" className="block">All Cards</a></li>
             <li><a href="/dashboard/mydecks" className="block">My Decks</a></li>
-            <li><a href="#" className="block">Events</a></li>
+            <li><a href="/dashboard/events" className="block">Events</a></li>
           </ul>
         </aside>
 

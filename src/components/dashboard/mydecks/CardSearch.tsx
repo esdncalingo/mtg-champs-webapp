@@ -1,5 +1,5 @@
 import { useEffect, useState, ChangeEvent, useTransition } from "react";
-import { fetchSearchCard, fetchExactCard } from "../../../helpers/apiscryfall";
+import { fetchSearchCard, fetchExactCard } from "../../../helpers/api/api_scryfall";
 
 type DeckCardListProps = {
   deck: any;

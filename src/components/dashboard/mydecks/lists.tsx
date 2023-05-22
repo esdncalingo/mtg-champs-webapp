@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchSymbols } from "../../../helpers/apiscryfall";
+import { fetchSymbols } from "../../../helpers/api/api_scryfall";
 
 type Props = {
   cards: any

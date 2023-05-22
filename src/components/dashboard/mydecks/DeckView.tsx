@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchDeck } from "../../../helpers/apicall"
+import { fetchDeck } from "../../../helpers/api/api_decks"
 import { useSearchParams } from "react-router-dom"
 import { dateString } from "../../../helpers/services/dateformats";
 import Cards from "./Cards";

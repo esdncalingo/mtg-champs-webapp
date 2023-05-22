@@ -27,11 +27,15 @@
 }
 
 .btn-card {
-  @apply flex justify-center items-center bg-gray-800 hover:bg-sky-800 active:bg-slate-700;
+  @apply flex justify-center items-center text-gray-300 bg-gray-800 hover:bg-sky-800 active:bg-slate-700;
 }
 
 .btn-card-delete {
   @apply flex bg-gray-800 h-4 w-[3rem] rounded-t-xl;
+}
+
+.input-primary {
+  @apply border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500 text-gray-300;
 }
 
 .card {

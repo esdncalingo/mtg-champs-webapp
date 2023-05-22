@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react"
-import { fetchDeck, updateDeck } from "../../../helpers/apicall"
-import { createDeck } from "../../../helpers/apicall"
+import { fetchDeck, updateDeck } from "../../../helpers/api/api_decks"
+import { createDeck } from "../../../helpers/api/api_decks"
 import { useToasty } from "../../popupmsg/Toasty";
 import Lists from "./lists";
 import DeckCardList from "./DeckCardList";
@@ -60,39 +60,39 @@ export default function DeckBuilder() {
 
   return (
     <div className="flex flex-col flex-grow p-4 bg-gray-100">
-    <span className="text-2xl font-bold mb-4 text-gray-700">Deck Builder</span>
-    <div className="flex gap-4">
-      <form className="space-y-2">      
-        {/* Deck Name */}
-        <InputComponent name={'Deck Name'} value={deckName} onchange={handleOnChangeDeckName}/>
+      <span className="text-2xl font-bold mb-4 text-gray-700">Deck Builder</span>
+      <div className="flex gap-4">
+        <form className="space-y-2">      
+          {/* Deck Name */}
+          <InputComponent name={'Deck Name'} value={deckName} onchange={handleOnChangeDeckName}/>
 
-        {/* Game Format */}
+          {/* Game Format */}
+          <div className="flex flex-col">
+            <label htmlFor="game-mode-select" className="text-gray-700">Format</label>
+            <select id="game-mode-select" className="border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500">
+              <option value="standard">Standard</option>
+              <option value="commander">Commander</option>
+              <option value="oathbreaker">Oathbreaker</option>
+            </select>
+          </div>
+
+          <InputComponent name={'Companion'} />
+          <InputComponent name={'Commander'} />
+          <InputComponent name={'Commander'} suffix={"Partner"} />
+          <InputComponent name={'Signature Spell'} />
+          <Lists cards={cards}/>
+        </form>
+        {/* Deck cards lists*/}
         <div className="flex flex-col">
-          <label htmlFor="game-mode-select" className="text-gray-700">Format</label>
-          <select id="game-mode-select" className="border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500">
-            <option value="standard">Standard</option>
-            <option value="commander">Commander</option>
-            <option value="oathbreaker">Oathbreaker</option>
-          </select>
+          <div className="flex">
+            <CardSearch deck={cards} setDeck={setCards}/>
+            {/* Save Deck Button */}
+            <button className="btn-primary ml-auto" onClick={handleSave}>Save</button>
+          </div> 
+          <DeckCardList deck={cards} setDeck={setCards}/>
         </div>
-
-        <InputComponent name={'Companion'} />
-        <InputComponent name={'Commander'} />
-        <InputComponent name={'Commander'} suffix={"Partner"} />
-        <InputComponent name={'Signature Spell'} />
-        <Lists cards={cards}/>
-      </form>
-      {/* Deck cards lists*/}
-      <div className="flex flex-col">
-        <div className="flex">
-          <CardSearch deck={cards} setDeck={setCards}/>
-          {/* Save Deck Button */}
-          <button className="btn-primary ml-auto" onClick={handleSave}>Save</button>
-        </div> 
-        <DeckCardList deck={cards} setDeck={setCards}/>
       </div>
     </div>
-  </div>
   )
 }
 

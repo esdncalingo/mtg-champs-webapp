@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchRandomCard } from "../helpers/apiscryfall"
+import { fetchRandomCard } from "../helpers/api/api_scryfall"
 
 import RandomCard from "./randomcard/RandomCard"
 
