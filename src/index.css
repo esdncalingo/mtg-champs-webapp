@@ -22,12 +22,16 @@
   @apply flex flex-col min-h-screen;
 }
 
+.btn-primary {
+  @apply bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600;
+}
+
 .btn-card {
-  @apply flex justify-center items-center bg-gray-800 hover:bg-sky-800 active:bg-slate-700
+  @apply flex justify-center items-center bg-gray-800 hover:bg-sky-800 active:bg-slate-700;
 }
 
 .btn-card-delete {
-  @apply flex bg-gray-800 h-4 w-[3rem] rounded-t-xl
+  @apply flex bg-gray-800 h-4 w-[3rem] rounded-t-xl;
 }
 
 .card {

@@ -38,13 +38,15 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
     if (!deck.find(((card: any) => card.name === cardName))) {
       let selectItem:any = await fetchExactCard(cardName)
       selectItem['quantity'] = 1
-      setDeck((prevDeck: any) => [...prevDeck, selectItem])
+      setDeck((prevDeck: any) => [selectItem, ...prevDeck])
+      setSearchSelectionShowing(false)
+      setSearchInput('')
     }
   }
   return (
     <div>
       {/* Search */}
-      <div className="flex items-center mt-2">
+      <div className="flex items-center">
       <input type="hidden" id="multiverse_id"/>
       <input 
         type="text" 
@@ -57,7 +59,7 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
       {/* <button className="bg-blue-500 text-white px-4 py-2 ml-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Add</button> */}
       </div>
       {/* Searchlist */}
-      {searchSelectionShowing && (<div className="flex  absolute z-20 flex-col bg-[#3B3B3B] p-2 rounded mt-1 overflow-auto max-h-[25rem] max-w-[20rem]">
+      {searchSelectionShowing && (<div className="flex min-w-[20rem] absolute z-20 flex-col bg-[#3B3B3B] p-2 rounded mt-1 overflow-auto max-h-[25rem] max-w-[20rem]">
         {searchList.map((card:any, index:number) => (
             <span 
               key={index}

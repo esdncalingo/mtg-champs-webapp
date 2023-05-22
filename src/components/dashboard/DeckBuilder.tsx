@@ -5,7 +5,7 @@ import { useToasty } from "../popupmsg/Toasty";
 import Lists from "./deck/lists";
 import DeckCardList from "./deck/DeckCardList";
 import CardSearch from "./deck/CardSearch";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 export default function DeckBuilder() {
 
@@ -13,23 +13,22 @@ export default function DeckBuilder() {
   const [cards, setCards] = useState<any[]>([])
   const [deckName, setDeckName] = useState('')
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const toasty = useToasty();
 
   useEffect(() => {
-    try {
-      editDeck()
-    } catch(error) {
-      //  error
-    }
+    editDeck()
   },[])
 
   const editDeck = async () => {
-    if (searchParams.get('id')) {
-      let data = await fetchDeck(sessionStorage.getItem('token'), searchParams.get('id'))
-      setDeckName(data.deck.name)
-      setDeck(data.deck)
-      setCards(JSON.parse(data.deck.cards))
+    try {
+      if (searchParams.get('id')) {
+        let data = await fetchDeck(sessionStorage.getItem('token'), searchParams.get('id'))
+        setDeckName(data.deck.name)
+        setDeck(data.deck)
+        setCards(JSON.parse(data.deck.cards))
+      }
+    } catch(error) {
+      // error
     }
   }
 
@@ -47,74 +46,70 @@ export default function DeckBuilder() {
       // sideboard: params.sideboard,
       game_format: game_format.value
     }
-    await searchParams.get('id') ? updateDeck(sessionStorage.getItem('token'), params) : createDeck(sessionStorage.getItem('token'), params)
-    toasty(`${deckName} is newly created`, false)
-    navigate('/dashboard/mydecks')
+
+    if (searchParams.get('id')) {
+      let data = await updateDeck(sessionStorage.getItem('token'), params)
+      data.error ? 
+        data.error['name'].map((err: string) => toasty(err)) :
+        toasty(`${deckName} is updated`, false)
+    } else {
+      await createDeck(sessionStorage.getItem('token'), params)
+      toasty(`${deckName} is newly created`, false)
+    }
   }
 
   return (
     <div className="flex flex-col flex-grow p-4 bg-gray-100">
-    <h2 className="text-2xl font-bold mb-4 text-gray-700">Deck Builder</h2>
-      <div className="flex gap-4">
-        <form>      
-          <div>
-            {/* Deck Name */}
-            <InputComponent name={'Deck Name'} value={deckName} onchange={handleOnChangeDeckName}/>
-            <InputComponent name={'Commander'} />
-            <InputComponent name={'Signature Spell'} />
+    <span className="text-2xl font-bold mb-4 text-gray-700">Deck Builder</span>
+    <div className="flex gap-4">
+      <form>      
+        {/* Deck Name */}
+        <InputComponent name={'Deck Name'} value={deckName} onchange={handleOnChangeDeckName}/>
 
-            {/* Companion Name */}
-            <div className="flex flex-col">
-              <label htmlFor="deck-companion" className="mr-2 text-gray-700">Companion:</label>
-              <input 
-                type="text" 
-                id="deck-companion" 
-                className="border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-              />
-            </div>
-
-            {/* Game Format */}
-            <div className="flex items-center mt-2">
-              <label htmlFor="game-mode-select" className="mr-2 text-gray-700">Format:</label>
-              <select id="game-mode-select" className="border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500">
-                <option value="standard">Standard</option>
-                <option value="commander">Commander</option>
-                <option value="oathbreaker">Oathbreaker</option>
-              </select>
-            </div>
-          </div>
-
-          
-          <Lists cards={cards}/>
-        </form>
-        {/* Deck cards lists*/}
+        {/* Game Format */}
         <div className="flex flex-col">
-          <CardSearch deck={cards} setDeck={setCards}/>
-          <DeckCardList deck={cards} setDeck={setCards}/>
+          <label htmlFor="game-mode-select" className="mr-2 text-gray-700">Format</label>
+          <select id="game-mode-select" className="border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500">
+            <option value="standard">Standard</option>
+            <option value="commander">Commander</option>
+            <option value="oathbreaker">Oathbreaker</option>
+          </select>
         </div>
-      </div>
 
-      {/* Save Deck Button */}
-      <div className="flex mt-4">
-        <button className="bg-blue-500 text-white px-4 py-2 ml-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600" onClick={handleSave}>Save</button>
-      </div> 
+        <InputComponent name={'Companion'} />
+        <InputComponent name={'Commander'} />
+        <InputComponent name={'Commander'} suffix={"Partner"} />
+        <InputComponent name={'Signature Spell'} />
+        <Lists cards={cards}/>
+      </form>
+      {/* Deck cards lists*/}
+      <div className="flex flex-col">
+        <div className="flex">
+          <CardSearch deck={cards} setDeck={setCards}/>
+          {/* Save Deck Button */}
+          <button className="btn-primary ml-auto" onClick={handleSave}>Save</button>
+        </div> 
+        <DeckCardList deck={cards} setDeck={setCards}/>
+      </div>
     </div>
+  </div>
   )
 }
 
 // --------- mini Components -----------
 type InputData = {
   name: string
+  suffix: string
   value: any
   onchange: any
 }
-const InputComponent = ({name, value, onchange} :InputData) => {
+const InputComponent = ({name, suffix, value, onchange} :InputData) => {
   return (
     <div className="flex flex-col">
-      <label htmlFor="deck-name" className="mr-2 text-gray-700">{name}:</label>
+      <label htmlFor={`deck-${name.toLowerCase()}`} className="mr-2 text-gray-700">{name} {suffix}</label>
       <input 
         type="text" 
-        id="deck-name" 
+        id={`deck-${name.toLowerCase()}`} 
         className="border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
         value={value}
         onChange={onchange}

@@ -60,7 +60,7 @@ export default function DeckCardList({ deck, setDeck }:DeckCardListProps) {
                 <span className="translate-x-5 -translate-y-1">x</span>
               </button>
             </div>
-            <div className="bg-gray-900 rounded-lg ring-2 ring-gray-800 p-[2px]">
+            <div className="bg-gray-900 rounded-lg ring-2 ring-gray-800 p-[2px] shadow-md shadow-neutral-950">
               <img src={card.image_uris['png']} alt="" />
             </div>
             <div className="flex gap-1 items-center mt-1">
