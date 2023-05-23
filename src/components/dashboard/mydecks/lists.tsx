@@ -13,6 +13,7 @@ export default function Lists({ cards }: Props) {
   // ---------- Card Types ----------
   const [creatures, setCreatures] = useState([])
   const [planeswalkers, setPlaneswalkers] = useState([])
+  const [battles, setBattles] = useState([])
   const [spells, setSpells] = useState([])
   const [artifacts, setArifacts] = useState([])
   const [enchantments, setEnchantments] = useState([])
@@ -28,6 +29,7 @@ export default function Lists({ cards }: Props) {
   const loadInfo = () => {
     let creatures:any = []
     let planeswalkers:any = []
+    let battles:any = []
     let spells:any = []
     let artifacts:any = []
     let enchantments:any = []
@@ -44,6 +46,8 @@ export default function Lists({ cards }: Props) {
         creatures = [...creatures, card]
       } else if (card_type.includes('planeswalker')) {
         planeswalkers = [...planeswalkers, card]
+      } else if (card_type.includes('battle')) {
+        battles = [...battles, card]
       } else if (card_type.includes('instant') || card_type.includes('sorcery')) {
         spells = [...spells, card]
       } else if (card_type.includes('artifact')) {
@@ -56,6 +60,7 @@ export default function Lists({ cards }: Props) {
     })
     setCreatures(sortByCMC(creatures))
     setPlaneswalkers(sortByCMC(planeswalkers))
+    setBattles(sortByCMC(battles))
     setSpells(sortByCMC(spells))
     setArifacts(sortByCMC(artifacts))
     setEnchantments(sortByCMC(enchantments))
@@ -94,6 +99,7 @@ export default function Lists({ cards }: Props) {
       </div>
       <CardType cardtype={creatures} manasymbols={cardManaSymbol} name="Creatures"/>
       <CardType cardtype={planeswalkers} manasymbols={cardManaSymbol} name="Planeswalkers"/>
+      <CardType cardtype={battles} manasymbols={cardManaSymbol} name="Battles"/>
       <CardType cardtype={spells} manasymbols={cardManaSymbol} name="Spells"/>
       <CardType cardtype={artifacts} manasymbols={cardManaSymbol} name="Artifacts"/>
       <CardType cardtype={enchantments} manasymbols={cardManaSymbol} name="Enchantments"/>

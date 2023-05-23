@@ -32,8 +32,8 @@ export const createDeck = async (access_token:any, params: any) => {
   try {
     const response = await axios.post(`${BASE_URL}deck?token=${TOKEN}`, body, { headers })
     return response.data
-  } catch(error) {
-    console.error('Error creating deck', error)
+  } catch(error: any) {
+    return error.response.data
   }
 }
 

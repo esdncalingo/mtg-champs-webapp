@@ -41,7 +41,7 @@ export default function DeckBuilder() {
     const params:any = {
       id: searchParams.get('id'),
       name: deckName,
-      cards: searchParams.get('id') ? JSON.stringify(cards) : JSON.stringify(deck),
+      cards: JSON.stringify(cards),
       // sideboard: params.sideboard,
       game_format: game_format.value
     }
@@ -49,11 +49,13 @@ export default function DeckBuilder() {
     if (searchParams.get('id')) {
       let data = await updateDeck(sessionStorage.getItem('token'), params)
       data.error ? 
-        data.error['name'].map((err: string) => toasty(err)) :
+        data.error['name'].map((err: string) => toasty(`Deckname ${err}`)) :
         toasty(`${deckName} is updated`, false)
     } else {
-      await createDeck(sessionStorage.getItem('token'), params)
-      toasty(`${deckName} is newly created`, false)
+      let data = await createDeck(sessionStorage.getItem('token'), params)
+      data.error ? 
+        data.error['name'].map((err: string) => toasty(`Deckname ${err}`)) :
+        toasty(`${deckName} is newly created`, false)
     }
   }
 

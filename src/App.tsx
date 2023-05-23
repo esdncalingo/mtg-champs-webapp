@@ -5,7 +5,7 @@ import LoginForm from './components/LoginForm'
 import Container from './components/Container'
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import SignUpForm from './components/SignUpForm'
 import Toasty from './components/popupmsg/Toasty'
 import Dashboard from './components/Dashboard'
@@ -32,6 +32,7 @@ function App() {
           <Route path='/deck' element={<DeckView/>}/>
           <Route path='/signin' element={<LoginForm/>}/>
           <Route path='/signup' element={<SignUpForm/>}/>
+          <Route path='*' element={<Navigate to='/' replace={true}/>}/>
         </Routes>
         <Footer/>
       </ToastyContext.Provider>

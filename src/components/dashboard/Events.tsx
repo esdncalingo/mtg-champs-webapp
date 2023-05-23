@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { postEvent, fetchEvent } from "../../helpers/api/api_events"
+import { participantsActionCable } from "../../helpers/cables/participants_cable";
 import { useToasty } from "../popupmsg/Toasty"
-import { dateString } from "../../helpers/services/dateformats";
+import { dateString, timeString } from "../../helpers/services/dateformats";
 
 export default function Events() {
   const [eventlist, setEventList] = useState<any[]>([]);
+  const [participants, setParticipants] = useState<any[]>([])
   const toasty = useToasty();
-
+  
   useEffect(() => {
     showEvents()
+    participantsActionCable( setParticipants )
   }, [])
 
   const showEvents = async () => {
@@ -26,7 +29,7 @@ export default function Events() {
     const params:any = {
       title: title.value,
       description: description.value,
-      schedule: schedule.value,
+      schedule:  schedule.value,
       game_format: game_format.value
     }
     let data = await postEvent(sessionStorage.getItem('token'), params)
@@ -49,7 +52,11 @@ export default function Events() {
         <button className="btn-card p-2 rounded-lg" onClick={handleCreateEvent}>Create Event</button>
         <button className="btn-card p-2 rounded-lg">Join Event</button>
       </div>
-
+      {participants.map((player: any, index: number) => (
+        <div key={index} className="bg-gray-500">
+          <span>{player.user_id}</span>
+        </div>
+      ))}
       {/* Form */}
       <form className="" action="">
         <div className="flex flex-col">
@@ -81,6 +88,7 @@ export default function Events() {
       <div className="flex flex-col gap-[1px] text-gray-300 mt-4">
         <div className="flex bg-zinc-900 p-2 rounded-t-md">
           <span className="flex-1">Schedule</span>
+          <span className="flex-1">Time Start</span>
           <span className="flex-1">Name</span>
           <span className="flex-1">Format</span>
           <span className="flex-1 text-right">Toggle Event</span>
@@ -88,6 +96,7 @@ export default function Events() {
         {eventlist.map((event: any, index: number) => (
           <div key={index} className={`${index % 2 === 0 ? 'bg-[#424242]' : 'bg-[#686868]' } p-4 flex`}>
             <span className="flex-1">{dateString(event.schedule)}</span>
+            <span className="flex-1">{timeString(event.schedule)}</span>
             <span className="flex-1 underline text-blue-400 hover:text-blue-500 cursor-pointer">{event.title}</span>
             <span className="flex-1">{event.game_format}</span>
             <span className="flex-1 text-right text-green-500 hover:text-green-600 cursor-pointer">Expand</span>
