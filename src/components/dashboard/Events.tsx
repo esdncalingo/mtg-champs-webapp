@@ -16,7 +16,7 @@ export default function Events() {
 
   const showEvents = async () => {
     let data = await fetchEvent(sessionStorage.getItem('token'))
-    console.log(data)
+    console.log('Event', data)
     setEventList(data)
   }
 
@@ -48,41 +48,10 @@ export default function Events() {
   return (
     <div className="flex flex-col flex-grow text-gray-700 p-4">
       {/* Buttons Create and Join */}
-      <div>
-        <button className="btn-card p-2 rounded-lg" onClick={handleCreateEvent}>Create Event</button>
-        <button className="btn-card p-2 rounded-lg">Join Event</button>
-      </div>
-      {participants.map((player: any, index: number) => (
-        <div key={index} className="bg-gray-500">
-          <span>{player.user_id}</span>
-        </div>
-      ))}
-      {/* Form */}
-      <form className="" action="">
-        <div className="flex flex-col">
-          <label htmlFor="event-title">Title</label>
-          <input type="text" id="event-title" name="event-title" className="input-primary"/>
-        </div>
-        
-        <div className="flex flex-col">
-          <label htmlFor="event-description">Description</label>
-          <input type="text" id="event-description" name="event-description" className="input-primary"/>
-        </div>
-
-        <div className="flex flex-col">
-          <label htmlFor="game-mode-select" className="text-gray-700">Format</label>
-          <select id="game-mode-select" className="input-primary">
-            <option value="standard">Standard</option>
-            <option value="commander">Commander</option>
-            <option value="oathbreaker">Oathbreaker</option>
-          </select>
-        </div>
-
-        <div className="flex flex-col">
-          <label htmlFor="event-schedule">Schedule</label>
-          <input type="datetime-local" id="event-schedule" name="event-schedule" className="input-primary"/>
-        </div>
-      </form>
+      <div className="flex">
+        <button className="btn-primary ml-auto" onClick={handleCreateEvent}>Create Event</button>
+        {/* <button className="btn-card p-2 rounded-lg">Join Event</button> */}
+      </div>     
 
       {/* Event Created Lists */}
       <div className="flex flex-col gap-[1px] text-gray-300 mt-4">
@@ -104,5 +73,37 @@ export default function Events() {
         ))}
       </div>
     </div>
+  )
+}
+
+// ------------- mini Components
+
+const FormComponent = () => {
+  return (
+    <form className="" action="">
+      <div className="flex flex-col">
+        <label htmlFor="event-title">Title</label>
+        <input type="text" id="event-title" name="event-title" className="input-primary"/>
+      </div>
+      
+      <div className="flex flex-col">
+        <label htmlFor="event-description">Description</label>
+        <input type="text" id="event-description" name="event-description" className="input-primary"/>
+      </div>
+
+      <div className="flex flex-col">
+        <label htmlFor="game-mode-select" className="text-gray-700">Format</label>
+        <select id="game-mode-select" className="input-primary">
+          <option value="standard">Standard</option>
+          <option value="commander">Commander</option>
+          <option value="oathbreaker">Oathbreaker</option>
+        </select>
+      </div>
+
+      <div className="flex flex-col">
+        <label htmlFor="event-schedule">Schedule</label>
+        <input type="datetime-local" id="event-schedule" name="event-schedule" className="input-primary"/>
+      </div>
+    </form>
   )
 }
