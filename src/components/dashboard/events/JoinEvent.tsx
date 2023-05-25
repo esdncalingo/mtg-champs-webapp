@@ -27,7 +27,7 @@ type ParticipantProps = {
 export default function JoinEvent() {
 
   const [searchParams] = useSearchParams();
-  const [deckLists, setDeckLists] = useState([]);
+  const [deckLists, setDeckLists] = useState<{ id: number }[]>([]);
   const [deck, setDeck] = useState([]);
   const [creator, setCreator] = useState('');
   const [event, setEvent] = useState<EventProp>({
@@ -71,7 +71,7 @@ export default function JoinEvent() {
     if (selectedDeck.selectedIndex != 0) {  
       let data = await joinEvent(sessionStorage.getItem('token'), params)
       if (data.error) {
-        console.log(data.error)
+        toasty(data.error['user_id'])
       } else {
         toasty('You join the Event!!, waiting for Host approval', false)
       }

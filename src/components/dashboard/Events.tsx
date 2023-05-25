@@ -31,8 +31,8 @@ export default function Events() {
       schedule:  schedule.value,
       game_format: game_format.value
     }
-    
-    let data = await postEvent(sessionStorage.getItem('token'), params)
+
+    const data = await postEvent(sessionStorage.getItem('token'), params)
     if (data.error) {
       if (data.error['title']) {
         data.error['title'].map((err: any) => toasty(`title ${err}`));

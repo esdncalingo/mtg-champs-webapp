@@ -13,9 +13,9 @@ export default function Deck({ deck }: Props) {
   useEffect(() => {
     try {
       const cards:any = JSON.parse(deck.cards)
+      deckCover(cards);
       countCards(cards);
       colorIdentity(cards);
-      deckCover(cards);
     } catch (e) {
       // console.log(e)
     }

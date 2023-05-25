@@ -38,7 +38,8 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
     if (!deck.find(((card: any) => card.name === cardName))) {
       let selectItem:any = await fetchExactCard(cardName)
       if (!!selectItem['card_faces']) {
-        selectItem = selectItem['card_faces'][0]
+        selectItem['image_uris'] = selectItem['card_faces'][0].image_uris
+        selectItem['mana_cost'] = `${selectItem['card_faces'][0].mana_cost}//${selectItem['card_faces'][1].mana_cost}`
       }
       selectItem['quantity'] = 1
       setDeck((prevDeck: any) => [selectItem, ...prevDeck])
