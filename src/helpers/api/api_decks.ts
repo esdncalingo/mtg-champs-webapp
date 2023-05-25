@@ -12,8 +12,8 @@ export const fetchDeckList = async (access_token:any) => {
       }
     })
     return response.data
-  } catch(error) {
-    console.error('Error fetching decks', error)
+  } catch(error: any) {
+    return error.response.data
   }
 }
 
@@ -68,5 +68,18 @@ export const fetchDeck = async (access_token:any, id: any) => {
     return response.data
   } catch(error) {
     console.log(error)
+  }
+}
+
+// GET Deck by Format
+export const fetchDeckbyFormat = async (access_token: any,game_format: string) => {
+  const headers = {
+    Authorization: access_token
+  }
+  try {
+    const response = await axios.get(`${BASE_URL}deck/${game_format}?token=${TOKEN}`, { headers })
+    return response.data
+  } catch (error: any) {
+    return error.response.data
   }
 }

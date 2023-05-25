@@ -38,6 +38,14 @@
   @apply border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500 text-gray-300;
 }
 
+.retract {
+  @apply h-0;
+}
+
+.extend {
+  @apply h-[10rem];
+}
+
 .card {
   @apply shadow-xl p-[1px] rounded-lg hover:scale-105 cursor-pointer transition-all duration-100 ease-in;
 }

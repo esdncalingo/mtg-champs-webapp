@@ -1,8 +1,8 @@
 type CableProps = {
-  setParticipants: React.Dispatch<React.SetStateAction<any[]>>;
+  setEvents: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-export const participantsActionCable = ( setParticipants: CableProps['setParticipants']) => {
+export const eventsActionCable = ( setEvents: CableProps['setEvents']) => {
   const ws = new WebSocket("ws://localhost:3000/actioncable")
   ws.onopen = () => {
     console.log('Connected to websocket server')
@@ -11,7 +11,7 @@ export const participantsActionCable = ( setParticipants: CableProps['setPartici
         command: "subscribe",
         identifier: JSON.stringify({
           id: sessionStorage.getItem('token'),
-          channel: "ParticipantsChannel",
+          channel: "EventsChannel",
         })
       })
     )
@@ -25,7 +25,7 @@ export const participantsActionCable = ( setParticipants: CableProps['setPartici
 
     const message = data.message;
     console.log(message)
-    setParticipants((prev: any) => [message, ...prev])
+    setEvents((prev: any) => [message, ...prev])
   }
 
   ws.onclose = () => {

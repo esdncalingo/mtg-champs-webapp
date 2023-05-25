@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react"
 import { fetchDeck, updateDeck, createDeck } from "../../../helpers/api/api_decks"
 import { useToasty } from "../../popupmsg/Toasty";
-import Lists from "./lists";
+import Lists from "./Lists";
 import DeckCardList from "./DeckCardList";
 import CardSearch from "./CardSearch";
 import { useSearchParams } from "react-router-dom";

@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import { postEvent, fetchEvent } from "../../helpers/api/api_events"
-import { participantsActionCable } from "../../helpers/cables/participants_cable";
+import { postEvent, fetchEvents } from "../../helpers/api/api_events"
+import { eventsActionCable } from "../../helpers/cables/events_cable";
 import { useToasty } from "../popupmsg/Toasty"
 import { dateString, timeString } from "../../helpers/services/dateformats";
 
 export default function Events() {
   const [eventlist, setEventList] = useState<any[]>([]);
-  const [participants, setParticipants] = useState<any[]>([])
   const toasty = useToasty();
   
   useEffect(() => {
     showEvents()
-    participantsActionCable( setParticipants )
+    eventsActionCable( setEventList )
   }, [])
 
   const showEvents = async () => {
-    let data = await fetchEvent(sessionStorage.getItem('token'))
+    let data = await fetchEvents(sessionStorage.getItem('token'))
     console.log('Event', data)
     setEventList(data)
   }
@@ -32,6 +31,7 @@ export default function Events() {
       schedule:  schedule.value,
       game_format: game_format.value
     }
+    
     let data = await postEvent(sessionStorage.getItem('token'), params)
     if (data.error) {
       if (data.error['title']) {
@@ -45,14 +45,25 @@ export default function Events() {
     }
   }
 
+  const handleExpandToggle = (event: any) => {
+    let id = (event.currentTarget.dataset['eventid'])
+    let extend = document.getElementById(`extendeventid-${id}`)
+    extend?.classList.toggle('extend')
+    extend?.classList.toggle('retract')
+  }
+
   return (
     <div className="flex flex-col flex-grow text-gray-700 p-4">
-      {/* Buttons Create and Join */}
-      <div className="flex">
-        <button className="btn-primary ml-auto" onClick={handleCreateEvent}>Create Event</button>
-        {/* <button className="btn-card p-2 rounded-lg">Join Event</button> */}
-      </div>     
+  
+      <FormComponent/>
 
+      <div className="flex mt-2">
+        <button className="btn-primary ml-auto" onClick={handleCreateEvent}>Create Event</button>
+      </div>
+
+      <div>
+        <span className="text-4xl font-bold">Upcoming Events</span>
+      </div>
       {/* Event Created Lists */}
       <div className="flex flex-col gap-[1px] text-gray-300 mt-4">
         <div className="flex bg-zinc-900 p-2 rounded-t-md">
@@ -63,12 +74,25 @@ export default function Events() {
           <span className="flex-1 text-right">Toggle Event</span>
         </div>
         {eventlist.map((event: any, index: number) => (
-          <div key={index} className={`${index % 2 === 0 ? 'bg-[#424242]' : 'bg-[#686868]' } p-4 flex`}>
-            <span className="flex-1">{dateString(event.schedule)}</span>
-            <span className="flex-1">{timeString(event.schedule)}</span>
-            <span className="flex-1 underline text-blue-400 hover:text-blue-500 cursor-pointer">{event.title}</span>
-            <span className="flex-1">{event.game_format}</span>
-            <span className="flex-1 text-right text-green-500 hover:text-green-600 cursor-pointer">Expand</span>
+          <div key={index}>
+            <div  id={`event-${event.id}`} className={`${index % 2 === 0 ? 'bg-[#424242]' : 'bg-[#686868]' } p-3 flex`}>
+              <span className="flex-1">{dateString(event.schedule)}</span>
+              <span className="flex-1">{timeString(event.schedule)}</span>
+              <span className="flex-1 underline text-blue-400 hover:text-blue-500 cursor-pointer">{event.title}</span>
+              <span className="flex-1">{event.game_format}</span>
+              <span data-eventid={event.id} className="flex-1 select-none text-right text-green-500 hover:text-green-600 active:text-orange-500 cursor-pointer" onClick={handleExpandToggle}>Expand</span>
+            </div>
+            <div id={`extendeventid-${event.id}`} className="retract transition-all duration-300 ease-in-out overflow-hidden text-gray-700">
+              <div className="flex flex-col relative h-full p-3">
+                <div>
+                  <span className="">Description: {event.description}</span>
+                </div>
+                <span>Participants:</span>
+                <div>
+                  <a href={`/join_event?id=${event.id}`} className="btn-card absolute p-2 rounded-md bottom-2 right-2">Join Event</a>
+                </div>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -82,17 +106,17 @@ const FormComponent = () => {
   return (
     <form className="" action="">
       <div className="flex flex-col">
-        <label htmlFor="event-title">Title</label>
+        <label htmlFor="event-title" className="font-bold">Title</label>
         <input type="text" id="event-title" name="event-title" className="input-primary"/>
       </div>
       
       <div className="flex flex-col">
-        <label htmlFor="event-description">Description</label>
+        <label htmlFor="event-description" className="font-bold">Description</label>
         <input type="text" id="event-description" name="event-description" className="input-primary"/>
       </div>
 
       <div className="flex flex-col">
-        <label htmlFor="game-mode-select" className="text-gray-700">Format</label>
+        <label htmlFor="game-mode-select" className="text-gray-700 font-bold">Format</label>
         <select id="game-mode-select" className="input-primary">
           <option value="standard">Standard</option>
           <option value="commander">Commander</option>
@@ -101,7 +125,7 @@ const FormComponent = () => {
       </div>
 
       <div className="flex flex-col">
-        <label htmlFor="event-schedule">Schedule</label>
+        <label htmlFor="event-schedule" className="font-bold">Schedule</label>
         <input type="datetime-local" id="event-schedule" name="event-schedule" className="input-primary"/>
       </div>
     </form>

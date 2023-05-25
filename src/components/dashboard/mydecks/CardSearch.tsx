@@ -37,6 +37,9 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
     const cardName:string = event.currentTarget.innerHTML
     if (!deck.find(((card: any) => card.name === cardName))) {
       let selectItem:any = await fetchExactCard(cardName)
+      if (!!selectItem['card_faces']) {
+        selectItem = selectItem['card_faces'][0]
+      }
       selectItem['quantity'] = 1
       setDeck((prevDeck: any) => [selectItem, ...prevDeck])
       setSearchSelectionShowing(false)

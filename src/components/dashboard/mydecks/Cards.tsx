@@ -8,6 +8,7 @@ export default function Cards({ cards }: Props) {
 
   // ---------- Card Types ----------
   const [creatures, setCreatures] = useState([])
+  const [planeswalkers, setPlaneswalkers] = useState([])
   const [spells, setSpells] = useState([])
   const [artifacts, setArifacts] = useState([])
   const [enchantments, setEnchantments] = useState([])
@@ -20,6 +21,7 @@ export default function Cards({ cards }: Props) {
 
   const loadInfo = () => {
     let creatures:any = []
+    let planeswalkers:any = []
     let spells:any = []
     let artifacts:any = []
     let enchantments:any = []
@@ -29,6 +31,8 @@ export default function Cards({ cards }: Props) {
       let card_type: any = card.type_line.toLowerCase()
       if (card_type.includes('creature')) {
         creatures = [...creatures, card]
+      } else if (card_type.includes('planeswalker')) {
+        planeswalkers = [...planeswalkers, card]
       } else if (card_type.includes('instant') || card_type.includes('sorcery')) {
         spells = [...spells, card]
       } else if (card_type.includes('artifact')) {
@@ -40,6 +44,7 @@ export default function Cards({ cards }: Props) {
       }
     })
     setCreatures(creatures)
+    setPlaneswalkers(planeswalkers)
     setSpells(spells)
     setArifacts(artifacts)
     setEnchantments(enchantments)
@@ -49,6 +54,7 @@ export default function Cards({ cards }: Props) {
   return (
     <div className="flex flex-col bg-[#3B3B3B] border rounded-md p-4 min-w-[50rem]">
       <CardType cardtype={creatures} name={'Creatures'}/>
+      <CardType cardtype={planeswalkers} name={'Planeswalkers'}/>
       <CardType cardtype={spells} name={'Spells'}/>
       <CardType cardtype={artifacts} name={'Artifacts'}/>
       <CardType cardtype={enchantments} name={'Enchantments'}/>

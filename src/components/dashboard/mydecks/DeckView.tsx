@@ -3,7 +3,7 @@ import { fetchDeck } from "../../../helpers/api/api_decks"
 import { useSearchParams } from "react-router-dom"
 import { dateString } from "../../../helpers/services/dateformats";
 import Cards from "./Cards";
-import Lists from "./lists";
+import Lists from "./Lists";
 
 type Deck = {
   id: any
