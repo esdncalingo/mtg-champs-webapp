@@ -56,7 +56,7 @@ export const removeParticipant = async (access_token: any, id: number) => {
 }
 
 // GET participant submitted deck
-export const fetchSubmittedDeck = async (access_token: any, id: number) => {
+export const fetchSubmittedDeck = async (access_token: any, id: any) => {
   const headers = {
     Authorization: access_token
   }

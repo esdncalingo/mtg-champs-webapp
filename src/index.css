@@ -34,8 +34,13 @@
   @apply flex bg-gray-800 h-4 w-[3rem] rounded-t-xl;
 }
 
+.btn-participant-delete {
+  @apply cursor-pointer w-[2.5rem] h-[2.5rem] bg-gray-100 rounded-full absolute justify-center items-center flex -left-1 -top-1 ring-[1px] p-4 ring-zinc-400
+        hover:bg-red-400 hover:ring-red-500 hover:ring-2 hover:text-white transition-all duration-300 ease-in-out;
+}
+
 .btn-start {
-  @apply btn-card px-4 py-3 ring ring-orange-500 ring-offset-2 ring-offset-gray-100 rounded-full 
+  @apply text-gray-300 bg-gray-800 px-4 py-3 ring ring-orange-500 ring-offset-2 ring-offset-gray-100 rounded-full 
         hover:ring-offset-orange-300 hover:ring-offset-4 hover:text-orange-400
         transition-all duration-100 ease-in;
 }
