@@ -25,7 +25,7 @@ export const participantsActionCable = ( setParticipants: CableProps['setPartici
 
     const message = data.message;
     console.log(message)
-    setParticipants((prev: any) => [message, ...prev])
+    setParticipants((prev: any) => [ ...prev, message])
   }
 
   ws.onclose = () => {

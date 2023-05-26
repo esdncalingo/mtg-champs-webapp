@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
 import { fetchHostEvents } from "../../helpers/api/api_events"
 import { dateString, timeString } from "../../helpers/services/dateformats"
-import { fetchEventParticipants } from "../../helpers/api/api_participants"
+import { fetchEventParticipants, removeParticipant, updateStatus } from "../../helpers/api/api_participants"
 import { participantsActionCable } from "../../helpers/cables/participants_cable"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTrash } from "@fortawesome/free-solid-svg-icons"
+import { useToasty } from "../popupmsg/Toasty"
 
 type EventProps = {
   title: string
@@ -73,6 +76,8 @@ const ParticipantComponent = ({ participant }: any) => {
   const [mainImg, setMainImg] = useState('')
   const [colors, setColors] = useState([])
 
+  let toasty = useToasty();
+
   useEffect(() => {
     try {
       setCards(JSON.parse(participant.cards))
@@ -102,12 +107,30 @@ const ParticipantComponent = ({ participant }: any) => {
     setColors(uniqueColorArray);
   }
 
-  const handleToggle = (event: any) => {
+  const handleToggle = async (event: any) => {
     const id = event.currentTarget.dataset['toggle']
-    const participant = document.getElementById(`participant-${id}`)
+    const player = document.getElementById(`participant-${id}`)
     const elem = document.getElementById(`switch-${id}`)
     elem?.classList.toggle('toggled')
-    participant?.classList.toggle('participant-toggle')
+    player?.classList.toggle('participant-toggle')
+
+    let params: any = {
+      id: participant.id,
+      status: participant.status == 'pending' ? 'approved' : 'pending'
+    }
+    await updateStatus(sessionStorage.getItem('token'), params)
+  }
+
+  const handleDelete = async (event: any) => {
+    const id = event.currentTarget.dataset['trash']
+    const data = await removeParticipant(sessionStorage.getItem('token'), id)
+    if (data.error) {
+      toasty('you cant delete this participant')
+    } else {
+      const player = document.getElementById(`participant-${id}`)
+      player?.remove()
+      toasty('Succesfully removed a participant', false)
+    }
   }
 
   return (
@@ -130,7 +153,7 @@ const ParticipantComponent = ({ participant }: any) => {
                 <span className=" font-semibold">by</span>
                 <span>{participant.nickname.toUpperCase()}</span>
               </div>
-              <span className="text-blue-500"><a href="#">View Details</a></span>
+              <span className="text-blue-500"><a href={``}>View Details</a></span>
             </div>
 
             <div className="flex items-center ml-auto">
@@ -138,8 +161,11 @@ const ParticipantComponent = ({ participant }: any) => {
               <label htmlFor={`toggle-${participant.id}`} className="toggle-label">
                 <span data-toggle={participant.id} id={`switch-${participant.id}`} className={`toggle-button ${ participant.status === 'pending' ? '' : 'toggled' }`} onClick={handleToggle}></span>
               </label>
-            </div>
-          </div>
+            </div>  
+          </div> 
+        </div>
+        <div data-trash={participant.id} onClick={handleDelete} className=" cursor-pointer w-[1.2rem] h-[1.2rem] bg-gray-100 rounded-full absolute justify-center items-center flex left-1 top-1 ring-[1px] p-4 ring-zinc-400">
+          <span><FontAwesomeIcon icon={faTrash} /></span>
         </div>
       </div>
     </div>

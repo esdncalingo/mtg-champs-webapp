@@ -15,6 +15,7 @@ import DeckView from './components/DeckView'
 import Events from './components/dashboard/Events'
 import JoinEvent from './components/dashboard/events/JoinEvent'
 import Host from './components/dashboard/Host'
+import ParticipantDeck from './components/dashboard/host/ParticipantDeck'
 
 function App() {
   const [accessData, setAccessData] = useState<string>('')
@@ -37,6 +38,7 @@ function App() {
             <Route path='/build_deck' element={<DeckBuilder/>}/>
             <Route path='/deck' element={<DeckView/>}/>
             <Route path='/join_event' element={<JoinEvent/>}/>
+            <Route path='/participant' element={<ParticipantDeck/>}/>
             <Route path='*' element={<Navigate to='/' replace={true}/>}/>
           </Routes>
         <Footer/>
