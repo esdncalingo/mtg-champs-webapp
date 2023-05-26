@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from "react"
-import { fetchDeck, updateDeck, createDeck } from "../../../helpers/api/api_decks"
-import { useToasty } from "../../popupmsg/Toasty";
-import Lists from "./Lists";
-import DeckCardList from "./DeckCardList";
-import CardSearch from "./CardSearch";
+import { fetchDeck, updateDeck, createDeck } from "../helpers/api/api_decks"
+import { useToasty } from "./popupmsg/Toasty";
+import Lists from "./dashboard/mydecks/Lists";
+import DeckCardList from "./dashboard/mydecks/DeckCardList";
+import CardSearch from "./dashboard/mydecks/CardSearch";
 import { useSearchParams } from "react-router-dom";
 
 export default function DeckBuilder() {

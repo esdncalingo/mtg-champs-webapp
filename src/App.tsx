@@ -10,10 +10,11 @@ import SignUpForm from './components/SignUpForm'
 import Toasty from './components/popupmsg/Toasty'
 import Dashboard from './components/Dashboard'
 import MyDecks from './components/dashboard/MyDecks'
-import DeckBuilder from './components/dashboard/mydecks/DeckBuilder'
-import DeckView from './components/dashboard/mydecks/DeckView'
+import DeckBuilder from './components/DeckBuilder'
+import DeckView from './components/DeckView'
 import Events from './components/dashboard/Events'
 import JoinEvent from './components/dashboard/events/JoinEvent'
+import Host from './components/dashboard/Host'
 
 function App() {
   const [accessData, setAccessData] = useState<string>('')
@@ -25,16 +26,17 @@ function App() {
         <Navbar/>
         <Toasty/>
           <Routes>
+            <Route path='/signin' element={<LoginForm/>}/>
+            <Route path='/signup' element={<SignUpForm/>}/>
             <Route path='/' element={<Container/>}/>
             <Route path='/dashboard' element={<Dashboard/>}>
               <Route path='mydecks' element={<MyDecks/>}/>
               <Route path='events' element={<Events/>}/>
+              <Route path='hosting' element={<Host/>}/>
             </Route>
             <Route path='/build_deck' element={<DeckBuilder/>}/>
             <Route path='/deck' element={<DeckView/>}/>
             <Route path='/join_event' element={<JoinEvent/>}/>
-            <Route path='/signin' element={<LoginForm/>}/>
-            <Route path='/signup' element={<SignUpForm/>}/>
             <Route path='*' element={<Navigate to='/' replace={true}/>}/>
           </Routes>
         <Footer/>

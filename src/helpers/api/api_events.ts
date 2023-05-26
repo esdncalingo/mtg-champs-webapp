@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL = "http://localhost:3000/api/v1/"
 const TOKEN = "d44050c4e18a75e2814cd92a9767b9bb4d674a45"
 
-// GET Events
+// GET All Events
 export const fetchEvents =async (access_token: any) => {
   try {
     const response = await axios.get(`${BASE_URL}event?token=${TOKEN}`, {
@@ -45,6 +45,20 @@ export const postEvent = async (access_token: any, params: any) => {
 
   try {
     const response = await axios.post(`${BASE_URL}event?token=${TOKEN}`, body, { headers })
+    return response.data
+  } catch(error: any) {
+    return error.response.data
+  }
+}
+
+// GET Hosted Events
+export const fetchHostEvents = async (access_token: any) => {
+  try {
+    const response = await axios.get(`${BASE_URL}event/host_event?token=${TOKEN}`, {
+      headers: {
+        'Authorization': access_token
+      }
+    })
     return response.data
   } catch(error: any) {
     return error.response.data

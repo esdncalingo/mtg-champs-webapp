@@ -38,6 +38,8 @@ export default function Events() {
         data.error['title'].map((err: any) => toasty(`title ${err}`));
       } else if (data.error['schedule']) {
         data.error['schedule'].map((err: any) => toasty(`schedule ${err}`))
+      } else if (data.error['event']) {
+        data.error['event'].map((err: any) => toasty(err))
       }
     } else {
       setEventList((prev: any) => [data.event, ...prev])
@@ -82,7 +84,7 @@ export default function Events() {
               <span className="flex-1">{event.game_format}</span>
               <span data-eventid={event.id} className="flex-1 select-none text-right text-green-500 hover:text-green-600 active:text-orange-500 cursor-pointer" onClick={handleExpandToggle}>Expand</span>
             </div>
-            <div id={`extendeventid-${event.id}`} className="retract transition-all duration-300 ease-in-out overflow-hidden text-gray-700">
+            <div id={`extendeventid-${event.id}`} className="retract event-extension">
               <div className="flex flex-col relative h-full p-3">
                 <div>
                   <span className="">Description: {event.description}</span>
