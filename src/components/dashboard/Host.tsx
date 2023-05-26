@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react"
-import { fetchHostEvents } from "../../helpers/api/api_events"
+import { fetchHostEvents, removeEvent } from "../../helpers/api/api_events"
 import { dateString, timeString } from "../../helpers/services/dateformats"
 import { fetchEventParticipants } from "../../helpers/api/api_participants"
 import { participantsActionCable } from "../../helpers/cables/participants_cable"
 import { ParticipantComponent } from "./host/ParticipantComponent"
+import { useToasty } from "../popupmsg/Toasty"
+import { useNavigate } from "react-router-dom"
 
 type EventProps = {
+  id: any
   title: string
   description: string
   game_format: string
@@ -16,13 +19,16 @@ type EventProps = {
 export default function Host() {
 
   const [participants, setParticipants] = useState<any[]>([]);
-  const [hostEvents, setHostEvents] = useState<EventProps>({
+  const [hostEvent, setHostEvent] = useState<EventProps>({
+    id: '',
     title: '',
     description: '',
     game_format: '',
     schedule: '',
     finished: false
   });
+  const navigate = useNavigate();
+  let toasty = useToasty();
 
   useEffect(() => {
     loadEvents()
@@ -34,24 +40,38 @@ export default function Host() {
     const data2 = await fetchEventParticipants(sessionStorage.getItem('token'), data.event[0].id)
     console.log(data.event[0])
     console.log(data2.participant)
-    setHostEvents(data.event[0])
+    setHostEvent(data.event[0])
     setParticipants(data2.participant)
   }
 
+  const handleStartEventButton = () => {
+    navigate('/tournament')
+  }
+
+  const handleRemoveEvent = async () => {
+    const data = await removeEvent(sessionStorage.getItem('token'), hostEvent.id)
+    if (data.error) {
+      console.log(data.error)
+    } else {
+      toasty('Successfully Removed', false)
+    }
+  }
+
   return (
-    <div className="p-2">
-      <div className="flex relative">
+    <div className="p-2 w-full">
+      <div className="flex relative border-b-4 border-gray-600">
         <div className="flex flex-col text-gray-700">
-          <span className="text-4xl font-bold">{hostEvents.title}</span>
-          <div className="flex flex-col ml-2 mt-4">
-            <span>{hostEvents.description}</span>
-            <span>{hostEvents.game_format}</span>
-            <span>{dateString(hostEvents.schedule)}</span>
-            <span>{timeString(hostEvents.schedule)}</span>
+          <span className="text-4xl font-bold mb-2">{hostEvent.title}</span>
+          <div className="flex flex-col ml-2 mb-4">
+            <span>{hostEvent.description}</span>
+            <span>Format {hostEvent.game_format.toUpperCase()}</span>
+            <span>Schedule {dateString(hostEvent.schedule)}</span>
+            {!hostEvent.finished && <span>Starting Time {timeString(hostEvent.schedule)}</span>}
+            <span className="underline text-blue-500 cursor-pointer hover:text-blue-700" onClick={handleRemoveEvent}>Remove</span>
           </div>
         </div>
         <div className="absolute self-center right-0">
-          <button className="btn-start">Start Event</button>
+          {!hostEvent.finished && <button className="btn-start" onClick={handleStartEventButton}>Start Event</button>}
         </div>
       </div>
 

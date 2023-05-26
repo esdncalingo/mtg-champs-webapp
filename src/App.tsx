@@ -1,21 +1,22 @@
 import { useState } from 'react'
 import { AuthorizationContext } from './context/AccessContext'
 import { ToastyContext } from './context/ToastyContext'
-import LoginForm from './components/LoginForm'
-import Container from './components/Container'
+import LoginForm from './pages/LoginForm'
+import Container from './pages/Container'
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import SignUpForm from './components/SignUpForm'
+import SignUpForm from './pages/SignUpForm'
 import Toasty from './components/popupmsg/Toasty'
-import Dashboard from './components/Dashboard'
+import Dashboard from './pages/Dashboard'
 import MyDecks from './components/dashboard/MyDecks'
-import DeckBuilder from './components/DeckBuilder'
-import DeckView from './components/DeckView'
+import DeckBuilder from './pages/DeckBuilder'
+import DeckView from './pages/DeckView'
 import Events from './components/dashboard/Events'
 import JoinEvent from './components/dashboard/events/JoinEvent'
 import Host from './components/dashboard/Host'
 import ParticipantDeck from './components/dashboard/host/ParticipantDeck'
+import Tournament from './pages/Tournament'
 
 function App() {
   const [accessData, setAccessData] = useState<string>('')
@@ -30,6 +31,7 @@ function App() {
             <Route path='/signin' element={<LoginForm/>}/>
             <Route path='/signup' element={<SignUpForm/>}/>
             <Route path='/' element={<Container/>}/>
+            <Route path='/tournament' element={<Tournament/>}/>
             <Route path='/dashboard' element={<Dashboard/>}>
               <Route path='mydecks' element={<MyDecks/>}/>
               <Route path='events' element={<Events/>}/>

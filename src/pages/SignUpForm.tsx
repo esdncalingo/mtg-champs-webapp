@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { userSignUp } from "../helpers/api/api_auth";
 import { useNavigate } from "react-router-dom";
-import { useToasty } from "./popupmsg/Toasty";
+import { useToasty } from "../components/popupmsg/Toasty";
 
 const SignUpForm = () => {
 

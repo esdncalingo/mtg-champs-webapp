@@ -1,14 +1,13 @@
 import React, { ChangeEvent, useEffect, useState } from "react"
 import { fetchDeck, updateDeck, createDeck } from "../helpers/api/api_decks"
-import { useToasty } from "./popupmsg/Toasty";
-import Lists from "./dashboard/mydecks/Lists";
-import DeckCardList from "./dashboard/mydecks/DeckCardList";
-import CardSearch from "./dashboard/mydecks/CardSearch";
+import { useToasty } from "../components/popupmsg/Toasty";
+import Lists from "../components/dashboard/mydecks/Lists";
+import DeckCardList from "../components/dashboard/mydecks/DeckCardList";
+import CardSearch from "../components/dashboard/mydecks/CardSearch";
 import { useSearchParams } from "react-router-dom";
 
 export default function DeckBuilder() {
 
-  const [deck, setDeck] = useState<any[]>([])
   const [cards, setCards] = useState<any[]>([])
   const [deckName, setDeckName] = useState('')
   const [searchParams] = useSearchParams();
@@ -23,7 +22,6 @@ export default function DeckBuilder() {
       if (searchParams.get('id')) {
         let data = await fetchDeck(sessionStorage.getItem('token'), searchParams.get('id'))
         setDeckName(data.deck.name)
-        setDeck(data.deck)
         setCards(JSON.parse(data.deck.cards))
       }
     } catch(error) {

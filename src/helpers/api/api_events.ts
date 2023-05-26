@@ -31,6 +31,19 @@ export const fetchEvent = async (access_token: any, id: any) => {
   }
 }
 
+// DELETE Event
+export const removeEvent = async (access_token: any, id: any) => {
+  const headers = {
+    Authorization: access_token
+  }
+  try {
+    const response = await axios.delete(`${BASE_URL}event?id=${id}&token=${TOKEN}`, { headers })
+    return response.data
+  } catch (error: any) {
+    return error.response.data
+  }
+}
+
 // POST Event
 export const postEvent = async (access_token: any, params: any) => {
   const headers = {

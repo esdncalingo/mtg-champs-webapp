@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import { fetchDeck } from "../helpers/api/api_decks"
 import { useSearchParams } from "react-router-dom"
 import { dateString } from "../helpers/services/dateformats";
-import Cards from "./dashboard/mydecks/Cards";
-import Lists from "./dashboard/mydecks/Lists";
+import Cards from "../components/dashboard/mydecks/Cards";
+import Lists from "../components/dashboard/mydecks/Lists";
 
 type Deck = {
   id: any

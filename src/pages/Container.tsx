@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { fetchRandomCard } from "../helpers/api/api_scryfall"
 
-import RandomCard from "./randomcard/RandomCard"
+import RandomCard from "../components/randomcard/RandomCard"
 
 function Container() {
   const [cards, setCards] = useState([]);
