@@ -6,15 +6,7 @@ import { participantsActionCable } from "../../helpers/cables/participants_cable
 import { ParticipantComponent } from "./host/ParticipantComponent"
 import { useToasty } from "../popupmsg/Toasty"
 import { useNavigate } from "react-router-dom"
-
-type EventProps = {
-  id: any
-  title: string
-  description: string
-  game_format: string
-  schedule: any
-  finished: boolean
-}
+import { EventProps } from "../../helpers/props/properties"
 
 export default function Host() {
 
@@ -28,7 +20,7 @@ export default function Host() {
     finished: false
   });
   const navigate = useNavigate();
-  let toasty = useToasty();
+  const toasty = useToasty();
 
   useEffect(() => {
     loadEvents()
@@ -45,7 +37,7 @@ export default function Host() {
   }
 
   const handleStartEventButton = () => {
-    navigate('/tournament')
+    navigate(`/tournament?id=${hostEvent.id}`)
   }
 
   const handleRemoveEvent = async () => {
@@ -62,7 +54,7 @@ export default function Host() {
       <div className="flex relative border-b-4 border-gray-600">
         <div className="flex flex-col text-gray-700">
           <span className="text-4xl font-bold mb-2">{hostEvent.title}</span>
-          <div className="flex flex-col ml-2 mb-4">
+          <div className="flex flex-col ml-2 mb-4 font-semibold">
             <span>{hostEvent.description}</span>
             <span>Format {hostEvent.game_format.toUpperCase()}</span>
             <span>Schedule {dateString(hostEvent.schedule)}</span>

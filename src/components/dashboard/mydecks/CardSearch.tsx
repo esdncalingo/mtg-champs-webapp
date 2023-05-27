@@ -57,7 +57,7 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
         id="card-search"
         value={searchInput}
         onChange={handleOnChangeSearch}
-        className="border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500" 
+        className="border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500 w-[20rem]" 
         placeholder="Search for cards"
       />
       {/* <button className="bg-blue-500 text-white px-4 py-2 ml-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Add</button> */}

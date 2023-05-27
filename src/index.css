@@ -22,6 +22,14 @@
   @apply flex flex-col min-h-screen;
 }
 
+.sidebar {
+  @apply flex flex-col bg-gray-800 text-white p-2 min-w-[4rem];
+}
+
+.sidelink {
+  @apply p-2 rounded-lg  transition-all duration-200 ease-in-out hover:bg-opacity-20 hover:bg-slate-500;
+}
+
 .btn-primary {
   @apply bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600;
 }

@@ -67,3 +67,16 @@ export const fetchSubmittedDeck = async (access_token: any, id: any) => {
     return error.response.data
   }
 }
+
+// GET approved participant
+export const fetchApprovedParticipants = async (access_token: any, id: any) => {
+  const headers = {
+    Authorization: access_token
+  }
+  try {
+    const response = await axios.get(`${BASE_URL}event/participant/approved?id=${id}&token=${TOKEN}`, { headers })
+    return response.data
+  } catch (error: any) {
+    return error.response.data
+  }
+}

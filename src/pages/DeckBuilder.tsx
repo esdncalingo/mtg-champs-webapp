@@ -82,7 +82,7 @@ export default function DeckBuilder() {
           <Lists cards={cards}/>
         </form>
         {/* Deck cards lists*/}
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <div className="flex">
             <CardSearch deck={cards} setDeck={setCards}/>
             {/* Save Deck Button */}
