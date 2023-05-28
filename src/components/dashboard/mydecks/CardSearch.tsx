@@ -18,7 +18,7 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
 
   const loadSearchList = async () => {
     if (searchInput) {
-      let list:any = await fetchSearchCard(searchInput)
+      const list = await fetchSearchCard(searchInput)
       setSearchList(list.data)
       setSearchSelectionShowing(true)
     } else {

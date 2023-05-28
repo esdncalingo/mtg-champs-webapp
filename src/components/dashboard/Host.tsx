@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react"
 import { fetchHostEvents, removeEvent } from "../../helpers/api/api_events"
 import { dateString, timeString } from "../../helpers/services/dateformats"
-import { fetchEventParticipants } from "../../helpers/api/api_participants"
+import { fetchApprovedParticipants, fetchEventParticipants } from "../../helpers/api/api_participants"
 import { participantsActionCable } from "../../helpers/cables/participants_cable"
 import { ParticipantComponent } from "./host/ParticipantComponent"
 import { useToasty } from "../popupmsg/Toasty"
 import { useNavigate } from "react-router-dom"
-import { EventProps } from "../../helpers/props/properties"
+import { EventProps, Team, TemplateBracketsProps } from "../../helpers/props/properties"
+import { fourParticipantsTemplate } from "../../helpers/template/four_participants"
+import { sixParticipantsTemplate } from "../../helpers/template/six_participants"
+import { eightParticipantsTemplate } from "../../helpers/template/eight_participants"
+import { sixteenParticipantsTemplate } from "../../helpers/template/sixteen_participants"
 
 export default function Host() {
 
@@ -30,13 +34,19 @@ export default function Host() {
   const loadEvents = async() => {
     const data = await fetchHostEvents(sessionStorage.getItem('token'))
     const data2 = await fetchEventParticipants(sessionStorage.getItem('token'), data.event[0].id)
-    console.log(data.event[0])
-    console.log(data2.participant)
     setHostEvent(data.event[0])
     setParticipants(data2.participant)
   }
 
-  const handleStartEventButton = () => {
+  const handleStartEventButton = async () => {
+    const data = await fetchApprovedParticipants(sessionStorage.getItem('token'), hostEvent.id)
+    const bracket = sixParticipantsTemplate['brackets']
+    const pairs = pairParticipants(data.participants, sixParticipantsTemplate['pairing_order'])
+    // Assigning to the bracket
+    for (let i = 0; i < pairs.length; i++) {
+      bracket[i].participants = pairs[i]
+    }
+    sessionStorage.setItem('brackets', JSON.stringify(bracket))
     navigate(`/tournament?id=${hostEvent.id}`)
   }
 
@@ -49,6 +59,20 @@ export default function Host() {
     }
   }
 
+  const pairParticipants = (participants: Team[], pairingOrder: number[]) => {
+    const pairs = [];
+    let currentIndex = 0;
+
+    for (let i = 0; i < pairingOrder.length; i++) {
+      const pairSize = pairingOrder[i];
+      const group = participants.slice(currentIndex, currentIndex + pairSize);
+      pairs.push(group)
+      currentIndex += pairSize;
+    }
+
+    return pairs;
+  }
+
   return (
     <div className="p-2 w-full">
       <div className="flex relative border-b-4 border-gray-600">
@@ -58,7 +82,7 @@ export default function Host() {
             <span>{hostEvent.description}</span>
             <span>Format {hostEvent.game_format.toUpperCase()}</span>
             <span>Schedule {dateString(hostEvent.schedule)}</span>
-            {!hostEvent.finished && <span>Starting Time {timeString(hostEvent.schedule)}</span>}
+            {!hostEvent.finished && <span>StartingTime {timeString(hostEvent.schedule)}</span>}
             <span className="underline text-blue-500 cursor-pointer hover:text-blue-700" onClick={handleRemoveEvent}>Remove</span>
           </div>
         </div>
@@ -68,12 +92,13 @@ export default function Host() {
       </div>
 
       {/* Participants */}
-      <div className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mt-4">
+      <div className="participants-container">
         {participants.map((participant: any, index: number) => (
           <div key={index} className="text-gray-700">
             <ParticipantComponent participant={participant} />
           </div>
         ))}
+        
       </div>
     </div>
   )

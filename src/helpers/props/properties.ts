@@ -20,3 +20,10 @@ export type EventProps = {
   schedule: string
   finished: boolean
 }
+
+export type TemplateBracketsProps = {
+  four_participants: any,
+  six_participants: any,
+  eight_participants: any,
+  sixteen_participants: any
+}

@@ -72,6 +72,10 @@
   @apply  drop-shadow-lg shadow-xl p-2 rounded-xl;
 }
 
+.participants-container {
+  @apply grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 mt-4;
+}
+
 .card {
   @apply shadow-xl p-[1px] rounded-lg hover:scale-105 cursor-pointer transition-all duration-100 ease-in;
 }

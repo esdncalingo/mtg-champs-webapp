@@ -36,7 +36,7 @@ export default function Lists({ cards }: Props) {
     let lands:any = []
 
     cards.forEach((card:any) => {
-      let card_type: any = card.type_line.toLowerCase()
+      const card_type = card.type_line.toLowerCase()
 
       if (typeof card['mana_cost'] === 'string') {
        card['mana_cost'] = manaCost(card['mana_cost'])
@@ -68,7 +68,7 @@ export default function Lists({ cards }: Props) {
   }
 
   const loadSymbols = async () => {
-    let data = await fetchSymbols()
+    const data = await fetchSymbols()
     setCardManaSymbol(data.data)
   }
 

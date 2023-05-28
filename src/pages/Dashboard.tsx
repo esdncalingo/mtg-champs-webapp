@@ -14,7 +14,7 @@ export default function Dashboard() {
     <div className="flex flex-grow bg-gray-100">
       <div className="flex w-full">
         {/* <!-- Sidebar --> */}
-        <aside className={`sidebar transition-all duration-300 ease-in ${isMinimized ? 'w-12' : 'w-[500px]'}`}>
+        <aside className={`sidebar transition-all duration-300 ease-in ${isMinimized ? 'w-12' : 'w-[200px]'}`}>
           <button
             className="block mb-6 bg-gray-600 text-white py-1 px-2 rounded-md hover:bg-gray-700"
             onClick={toggleSidebar}
@@ -37,12 +37,13 @@ export default function Dashboard() {
                 {isMinimized ? <FontAwesomeIcon icon={faComputer} />  : 'Host'}
               </a>
             </li>
-          </ul>
-          
+          </ul> 
         </aside>
 
         {/* <!-- Main Content --> */}
-        <Outlet/>
+        <div className="flex-1">
+          <Outlet/>
+        </div>
       </div>
     </div>
   )

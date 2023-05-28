@@ -10,7 +10,7 @@ export const ParticipantComponent = ({ participant }: any) => {
   const [mainImg, setMainImg] = useState('')
   const [colors, setColors] = useState([])
 
-  let toasty = useToasty();
+  const toasty = useToasty();
 
   useEffect(() => {
     try {
@@ -27,7 +27,7 @@ export const ParticipantComponent = ({ participant }: any) => {
   }
 
   const colorIdentity = (cards:any) => {
-    let colorArrays: any = []
+    const colorArrays: any[] = []
     cards.forEach((card:any) => {
       colorArrays.push(card.color_identity)
     })
@@ -48,7 +48,7 @@ export const ParticipantComponent = ({ participant }: any) => {
     elem?.classList.toggle('toggled')
     player?.classList.toggle('participant-toggle')
 
-    let params: any = {
+    const params = {
       id: participant.id,
       status: participant.status == 'pending' ? 'approved' : 'pending'
     }
@@ -74,7 +74,7 @@ export const ParticipantComponent = ({ participant }: any) => {
           <img src={mainImg} alt="" />
         </div>
         <div className="flex flex-col ml-3 w-full">
-          <span className="text-2xl font-bold whitespace-nowrap mb-2 overflow-hidden">{participant.deck_name}</span>
+          <span className="text-lg font-bold whitespace-nowrap mb-2">{participant.deck_name}</span>
           <span className="text-gray-700 flex gap-[2px]">{colors.map((color, index) => (
             <div key={index} className="w-[15px]">
               <img src={`https://svgs.scryfall.io/card-symbols/${color}.svg`}/>
