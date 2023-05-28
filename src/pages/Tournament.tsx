@@ -7,6 +7,7 @@ import { useToasty } from "../components/popupmsg/Toasty";
 export default function Tournament() {
  
   const [selectedMatch, setSelectedMatch] = useState([]);
+  const [matchState, setMatchState] = useState([]);
   const [playerOne, setPlayerOne] = useState('')
   const [playerTwo, setPlayerTwo] = useState('')
   const [brackets, setBrackets] = useState(JSON.parse(sessionStorage.getItem('brackets')))
@@ -33,15 +34,20 @@ export default function Tournament() {
   const handleOnChangeSelect = (event: any) => {
     const id = event.currentTarget.value
     const bracket = brackets.find((bracket: any) => bracket.id == id)
-    // console.log(bracket['participants'][0].name)
+    console.log(bracket)
     setSelectedMatch(bracket)
     setPlayerOne(bracket['participants'][0].resultText)
-    setPlayerTwo(bracket['participants'][1].resultText)
+    if (bracket['participants'][1] !== undefined) {
+      setPlayerTwo(bracket['participants'][1].resultText)
+    }
+  }
+
+  const handleOnChangeMatchState = (event: any) => {
+    setMatchState(event.currentTarget.value)
   }
 
   const handleOnChangePlayerOne = (event: any) => {
     setPlayerOne(event.currentTarget.value)
-    
   }
 
   const handleOnChangePlayerTwo = (event: any) => {
@@ -49,44 +55,63 @@ export default function Tournament() {
   }
 
   const handleOnSubmit = () => {
-    console.log(playerOne, playerTwo , selectedMatch)
     const bracket = brackets.find((bracket: any) => bracket.id == selectedMatch.id)
-    const nextBracket = brackets.find((bracket: any) => bracket.id == selectedMatch.nextMatchId)
-    const search = brackets.filter((brack: any) => brack.nextMatchId == selectedMatch.nextMatchId)
-
-    console.log('Next', search)
 
     if (playerOne == playerTwo){
       return toasty("It's Draw")
     } 
 
+    bracket['participants'][0].resultText = playerOne
+    if (bracket['participants'][1] !== undefined) {
+      bracket['participants'][1].resultText = playerTwo
+    }
     if (playerOne > playerTwo) {
-      bracket['participants'][0].resultText = playerOne
       bracket['participants'][0].isWinner = true
-      if (search[0].id == bracket.id) {
-        nextBracket['participants'][0] = bracket['participants'][0]
-        nextBracket['participants'][0].isWinner = false
-        nextBracket['participants'][0].resultText = ''
-      } else {
-        nextBracket['participants'][1] = bracket['participants'][0]
-        nextBracket['participants'][1].isWinner = false
-        nextBracket['participants'][1].resultText = ''
+      if (bracket['participants'][1] !== undefined) {
+        bracket['participants'][1].isWinner = false
       }
+      bracket['state'] = 'DONE'
+      nextBracket(bracket['participants'][0])
       return toasty(`${bracket['participants'][0].name} won the match`, false)
     } else {
-      bracket['participants'][1].resultText = playerOne
+      bracket['participants'][0].isWinner = false
       bracket['participants'][1].isWinner = true
-      if (search[0].id == bracket.id) {
-        nextBracket['participants'][0] = bracket['participants'][1]
-        nextBracket['participants'][0].isWinner = false
-        nextBracket['participants'][0].resultText = ''
-      } else {
-        nextBracket['participants'][1] = bracket['participants'][1]
-        nextBracket['participants'][1].isWinner = false
-        nextBracket['participants'][1].resultText = ''
-      }
+      bracket['state'] = 'DONE'
+      nextBracket(bracket['participants'][1])
       return toasty(`${bracket['participants'][1].name} won the match`, false)
     }
+  }
+
+  const nextBracket = (winner: any) => {
+    const nextBracket = brackets.find((bracket: any) => bracket.id == selectedMatch.nextMatchId)
+    const search = brackets.filter((bracket: any) => bracket.nextMatchId == selectedMatch.nextMatchId)
+    console.log(selectedMatch.name, search, winner)
+    if (search[0].id == selectedMatch.id) {
+      nextBracket['participants'][0] = {
+        id: winner.id,
+        name: winner.name,
+        isWinner: false,
+        resultText: ''
+      }
+    } else if (search[1].id == selectedMatch.id) {
+      if (nextBracket['participants'] && nextBracket['participants'][0] !== undefined) {
+        nextBracket['participants'][1] = {
+          id: winner.id,
+          name: winner.name,
+          isWinner: false,
+          resultText: '',
+        };
+      } else {
+        nextBracket['participants'][0] = {};
+        nextBracket['participants'][1] = {
+          id: winner.id,
+          name: winner.name,
+          isWinner: false,
+          resultText: '',
+        };
+      }
+    }
+    
   }
 
   return (
@@ -105,7 +130,7 @@ export default function Tournament() {
         </div>
         <div className="mb-6 flex flex-col">
           <span className="font-bold">State</span>
-          <select className="w-[18rem] p-1 rounded text-gray-200" name="" id="">
+          <select className="w-[18rem] p-1 rounded text-gray-200" name="" id="" value={matchState} onChange={handleOnChangeMatchState}>
             <option value={MATCH_STATES.PLAYED}>{MATCH_STATES.PLAYED}</option>
             <option value={MATCH_STATES.NO_SHOW}>{MATCH_STATES.NO_SHOW}</option>
             <option value={MATCH_STATES.WALK_OVER}>{MATCH_STATES.WALK_OVER}</option>
