@@ -2,14 +2,13 @@ import { Match, SVGViewer, SingleEliminationBracket, MATCH_STATES } from "@g-loo
 import { EventProps } from "../helpers/props/properties";
 import { useEffect, useState } from "react";
 import { fetchHostEvents } from "../helpers/api/api_events";
-import { sixParticipantsTemplate } from "../helpers/template/six_participants";
-import { sixteenParticipantsTemplate } from "../helpers/template/sixteen_participants";
-import { fourParticipantsTemplate } from "../helpers/template/four_participants";
+import { useToasty } from "../components/popupmsg/Toasty";
 
 export default function Tournament() {
  
-  const [participants, setParticipants] = useState([]);
   const [selectedMatch, setSelectedMatch] = useState([]);
+  const [playerOne, setPlayerOne] = useState('')
+  const [playerTwo, setPlayerTwo] = useState('')
   const [brackets, setBrackets] = useState(JSON.parse(sessionStorage.getItem('brackets')))
   const [event, setEvent] = useState<EventProps>({
     id: '',
@@ -19,6 +18,7 @@ export default function Tournament() {
     schedule: '',
     finished: false
   });
+  const toasty = useToasty()
 
   useEffect(() => {
     loadEvents()
@@ -35,6 +35,58 @@ export default function Tournament() {
     const bracket = brackets.find((bracket: any) => bracket.id == id)
     // console.log(bracket['participants'][0].name)
     setSelectedMatch(bracket)
+    setPlayerOne(bracket['participants'][0].resultText)
+    setPlayerTwo(bracket['participants'][1].resultText)
+  }
+
+  const handleOnChangePlayerOne = (event: any) => {
+    setPlayerOne(event.currentTarget.value)
+    
+  }
+
+  const handleOnChangePlayerTwo = (event: any) => {
+    setPlayerTwo(event.currentTarget.value)
+  }
+
+  const handleOnSubmit = () => {
+    console.log(playerOne, playerTwo , selectedMatch)
+    const bracket = brackets.find((bracket: any) => bracket.id == selectedMatch.id)
+    const nextBracket = brackets.find((bracket: any) => bracket.id == selectedMatch.nextMatchId)
+    const search = brackets.filter((brack: any) => brack.nextMatchId == selectedMatch.nextMatchId)
+
+    console.log('Next', search)
+
+    if (playerOne == playerTwo){
+      return toasty("It's Draw")
+    } 
+
+    if (playerOne > playerTwo) {
+      bracket['participants'][0].resultText = playerOne
+      bracket['participants'][0].isWinner = true
+      if (search[0].id == bracket.id) {
+        nextBracket['participants'][0] = bracket['participants'][0]
+        nextBracket['participants'][0].isWinner = false
+        nextBracket['participants'][0].resultText = ''
+      } else {
+        nextBracket['participants'][1] = bracket['participants'][0]
+        nextBracket['participants'][1].isWinner = false
+        nextBracket['participants'][1].resultText = ''
+      }
+      return toasty(`${bracket['participants'][0].name} won the match`, false)
+    } else {
+      bracket['participants'][1].resultText = playerOne
+      bracket['participants'][1].isWinner = true
+      if (search[0].id == bracket.id) {
+        nextBracket['participants'][0] = bracket['participants'][1]
+        nextBracket['participants'][0].isWinner = false
+        nextBracket['participants'][0].resultText = ''
+      } else {
+        nextBracket['participants'][1] = bracket['participants'][1]
+        nextBracket['participants'][1].isWinner = false
+        nextBracket['participants'][1].resultText = ''
+      }
+      return toasty(`${bracket['participants'][1].name} won the match`, false)
+    }
   }
 
   return (
@@ -51,7 +103,7 @@ export default function Tournament() {
             ))}
           </select>
         </div>
-        <div className="mb-6">
+        <div className="mb-6 flex flex-col">
           <span className="font-bold">State</span>
           <select className="w-[18rem] p-1 rounded text-gray-200" name="" id="">
             <option value={MATCH_STATES.PLAYED}>{MATCH_STATES.PLAYED}</option>
@@ -66,18 +118,41 @@ export default function Tournament() {
           <div>
             <span className="text-gray-700 font-bold">Players</span>
           </div>
-          <div className="flex gap-1 p-2 rounded bg-[#141822]">
-            <span className="rounded  flex-1">{selectedMatch['participants'][0] !== undefined ? 
-                                    selectedMatch['participants'][0].name : ''}
+          {/* First Player */}
+          <div className="flex gap-1 p-2 rounded bg-[#1D2232]">
+            <span className="rounded bg-[#141822] flex-1">{selectedMatch && 
+                                  selectedMatch['participants'] && 
+                                  selectedMatch['participants'][0] !== undefined ? 
+                                  selectedMatch['participants'][0].name : ''}
             </span>
-            <input className="w-[2rem] text-center rounded" type="text" maxLength={3}/>
+            <input 
+              id="playerone"
+              className="w-[2rem] text-center rounded" 
+              type="text" 
+              maxLength={3}
+              value={playerOne}
+              onChange={handleOnChangePlayerOne}
+            />
           </div>
-          <div className="flex gap-1 p-2 rounded bg-[#141822]">
-            <span className="rounded  flex-1">{selectedMatch['participants'][1] !== undefined ? 
-                                    selectedMatch['participants'][1].name : ''}
+          {/* Second Player */}
+          <div className="flex gap-1 p-2 rounded bg-[#1D2232] mb-4">
+            <span className="rounded bg-[#141822] flex-1">{selectedMatch && 
+                                  selectedMatch['participants'] && 
+                                  selectedMatch['participants'][1] !== undefined ? 
+                                  selectedMatch['participants'][1].name : ''}
             </span>
-            <input className="w-[2rem] text-center rounded" type="text" maxLength={3}/>
+            <input 
+              id="playertwo"
+              className="w-[2rem] text-center rounded" 
+              type="text" 
+              maxLength={3}
+              value={playerTwo}
+              onChange={handleOnChangePlayerTwo}
+            />
           </div>
+
+          {/* Submit Button */}
+          <button className="btn-primary" onClick={handleOnSubmit}>Submit</button>
         </div>
       </div>
       
