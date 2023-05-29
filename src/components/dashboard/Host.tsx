@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { fetchHostEvents, removeEvent } from "../../helpers/api/api_events"
 import { dateString, timeString } from "../../helpers/services/dateformats"
 import { fetchApprovedParticipants, fetchEventParticipants } from "../../helpers/api/api_participants"
@@ -25,10 +25,10 @@ export default function Host() {
   });
   const navigate = useNavigate();
   const toasty = useToasty();
-
+  
   useEffect(() => {
     loadEvents()
-    participantsActionCable( setParticipants )
+    participantsActionCable(setParticipants)
   }, [])
 
   const loadEvents = async() => {

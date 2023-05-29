@@ -20,7 +20,7 @@ export default function DeckBuilder() {
   const editDeck = async () => {
     try {
       if (searchParams.get('id')) {
-        let data = await fetchDeck(sessionStorage.getItem('token'), searchParams.get('id'))
+        const data = await fetchDeck(sessionStorage.getItem('token'), searchParams.get('id'))
         setDeckName(data.deck.name)
         setCards(JSON.parse(data.deck.cards))
       }
@@ -45,12 +45,12 @@ export default function DeckBuilder() {
     }
 
     if (searchParams.get('id')) {
-      let data = await updateDeck(sessionStorage.getItem('token'), params)
+      const data = await updateDeck(sessionStorage.getItem('token'), params)
       data.error ? 
         data.error['name'].map((err: string) => toasty(`Deckname ${err}`)) :
         toasty(`${deckName} is updated`, false)
     } else {
-      let data = await createDeck(sessionStorage.getItem('token'), params)
+      const data = await createDeck(sessionStorage.getItem('token'), params)
       data.error ? 
         data.error['name'].map((err: string) => toasty(`Deckname ${err}`)) :
         toasty(`${deckName} is newly created`, false)

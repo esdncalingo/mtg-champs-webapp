@@ -5,17 +5,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export const ParticipantComponent = ({ participant }: any) => {
-
-  const [cards, setCards] = useState([])
+  
   const [mainImg, setMainImg] = useState('')
   const [colors, setColors] = useState([])
   const toasty = useToasty();
 
   useEffect(() => {
     try {
-      setCards(JSON.parse(participant.cards))
-      deckCover(cards)
-      colorIdentity(cards)
+      const parseCards = JSON.parse(participant.cards)
+      deckCover(parseCards)
+      colorIdentity(parseCards)
     } catch (error) {
       // error
     }

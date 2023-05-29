@@ -33,11 +33,11 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
     })
   }
 
-  const handleOnClick = async (event:any) => {
+  const handleOnClick = async (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const cardName:string = event.currentTarget.innerHTML
     if (!deck.find(((card: any) => card.name === cardName))) {
-      let selectItem:any = await fetchExactCard(cardName)
-      if (!!selectItem['card_faces']) {
+      const selectItem = await fetchExactCard(cardName)
+      if (selectItem['card_faces']) {
         selectItem['image_uris'] = selectItem['card_faces'][0].image_uris
         selectItem['mana_cost'] = `${selectItem['card_faces'][0].mana_cost}//${selectItem['card_faces'][1].mana_cost}`
       }
