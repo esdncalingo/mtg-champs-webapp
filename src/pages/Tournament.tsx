@@ -1,16 +1,23 @@
 import { Match, SVGViewer, SingleEliminationBracket, MATCH_STATES } from "@g-loot/react-tournament-brackets";
-import { EventProps } from "../helpers/props/properties";
-import { useEffect, useState } from "react";
+import { EventProps, Matchup } from "../helpers/props/properties";
+import { ChangeEvent, useEffect, useState } from "react";
 import { fetchHostEvents } from "../helpers/api/api_events";
 import { useToasty } from "../components/popupmsg/Toasty";
 
 export default function Tournament() {
  
-  const [selectedMatch, setSelectedMatch] = useState([]);
-  const [matchState, setMatchState] = useState([]);
+  const storedBrackets = sessionStorage.getItem('brackets');
+  const initialBrackets = storedBrackets ? JSON.parse(storedBrackets) : null;
+  const [selectedMatch, setSelectedMatch] = useState<Matchup>({
+    id: null ,
+    name: '',
+    nextMatchId: null,
+    participants: []
+  });
+  const [matchState, setMatchState] = useState<string>('');
   const [playerOne, setPlayerOne] = useState('')
   const [playerTwo, setPlayerTwo] = useState('')
-  const [brackets, setBrackets] = useState(JSON.parse(sessionStorage.getItem('brackets')))
+  const [brackets, setBrackets] = useState(initialBrackets)
   const [event, setEvent] = useState<EventProps>({
     id: '',
     title: '',
@@ -22,16 +29,15 @@ export default function Tournament() {
   const toasty = useToasty()
 
   useEffect(() => {
+    const loadEvents = async() => {
+      const data = await fetchHostEvents(sessionStorage.getItem('token'))
+      setEvent(data.event[0])
+      setBrackets(initialBrackets)
+    }
     loadEvents()
-  }, [])
-  
-  const loadEvents = async() => {
-    const data = await fetchHostEvents(sessionStorage.getItem('token'))
-    setEvent(data.event[0])
-    setBrackets(JSON.parse(sessionStorage.getItem('brackets')))
-  }
+  }, [initialBrackets])
 
-  const handleOnChangeSelect = (event: any) => {
+  const handleOnChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     const id = event.currentTarget.value
     const bracket = brackets.find((bracket: any) => bracket.id == id)
     console.log(bracket)
@@ -42,15 +48,15 @@ export default function Tournament() {
     }
   }
 
-  const handleOnChangeMatchState = (event: any) => {
+  const handleOnChangeMatchState = (event: ChangeEvent<HTMLSelectElement>) => {
     setMatchState(event.currentTarget.value)
   }
 
-  const handleOnChangePlayerOne = (event: any) => {
+  const handleOnChangePlayerOne = (event: ChangeEvent<HTMLInputElement>) => {
     setPlayerOne(event.currentTarget.value)
   }
 
-  const handleOnChangePlayerTwo = (event: any) => {
+  const handleOnChangePlayerTwo = (event: ChangeEvent<HTMLInputElement>) => {
     setPlayerTwo(event.currentTarget.value)
   }
 
@@ -82,10 +88,10 @@ export default function Tournament() {
     }
   }
 
-  const nextBracket = (winner: any) => {
+  const nextBracket = (winner: Matchup) => {
     const nextBracket = brackets.find((bracket: any) => bracket.id == selectedMatch.nextMatchId)
     const search = brackets.filter((bracket: any) => bracket.nextMatchId == selectedMatch.nextMatchId)
-    console.log(selectedMatch.name, search, winner)
+    
     if (search[0].id == selectedMatch.id) {
       nextBracket['participants'][0] = {
         id: winner.id,

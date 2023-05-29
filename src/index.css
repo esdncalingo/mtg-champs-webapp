@@ -69,7 +69,7 @@
 }
 
 .participantcard {
-  @apply  drop-shadow-lg shadow-xl p-2 rounded-xl;
+  @apply text-gray-700 drop-shadow-lg shadow-xl rounded-xl;
 }
 
 .participants-container {

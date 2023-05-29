@@ -68,12 +68,12 @@ export const ParticipantComponent = ({ participant }: any) => {
   }
 
   return (
-    <div id={`participant-${participant.id}`} className={`participantcard ${ participant.status === 'pending' ? '' : 'participant-toggle' }`}>
+    <div id={`participant-${participant.id}`} className={`participantcard p-1 ${ participant.status === 'pending' ? '' : 'participant-toggle' }`}>
       <div className="flex">
         <div className="max-w-[12rem] min-w-[11rem]">
           <img src={mainImg} alt="" />
         </div>
-        <div className="flex flex-col ml-3 w-full">
+        <div className="flex flex-col ml-2 w-full">
           <span className="text-lg font-bold whitespace-nowrap mb-2">{participant.deck_name}</span>
           <span className="text-gray-700 flex gap-[2px]">{colors.map((color, index) => (
             <div key={index} className="w-[15px]">

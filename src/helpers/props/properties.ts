@@ -6,7 +6,7 @@ export type Team = {
 };
 
 export type Matchup = {
-  id: number;
+  id: number | null;
   name: string;
   nextMatchId?: number | null;
   participants: Team[];

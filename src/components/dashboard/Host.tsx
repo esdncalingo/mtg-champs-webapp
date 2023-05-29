@@ -6,15 +6,15 @@ import { participantsActionCable } from "../../helpers/cables/participants_cable
 import { ParticipantComponent } from "./host/ParticipantComponent"
 import { useToasty } from "../popupmsg/Toasty"
 import { useNavigate } from "react-router-dom"
-import { EventProps, Team, TemplateBracketsProps } from "../../helpers/props/properties"
-import { fourParticipantsTemplate } from "../../helpers/template/four_participants"
+import { EventProps, Matchup, Team } from "../../helpers/props/properties"
+// import { fourParticipantsTemplate } from "../../helpers/template/four_participants"
 import { sixParticipantsTemplate } from "../../helpers/template/six_participants"
-import { eightParticipantsTemplate } from "../../helpers/template/eight_participants"
-import { sixteenParticipantsTemplate } from "../../helpers/template/sixteen_participants"
+// import { eightParticipantsTemplate } from "../../helpers/template/eight_participants"
+// import { sixteenParticipantsTemplate } from "../../helpers/template/sixteen_participants"
 
 export default function Host() {
 
-  const [participants, setParticipants] = useState<any[]>([]);
+  const [participants, setParticipants] = useState<Team[]>([]);
   const [hostEvent, setHostEvent] = useState<EventProps>({
     id: '',
     title: '',
@@ -40,7 +40,7 @@ export default function Host() {
 
   const handleStartEventButton = async () => {
     const data = await fetchApprovedParticipants(sessionStorage.getItem('token'), hostEvent.id)
-    const bracket = sixParticipantsTemplate['brackets']
+    const bracket: Matchup[] = sixParticipantsTemplate['brackets']
     const pairs = pairParticipants(data.participants, sixParticipantsTemplate['pairing_order'])
     // Assigning to the bracket
     for (let i = 0; i < pairs.length; i++) {
@@ -93,12 +93,9 @@ export default function Host() {
 
       {/* Participants */}
       <div className="participants-container">
-        {participants.map((participant: any, index: number) => (
-          <div key={index} className="text-gray-700">
-            <ParticipantComponent participant={participant} />
-          </div>
+        {participants.map((participant: Team, index: number) => (
+          <ParticipantComponent key={index} participant={participant} />
         ))}
-        
       </div>
     </div>
   )
