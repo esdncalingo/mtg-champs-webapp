@@ -39,7 +39,7 @@ export default function Tournament() {
 
   const handleOnChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     const id = event.currentTarget.value
-    const bracket = brackets.find((bracket: any) => bracket.id == id)
+    const bracket = brackets.find((bracket: Matchup) => bracket.id === Number(id))
     console.log(bracket)
     setSelectedMatch(bracket)
     setPlayerOne(bracket['participants'][0].resultText)
@@ -61,7 +61,7 @@ export default function Tournament() {
   }
 
   const handleOnSubmit = () => {
-    const bracket = brackets.find((bracket: any) => bracket.id == selectedMatch.id)
+    const bracket = brackets.find((bracket: Matchup) => bracket.id == selectedMatch.id)
 
     if (playerOne == playerTwo){
       return toasty("It's Draw")
@@ -89,8 +89,8 @@ export default function Tournament() {
   }
 
   const nextBracket = (winner: Matchup) => {
-    const nextBracket = brackets.find((bracket: any) => bracket.id == selectedMatch.nextMatchId)
-    const search = brackets.filter((bracket: any) => bracket.nextMatchId == selectedMatch.nextMatchId)
+    const nextBracket = brackets.find((bracket: Matchup) => bracket.id == selectedMatch.nextMatchId)
+    const search = brackets.filter((bracket: Matchup) => bracket.nextMatchId == selectedMatch.nextMatchId)
     
     if (search[0].id == selectedMatch.id) {
       nextBracket['participants'][0] = {
@@ -129,8 +129,8 @@ export default function Tournament() {
           {/* Match selection */}
           <select className="w-[18rem] p-1 rounded" name="" id="" onChange={handleOnChangeSelect}>
             <option className="text-center" disabled selected defaultValue=''> ------- select ------- </option>
-            {brackets.map((bracket: any, index: number) => (
-              <option key={index} value={bracket.id}>{bracket['name']}</option>
+            {brackets.map((bracket: Matchup, index: number) => (
+              <option key={index} value={String(bracket.id)}>{bracket['name']}</option>
             ))}
           </select>
         </div>
