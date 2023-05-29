@@ -6,7 +6,7 @@ import { participantsActionCable } from "../../helpers/cables/participants_cable
 import { ParticipantComponent } from "./host/ParticipantComponent"
 import { useToasty } from "../popupmsg/Toasty"
 import { useNavigate } from "react-router-dom"
-import { EventProps, Matchup, Team } from "../../helpers/props/properties"
+import { EventProps, Team } from "../../helpers/props/properties"
 import { fourParticipantsTemplate } from "../../helpers/template/four_participants"
 import { sixParticipantsTemplate } from "../../helpers/template/six_participants"
 import { eightParticipantsTemplate } from "../../helpers/template/eight_participants"
