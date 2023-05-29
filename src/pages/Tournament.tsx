@@ -79,20 +79,25 @@ export default function Tournament() {
       }
       bracket['state'] = 'DONE'
       nextBracket(bracket['participants'][0])
-      return toasty(`${bracket['participants'][0].name} won the match`, false)
     } else {
       bracket['participants'][0].isWinner = false
       bracket['participants'][1].isWinner = true
       bracket['state'] = 'DONE'
       nextBracket(bracket['participants'][1])
-      return toasty(`${bracket['participants'][1].name} won the match`, false)
     }
   }
 
   const nextBracket = (winner: Matchup) => {
     const nextBracket = brackets.find((bracket: Matchup) => bracket.id == selectedMatch.nextMatchId)
     const search = brackets.filter((bracket: Matchup) => bracket.nextMatchId == selectedMatch.nextMatchId)
-    
+
+    if (nextBracket == undefined) {
+      sessionStorage.setItem('brackets', JSON.stringify(brackets))
+      return toasty(`${winner.name} is the winner of the tournament`, false)
+    } else {
+      return toasty(`${winner.name} won the match`, false)
+    }
+
     if (search[0].id == selectedMatch.id) {
       nextBracket['participants'][0] = {
         id: winner.id,
@@ -118,7 +123,7 @@ export default function Tournament() {
         };
       }
     }
-    
+    sessionStorage.setItem('brackets', JSON.stringify(brackets))
   }
 
   return (
