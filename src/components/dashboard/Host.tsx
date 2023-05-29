@@ -7,10 +7,10 @@ import { ParticipantComponent } from "./host/ParticipantComponent"
 import { useToasty } from "../popupmsg/Toasty"
 import { useNavigate } from "react-router-dom"
 import { EventProps, Matchup, Team } from "../../helpers/props/properties"
-// import { fourParticipantsTemplate } from "../../helpers/template/four_participants"
+import { fourParticipantsTemplate } from "../../helpers/template/four_participants"
 import { sixParticipantsTemplate } from "../../helpers/template/six_participants"
-// import { eightParticipantsTemplate } from "../../helpers/template/eight_participants"
-// import { sixteenParticipantsTemplate } from "../../helpers/template/sixteen_participants"
+import { eightParticipantsTemplate } from "../../helpers/template/eight_participants"
+import { sixteenParticipantsTemplate } from "../../helpers/template/sixteen_participants"
 
 export default function Host() {
 
@@ -40,13 +40,32 @@ export default function Host() {
 
   const handleStartEventButton = async () => {
     const data = await fetchApprovedParticipants(sessionStorage.getItem('token'), hostEvent.id)
-    const bracket: Matchup[] = sixParticipantsTemplate['brackets']
-    const pairs = pairParticipants(data.participants, sixParticipantsTemplate['pairing_order'])
+    let bracketTemplate: any = {}
+    let pairingOrder: any[] = []
+
+    //  Pairing Players
+    if (data.participants.length == 4) {
+      bracketTemplate = fourParticipantsTemplate['brackets'];
+      pairingOrder = fourParticipantsTemplate['pairing_order']
+    } else if (data.participants.length >= 5 && data.participants.length <= 6) {
+      bracketTemplate = sixParticipantsTemplate['brackets'];
+      pairingOrder = sixParticipantsTemplate['pairing_order']
+    } else if (data.participants.length >= 7 && data.participants.length <= 8) {
+      bracketTemplate = eightParticipantsTemplate['brackets'];
+      pairingOrder = eightParticipantsTemplate['pairing_order']
+    } else if (data.participants.length >= 15 && data.participants.length <= 16) {
+      bracketTemplate = sixteenParticipantsTemplate['brackets'];
+      pairingOrder = sixteenParticipantsTemplate['pairing_order']
+    } else {
+      return toasty('Invalid number of Participants')
+    }
+    const pairs = pairParticipants(data.participants, pairingOrder)
+
     // Assigning to the bracket
     for (let i = 0; i < pairs.length; i++) {
-      bracket[i].participants = pairs[i]
+      bracketTemplate[i].participants = pairs[i]
     }
-    sessionStorage.setItem('brackets', JSON.stringify(bracket))
+    sessionStorage.setItem('brackets', JSON.stringify(bracketTemplate))
     navigate(`/tournament?id=${hostEvent.id}`)
   }
 
@@ -69,7 +88,6 @@ export default function Host() {
       pairs.push(group)
       currentIndex += pairSize;
     }
-
     return pairs;
   }
 

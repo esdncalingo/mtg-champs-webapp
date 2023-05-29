@@ -9,7 +9,6 @@ export const ParticipantComponent = ({ participant }: any) => {
   const [cards, setCards] = useState([])
   const [mainImg, setMainImg] = useState('')
   const [colors, setColors] = useState([])
-
   const toasty = useToasty();
 
   useEffect(() => {
@@ -69,13 +68,13 @@ export const ParticipantComponent = ({ participant }: any) => {
 
   return (
     <div id={`participant-${participant.id}`} className={`participantcard p-1 ${ participant.status === 'pending' ? '' : 'participant-toggle' }`}>
-      <div className="flex">
-        <div className="max-w-[12rem] min-w-[11rem]">
+      <div className="flex flex-col">
+        <div>
           <img src={mainImg} alt="" />
         </div>
         <div className="flex flex-col ml-2 w-full">
-          <span className="text-lg font-bold whitespace-nowrap mb-2">{participant.deck_name}</span>
-          <span className="text-gray-700 flex gap-[2px]">{colors.map((color, index) => (
+          <span className="text-lg font-bold whitespace-nowrap">{participant.deck_name}</span>
+          <span className="text-gray-700 flex gap-[2px] mb-4">{colors.map((color, index) => (
             <div key={index} className="w-[15px]">
               <img src={`https://svgs.scryfall.io/card-symbols/${color}.svg`}/>
             </div>))}
@@ -90,12 +89,15 @@ export const ParticipantComponent = ({ participant }: any) => {
               <span className="text-blue-500"><a href={`/participant?id=${participant.id}`}>View Details</a></span>
             </div>
 
-            <div className="flex items-center ml-auto">
-              <input type="checkbox" id={`toggle-${participant.id}`} className="hidden" />
-              <label htmlFor={`toggle-${participant.id}`} className="toggle-label">
-                <span data-toggle={participant.id} id={`switch-${participant.id}`} className={`toggle-button ${ participant.status === 'pending' ? '' : 'toggled' }`} onClick={handleToggle}></span>
-              </label>
-            </div>  
+            {/* Toggle Button */}
+            <div className="ml-auto">
+              <div className="flex items-center p-2 mr-2">
+                <input type="checkbox" id={`toggle-${participant.id}`} className="hidden" />
+                <label htmlFor={`toggle-${participant.id}`} className="toggle-label">
+                  <span data-toggle={participant.id} id={`switch-${participant.id}`} className={`toggle-button ${ participant.status === 'pending' ? '' : 'toggled' }`} onClick={handleToggle}></span>
+                </label>
+              </div>  
+            </div>
           </div> 
         </div>
         <div data-trash={participant.id} onClick={handleDelete} className="btn-participant-delete">

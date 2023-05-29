@@ -41,7 +41,6 @@ export default function Tournament() {
   const handleOnChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     const id = event.currentTarget.value
     const bracket = brackets.find((bracket: Matchup) => bracket.id === Number(id))
-    console.log(bracket)
     setSelectedMatch(bracket)
     setPlayerOne(bracket['participants'][0].resultText)
     if (bracket['participants'][1] !== undefined) {
