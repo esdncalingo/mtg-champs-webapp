@@ -29,13 +29,14 @@ export default function Tournament() {
   const toasty = useToasty()
 
   useEffect(() => {
-    const loadEvents = async() => {
-      const data = await fetchHostEvents(sessionStorage.getItem('token'))
-      setEvent(data.event[0])
-      setBrackets(initialBrackets)
-    }
     loadEvents()
-  }, [initialBrackets])
+  }, [])
+
+  const loadEvents = async() => {
+    const data = await fetchHostEvents(sessionStorage.getItem('token'))
+    setEvent(data.event[0])
+    setBrackets(initialBrackets)
+  }
 
   const handleOnChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     const id = event.currentTarget.value
@@ -128,7 +129,7 @@ export default function Tournament() {
         <div className="text-gray-200">
           {/* Match selection */}
           <select className="w-[18rem] p-1 rounded" name="" id="" onChange={handleOnChangeSelect}>
-            <option className="text-center" disabled selected defaultValue=''> ------- select ------- </option>
+            <option className="text-center" disabled selected defaultValue={''}></option>
             {brackets.map((bracket: Matchup, index: number) => (
               <option key={index} value={String(bracket.id)}>{bracket['name']}</option>
             ))}
