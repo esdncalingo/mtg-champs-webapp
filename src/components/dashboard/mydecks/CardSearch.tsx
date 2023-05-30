@@ -5,7 +5,7 @@ type DeckCardListProps = {
   deck: any;
   setDeck: React.Dispatch<React.SetStateAction<any>>;
 }
-const DELAY = 1000;
+const DELAY = 1500;
 export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
   
   const [searchInput, setSearchInput] = useState('')

@@ -14,9 +14,9 @@ export default function Events() {
   }, [])
 
   const showEvents = async () => {
-    let data = await fetchEvents(sessionStorage.getItem('token'))
+    const data = await fetchEvents(sessionStorage.getItem('token'))
     console.log('Event', data)
-    setEventList(data)
+    setEventList(data.events)
   }
 
   const handleCreateEvent = async () => {
@@ -90,6 +90,9 @@ export default function Events() {
                   <span className="">Description: {event.description}</span>
                 </div>
                 <span>Participants:</span>
+                {event.participants.map((participant: string) => (
+                  <span>{participant}</span>
+                ))}
                 <div>
                   <a href={`/join_event?id=${event.id}`} className="btn-card absolute p-2 rounded-md bottom-2 right-2">Join Event</a>
                 </div>
