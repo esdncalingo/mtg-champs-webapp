@@ -1,37 +1,39 @@
-import { useEffect, useState, ChangeEvent, useTransition } from "react";
+import { ChangeEvent, useTransition, useState } from "react";
 import { fetchSearchCard, fetchExactCard } from "../../../helpers/api/api_scryfall";
 
 type DeckCardListProps = {
   deck: any;
   setDeck: React.Dispatch<React.SetStateAction<any>>;
 }
-
+const DELAY = 1000;
 export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
+  
   const [searchInput, setSearchInput] = useState('')
   const [searchList, setSearchList] = useState([])
   const [searchSelectionShowing, setSearchSelectionShowing] = useState(false);
-  const [isListing, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
+  let typingTimeout: ReturnType<typeof setTimeout>;
 
-  useEffect(() => {
-    loadSearchList();
-  }, [searchInput])
-
-  const loadSearchList = async () => {
-    if (searchInput) {
-      const list = await fetchSearchCard(searchInput)
-      setSearchList(list.data)
-      setSearchSelectionShowing(true)
-    } else {
-      setSearchList([])
-      setSearchSelectionShowing(false)
-    }
+  const handleOnChangeSearch = async (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(event.target.value)
+    clearTimeout(typingTimeout);
+    typingTimeout = setTimeout(() => {
+      startTransition(() => {
+        if (event.target.value) {
+          fetchSearchResults(event.target.value);
+        } else {
+          setSearchList([]);
+          setSearchSelectionShowing(false);
+        }
+      });
+    }, DELAY);
   }
 
-  const handleOnChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    startTransition(() => {
-      setSearchInput(event.target.value)
-    })
-  }
+  const fetchSearchResults = async (value: string) => {
+    const list = await fetchSearchCard(value);
+    setSearchList(list.data);
+    setSearchSelectionShowing(true);
+  };
 
   const handleOnClick = async (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const cardName:string = event.currentTarget.innerHTML
