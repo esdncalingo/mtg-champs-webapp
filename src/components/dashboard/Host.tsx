@@ -11,6 +11,7 @@ import { fourParticipantsTemplate } from "../../helpers/template/four_participan
 import { sixParticipantsTemplate } from "../../helpers/template/six_participants"
 import { eightParticipantsTemplate } from "../../helpers/template/eight_participants"
 import { sixteenParticipantsTemplate } from "../../helpers/template/sixteen_participants"
+import { shuffle } from "../../helpers/services/functions"
 
 export default function Host() {
 
@@ -60,6 +61,7 @@ export default function Host() {
     } else {
       return toasty('Invalid number of Participants')
     }
+    shuffle(data.participants)
     const pairs = pairParticipants(data.participants, pairingOrder)
 
     // Assigning to the bracket
