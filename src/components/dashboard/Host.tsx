@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { fetchHostEvents, removeEvent } from "../../helpers/api/api_events"
 import { dateString, timeString } from "../../helpers/services/dateformats"
 import { fetchApprovedParticipants, fetchEventParticipants } from "../../helpers/api/api_participants"
@@ -6,7 +6,7 @@ import { useParticipantsActionCable } from "../../helpers/cables/participants_ca
 import { ParticipantComponent } from "./host/ParticipantComponent"
 import { useToasty } from "../popupmsg/Toasty"
 import { useNavigate } from "react-router-dom"
-import { EventProps, Team } from "../../helpers/props/properties"
+import { EventProps, Matchup, Team } from "../../helpers/props/properties"
 import { fourParticipantsTemplate } from "../../helpers/template/four_participants"
 import { sixParticipantsTemplate } from "../../helpers/template/six_participants"
 import { eightParticipantsTemplate } from "../../helpers/template/eight_participants"
@@ -42,8 +42,8 @@ export default function Host() {
 
   const handleStartEventButton = async () => {
     const data = await fetchApprovedParticipants(sessionStorage.getItem('token'), hostEvent.id)
-    let bracketTemplate: any = {}
-    let pairingOrder: any[] = []
+    let bracketTemplate: Matchup[] = []
+    let pairingOrder: number[] = []
 
     //  Pairing Players
     if (data.participants.length == 4) {
