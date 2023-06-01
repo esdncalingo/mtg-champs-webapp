@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { postEvent, fetchEvents } from "../../helpers/api/api_events"
-import { eventsActionCable } from "../../helpers/cables/events_cable";
+// import { eventsActionCable } from "../../helpers/cables/events_cable";
 import { useToasty } from "../popupmsg/Toasty"
 import { dateString, timeString } from "../../helpers/services/dateformats";
 
@@ -10,7 +10,7 @@ export default function Events() {
   
   useEffect(() => {
     showEvents()
-    eventsActionCable( setEventList )
+    // eventsActionCable( setEventList )
   }, [])
 
   const showEvents = async () => {
@@ -25,7 +25,7 @@ export default function Events() {
     const schedule = document.getElementById('event-schedule') as HTMLInputElement
     const game_format = document.getElementById('game-mode-select') as HTMLSelectElement
     
-    const params:any = {
+    const params = {
       title: title.value,
       description: description.value,
       schedule:  schedule.value,
@@ -42,14 +42,14 @@ export default function Events() {
         data.error['event'].map((err: any) => toasty(err))
       }
     } else {
-      setEventList((prev: any) => [data.event, ...prev])
+      setEventList((prev) => [data.event, ...prev])
       toasty(`${title.value} has been posted.`, false)
     }
   }
 
-  const handleExpandToggle = (event: any) => {
-    let id = (event.currentTarget.dataset['eventid'])
-    let extend = document.getElementById(`extendeventid-${id}`)
+  const handleExpandToggle = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    const id = (event.currentTarget.dataset['eventid'])
+    const extend = document.getElementById(`extendeventid-${id}`)
     extend?.classList.toggle('extend')
     extend?.classList.toggle('retract')
   }
@@ -75,7 +75,7 @@ export default function Events() {
           <span className="flex-1">Format</span>
           <span className="flex-1 text-right">Toggle Event</span>
         </div>
-        {eventlist.map((event: any, index: number) => (
+        {eventlist.map((event, index: number) => (
           <div key={index}>
             <div  id={`event-${event.id}`} className={`${index % 2 === 0 ? 'bg-[#424242]' : 'bg-[#686868]' } p-3 flex`}>
               <span className="flex-1">{dateString(event.schedule)}</span>
@@ -84,15 +84,21 @@ export default function Events() {
               <span className="flex-1">{event.game_format}</span>
               <span data-eventid={event.id} className="flex-1 select-none text-right text-green-500 hover:text-green-600 active:text-orange-500 cursor-pointer" onClick={handleExpandToggle}>Expand</span>
             </div>
+            {/* Extension Toggle */}
             <div id={`extendeventid-${event.id}`} className="retract event-extension">
               <div className="flex flex-col relative h-full p-3">
                 <div>
-                  <span className="">Description: {event.description}</span>
+                  <span className="font-bold">Description: {event.description}</span>
                 </div>
-                <span>Participants:</span>
-                {event.participants.map((participant: string) => (
-                  <span>{participant}</span>
-                ))}
+                
+                <span className="font-bold">Participants:</span>
+                <div className="flex flex-col flex-wrap overflow-auto">
+                  {event.participants.map((participant: string, index: number) => (
+                    <span key={index} className="column-container ">
+                      {participant.toUpperCase()}
+                    </span>
+                  ))}
+                </div>
                 <div>
                   <a href={`/join_event?id=${event.id}`} className="btn-card absolute p-2 rounded-md bottom-2 right-2">Join Event</a>
                 </div>

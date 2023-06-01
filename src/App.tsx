@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AuthorizationContext } from './context/AccessContext'
 import { ToastyContext } from './context/ToastyContext'
 import LoginForm from './pages/LoginForm'
@@ -18,10 +18,11 @@ import Host from './components/dashboard/Host'
 import ParticipantDeck from './components/dashboard/host/ParticipantDeck'
 import Tournament from './pages/Tournament'
 
+
 function App() {
   const [accessData, setAccessData] = useState<string>('')
   const [popupMsg, setPopupMsg] = useState<any>([])
-  
+
   return (
     <AuthorizationContext.Provider value={{ accessData, setAccessData }}>
       <ToastyContext.Provider value={{ popupMsg, setPopupMsg }}>

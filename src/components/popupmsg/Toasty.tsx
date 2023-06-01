@@ -21,7 +21,7 @@ export function useToasty() {
   };
 }
 
-const PopUpItem = (item: string, index: number) => {
+const PopUpItem = (item: string, index: boolean) => {
   const [removeItem, setRemoveItem] = useState(true);
   const deleteMessage = () => {
     setRemoveItem(false);

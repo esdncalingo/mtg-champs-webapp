@@ -66,7 +66,6 @@ export default function Tournament() {
     if (playerOne == playerTwo){
       return toasty("It's Draw")
     } 
-
     bracket['participants'][0].resultText = playerOne
     if (bracket['participants'][1] !== undefined) {
       bracket['participants'][1].resultText = playerTwo
@@ -94,7 +93,7 @@ export default function Tournament() {
       sessionStorage.setItem('brackets', JSON.stringify(brackets))
       return toasty(`${winner.name} is the winner of the tournament`, false)
     } else {
-      return toasty(`${winner.name} won the match`, false)
+      toasty(`${winner.name} won the match`, false)
     }
 
     if (search[0].id == selectedMatch.id) {

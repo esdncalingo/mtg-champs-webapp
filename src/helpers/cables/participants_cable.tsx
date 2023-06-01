@@ -1,12 +1,21 @@
+import { useEffect } from "react";
+
 type CableProps = {
   setParticipants: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-export const participantsActionCable = ( setParticipants: CableProps['setParticipants']) => {
-  const ws = new WebSocket("ws://localhost:3000/actioncable")
-  ws.onopen = () => {
+export const useParticipantsActionCable = ( setParticipants: CableProps['setParticipants']) => {
+  const wsParticipants = new WebSocket("ws://localhost:3000/actioncable")
+
+  useEffect(() => {
+    if (wsParticipants.readyState === WebSocket.OPEN) {
+      console.log('WebSocket connection is open');
+    }
+  }, [wsParticipants.readyState])
+
+  wsParticipants.onopen = () => {
     console.log('Connected to websocket server')
-    ws.send(
+    wsParticipants.send(
       JSON.stringify({
         command: "subscribe",
         identifier: JSON.stringify({
@@ -16,8 +25,15 @@ export const participantsActionCable = ( setParticipants: CableProps['setPartici
       })
     )
   }
+  wsParticipants.onclose = () => {
+    console.log('Disconnected from websocket server')
+  }
 
-  ws.onmessage = (e) => {
+  wsParticipants.onerror = (error) => {
+    console.log('Websocket error', error)
+  }
+
+  wsParticipants.onmessage = (e) => {
     const data = JSON.parse(e.data)
     if (data.type === "ping") return;
     if (data.type === "welcome") return;
@@ -28,11 +44,5 @@ export const participantsActionCable = ( setParticipants: CableProps['setPartici
     setParticipants((prev: any) => [ ...prev, message])
   }
 
-  ws.onclose = () => {
-    console.log('Disconnected from websocket server')
-  }
-
-  ws.onerror = (error) => {
-    console.log('Websocket error', error)
-  }
+  
 }

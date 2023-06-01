@@ -14,7 +14,7 @@ function Container() {
   const loadRandomCard = async () => {
     let cardlist: any = []
     for (let i = 0; i < 10; i++){
-      let randomCard = await fetchRandomCard()
+      const randomCard = await fetchRandomCard()
       cardlist = [...cardlist, randomCard.image_uris.png]
     }
     setCards(cardlist)

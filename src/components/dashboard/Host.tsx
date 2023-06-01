@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react"
 import { fetchHostEvents, removeEvent } from "../../helpers/api/api_events"
 import { dateString, timeString } from "../../helpers/services/dateformats"
 import { fetchApprovedParticipants, fetchEventParticipants } from "../../helpers/api/api_participants"
-import { participantsActionCable } from "../../helpers/cables/participants_cable"
+import { useParticipantsActionCable } from "../../helpers/cables/participants_cable"
 import { ParticipantComponent } from "./host/ParticipantComponent"
 import { useToasty } from "../popupmsg/Toasty"
 import { useNavigate } from "react-router-dom"
@@ -23,12 +23,13 @@ export default function Host() {
     schedule: '',
     finished: false
   });
+  useParticipantsActionCable(setParticipants)
   const navigate = useNavigate();
   const toasty = useToasty();
   
   useEffect(() => {
     loadEvents()
-    participantsActionCable(setParticipants)
+    
   }, [])
 
   const loadEvents = async() => {

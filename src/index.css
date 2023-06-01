@@ -105,6 +105,12 @@
   @apply ring-2 ring-green-500 shadow-md shadow-green-700 transition-all duration-300 ease-in;
 }
 
+.column-container {
+  flex: 1;
+  break-inside: avoid-column;
+  column-count: 1;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
