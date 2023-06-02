@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { AuthorizationContext } from './context/AccessContext'
 import { ToastyContext } from './context/ToastyContext'
 import LoginForm from './pages/LoginForm'
