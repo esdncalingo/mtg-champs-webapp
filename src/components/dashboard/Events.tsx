@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { postEvent, fetchEvents } from "../../helpers/api/api_events"
-import { eventsActionCable } from "../../helpers/cables/events_cable";
+// import { eventsActionCable } from "../../helpers/cables/events_cable";
 import { useToasty } from "../popupmsg/Toasty"
 import { dateString, timeString } from "../../helpers/services/dateformats";
 
@@ -10,7 +10,7 @@ export default function Events() {
   
   useEffect(() => {
     showEvents()
-    eventsActionCable( setEventList )
+    // eventsActionCable( setEventList )
   }, [])
 
   const showEvents = async () => {
