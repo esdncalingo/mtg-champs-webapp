@@ -5,7 +5,7 @@ type CableProps = {
 }
 
 export const useParticipantsActionCable = ( setParticipants: CableProps['setParticipants']) => {
-  const wsParticipants = new WebSocket("https://mtg-champs-api.onrender.com/actioncable")
+  const wsParticipants = new WebSocket("ws://mtg-champs-api.onrender.com/actioncable")
 
   useEffect(() => {
     if (wsParticipants.readyState === WebSocket.OPEN) {
