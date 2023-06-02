@@ -27,3 +27,8 @@ export type TemplateBracketsProps = {
   eight_participants: any,
   sixteen_participants: any
 }
+
+export type PopupMessage = {
+  message: string;
+  fail: boolean;
+};

@@ -1,12 +1,13 @@
-import { createContext, useContext } from "react"
+import React, { useContext } from "react"
+import { PopupMessage } from "../helpers/props/properties";
 
-export type ToastyContent = {
-  popupMsg: string[]
-  setPopupMsg:(c: string[]) => void
-}
+type ToastyContextType = {
+  popupMsg: PopupMessage[];
+  setPopupMsg: React.Dispatch<React.SetStateAction<PopupMessage[]>>;
+};
 
-export const ToastyContext = createContext<ToastyContent>({
+export const ToastyContext = React.createContext<ToastyContextType>({
   popupMsg: [],
-  setPopupMsg: () => {}
+  setPopupMsg: () => {},
 });
-export const useAccessContext = () => useContext(ToastyContext)
+export const useToastContext = () => useContext(ToastyContext)
