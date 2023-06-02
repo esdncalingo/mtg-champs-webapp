@@ -17,6 +17,10 @@ export default function CardSearch({ deck, setDeck }:DeckCardListProps) {
   const handleOnChangeSearch = async (event: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value)
     clearTimeout(typingTimeout);
+    if (isPending){
+      console.log('is pending')
+    }
+    
     typingTimeout = setTimeout(() => {
       startTransition(() => {
         if (event.target.value) {

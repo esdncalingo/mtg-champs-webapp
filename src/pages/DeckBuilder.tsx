@@ -98,22 +98,24 @@ export default function DeckBuilder() {
 // --------- mini Components -----------
 type InputData = {
   name: string
-  suffix: string
-  value: any
-  onchange: any
+  suffix?: string | null
+  value?: any | null
+  onchange?: any | null
 }
-const InputComponent = ({name, suffix, value, onchange} :InputData) => {
+const InputComponent = ({ name, suffix, value, onchange }: InputData) => {
   return (
     <div className="flex flex-col">
-      <label htmlFor={`deck-${name.toLowerCase()}`} className="text-gray-700">{name} {suffix}</label>
-      <input 
-        type="text" 
-        id={`deck-${name.toLowerCase()}`} 
+      <label htmlFor={`deck-${name.toLowerCase()}`} className="text-gray-700">
+        {name} {suffix}
+      </label>
+      <input
+        type="text"
+        id={`deck-${name.toLowerCase()}`}
         className="border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
         value={value}
         onChange={onchange}
       />
     </div>
-  )
-}
+  );
+};
 // -------------------------------------
