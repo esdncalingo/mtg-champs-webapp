@@ -3,7 +3,7 @@ type CableProps = {
 }
 
 export const eventsActionCable = ( setEvents: CableProps['setEvents']) => {
-  const ws = new WebSocket("wss://54.254.162.138/cable")
+  const ws = new WebSocket("wss://locahost:3000/cable")
   ws.onopen = () => {
     console.log('Connected to websocket server')
     ws.send(

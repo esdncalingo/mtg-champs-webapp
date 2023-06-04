@@ -24,10 +24,10 @@ export default function Host() {
     schedule: '',
     finished: false
   });
-  useParticipantsActionCable(setParticipants)
+  
   const navigate = useNavigate();
   const toasty = useToasty();
-  
+  useParticipantsActionCable(setParticipants)
   useEffect(() => {
     loadEvents()
     

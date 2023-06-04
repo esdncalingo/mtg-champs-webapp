@@ -1,8 +1,13 @@
-import { faFigma } from "@fortawesome/free-brands-svg-icons";
-import { faArrowDown, faBoxArchive, faComputer, faExpandAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Outlet } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { 
+  faArrowDown, 
+  faBoxArchive, 
+  faCalendarCheck, 
+  faComputer, 
+  faExpandAlt 
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Dashboard() {
   const [isMinimized, setIsMinimized] = useState(true);
@@ -23,18 +28,18 @@ export default function Dashboard() {
           </button>
           <ul className="space-y-2 flex flex-col justify-center">
             <li>
-              <a href="/dashboard/mydecks" className={`block sidelink text-2xl ${isMinimized ? 'text-center' : ''}`}>
-                {isMinimized ? <FontAwesomeIcon icon={faBoxArchive} /> : 'My Decks'}
+              <a href="/dashboard/mydecks" title="My Decks" className={`block sidelink ${isMinimized ? 'text-center' : ''}`}>
+                {isMinimized ? <FontAwesomeIcon icon={faBoxArchive} /> : <><FontAwesomeIcon icon={faBoxArchive} />  <span className="ml-2">My Decks</span></>}
               </a>
             </li>
             <li>
-              <a href="/dashboard/events" className={`block sidelink text-2xl ${isMinimized ? 'text-center' : ''}`}>
-                {isMinimized ? <FontAwesomeIcon icon={faFigma} /> : 'Events'}
+              <a href="/dashboard/events" title="Events" className={`block sidelink ${isMinimized ? 'text-center' : ''}`}>
+                {isMinimized ? <FontAwesomeIcon icon={faCalendarCheck} /> : <><FontAwesomeIcon icon={faCalendarCheck} />  <span className="ml-2">Events</span></>}
               </a>
             </li>
             <li>
-              <a href="/dashboard/hosting" className={`block sidelink text-2xl ${isMinimized ? 'text-center' : ''}`}>
-                {isMinimized ? <FontAwesomeIcon icon={faComputer} />  : 'Host'}
+              <a href="/dashboard/hosting" title="Hosting" className={`block sidelink ${isMinimized ? 'text-center' : ''}`}>
+                {isMinimized ? <FontAwesomeIcon icon={faComputer} />  : <><FontAwesomeIcon icon={faComputer} />  <span className="ml-2">Host</span></>}
               </a>
             </li>
           </ul> 

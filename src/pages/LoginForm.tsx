@@ -14,7 +14,7 @@ export default function LoginForm() {
   const handleSignIn = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    let data = await userSignIn(email, password)
+    const data = await userSignIn(email, password)
     setAccessData(data.token)
     sessionStorage.setItem('token', data.token)
     setEmail('')
