@@ -32,3 +32,7 @@ export type PopupMessage = {
   message: string;
   fail: boolean;
 };
+
+export type isLogInProps = {
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}

@@ -1,12 +1,19 @@
 import { Outlet } from "react-router-dom"
+import Navbar from "../components/Navbar"
+import Footer from "../components/Footer"
+import Toasty from "../components/popupmsg/Toasty"
 
-function Home() {
-  
+function Main() {
   
   return (
-    <div className="flex flex-grow">
-      <Outlet/>
-    </div>
+    <>
+      <Navbar/>
+      <Toasty/>
+      <div className="flex flex-grow">
+        <Outlet/>
+      </div>
+      <Footer/>
+    </>
   )
 }
-export default Home
+export default Main
