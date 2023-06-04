@@ -6,7 +6,9 @@ import {
   faBoxArchive, 
   faCalendarDays, 
   faComputer, 
-  faExpandAlt 
+  faExpandAlt, 
+  faHome, 
+  faHomeAlt
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Dashboard() {
@@ -31,6 +33,17 @@ export default function Dashboard() {
           </button>
           <ul className="space-y-2 flex flex-col justify-center">
             <li>
+              <a href="/dashboard" title="Dashboard" className={`block sidelink ${isMinimized ? 'text-center' : ''}`}>
+                {isMinimized ? 
+                  <FontAwesomeIcon icon={faHome} /> : 
+                  <>
+                    <FontAwesomeIcon icon={faHome} />  
+                    <span className="ml-2">Dashboard</span>
+                  </>
+                }
+              </a>
+            </li>
+            <li>
               <a href="/dashboard/mydecks" title="My Decks" className={`block sidelink ${isMinimized ? 'text-center' : ''}`}>
                 {isMinimized ? 
                   <FontAwesomeIcon icon={faBoxArchive} /> : 
@@ -47,7 +60,7 @@ export default function Dashboard() {
                   <FontAwesomeIcon icon={faCalendarDays} /> : 
                   <>
                     <FontAwesomeIcon icon={faCalendarDays} />  
-                    <span className="ml-2">Events</span>
+                    <span className="ml-2">Schedule</span>
                   </>
                 }
               </a>
@@ -58,7 +71,7 @@ export default function Dashboard() {
                   <FontAwesomeIcon icon={faComputer} />  : 
                   <>
                     <FontAwesomeIcon icon={faComputer} />  
-                    <span className="ml-2">Host</span>
+                    <span className="ml-2">Event Manager</span>
                   </>
                 }
               </a>

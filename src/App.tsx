@@ -12,7 +12,7 @@ import Host from './components/dashboard/Host'
 import ParticipantDeck from './components/dashboard/host/ParticipantDeck'
 import Tournament from './pages/Tournament'
 import LoginPage from './pages/LoginPage'
-import Main from './pages/Home'
+import Main from './pages/Main'
 
 function App() {
   const [accessData, setAccessData] = useState<string>('')
