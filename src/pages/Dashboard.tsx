@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
   faArrowDown, 
   faBoxArchive, 
-  faCalendarCheck, 
+  faCalendarDays, 
   faComputer, 
   faExpandAlt 
 } from "@fortawesome/free-solid-svg-icons";
@@ -24,22 +24,43 @@ export default function Dashboard() {
             className="block mb-6 bg-gray-600 text-white py-1 px-2 rounded-md hover:bg-gray-700"
             onClick={toggleSidebar}
           >
-            {isMinimized ? <FontAwesomeIcon icon={faExpandAlt} />: <FontAwesomeIcon icon={faArrowDown} />}
+            {isMinimized ? 
+              <FontAwesomeIcon icon={faExpandAlt} />: 
+              <FontAwesomeIcon icon={faArrowDown} />
+            }
           </button>
           <ul className="space-y-2 flex flex-col justify-center">
             <li>
               <a href="/dashboard/mydecks" title="My Decks" className={`block sidelink ${isMinimized ? 'text-center' : ''}`}>
-                {isMinimized ? <FontAwesomeIcon icon={faBoxArchive} /> : <><FontAwesomeIcon icon={faBoxArchive} />  <span className="ml-2">My Decks</span></>}
+                {isMinimized ? 
+                  <FontAwesomeIcon icon={faBoxArchive} /> : 
+                  <>
+                    <FontAwesomeIcon icon={faBoxArchive} />  
+                    <span className="ml-2">My Decks</span>
+                  </>
+                }
               </a>
             </li>
             <li>
               <a href="/dashboard/events" title="Events" className={`block sidelink ${isMinimized ? 'text-center' : ''}`}>
-                {isMinimized ? <FontAwesomeIcon icon={faCalendarCheck} /> : <><FontAwesomeIcon icon={faCalendarCheck} />  <span className="ml-2">Events</span></>}
+                {isMinimized ? 
+                  <FontAwesomeIcon icon={faCalendarDays} /> : 
+                  <>
+                    <FontAwesomeIcon icon={faCalendarDays} />  
+                    <span className="ml-2">Events</span>
+                  </>
+                }
               </a>
             </li>
             <li>
               <a href="/dashboard/hosting" title="Hosting" className={`block sidelink ${isMinimized ? 'text-center' : ''}`}>
-                {isMinimized ? <FontAwesomeIcon icon={faComputer} />  : <><FontAwesomeIcon icon={faComputer} />  <span className="ml-2">Host</span></>}
+                {isMinimized ? 
+                  <FontAwesomeIcon icon={faComputer} />  : 
+                  <>
+                    <FontAwesomeIcon icon={faComputer} />  
+                    <span className="ml-2">Host</span>
+                  </>
+                }
               </a>
             </li>
           </ul> 
