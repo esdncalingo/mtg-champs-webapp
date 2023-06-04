@@ -2,6 +2,10 @@ function Navbar() {
 
   const token: string | null = sessionStorage.getItem('token')
   
+  const handleSignOut = () => {
+    sessionStorage.setItem('token', '')
+  }
+
   return (
     <div className="bg-gray-800">
       <div className=" max-w-full px-4 sm:px-6 lg:px-4">
@@ -15,7 +19,7 @@ function Navbar() {
             {token ? <a href="/dashboard/mydecks" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Dashboard</a> : ''}
             <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">About</a>
             <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Contact</a>
-            <a href={token ? "/" : "/acc/signin"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">{token ? 'Account' :'Login'}</a>
+            <a onClick={handleSignOut} href={token ? "/" : "/account"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">{token ? 'Signout' :'Login'}</a>
           </div>
         </div>
       </div>

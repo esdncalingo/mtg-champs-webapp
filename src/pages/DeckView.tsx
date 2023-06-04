@@ -27,7 +27,7 @@ export default function DeckView() {
   }, [])
   
   const loadDeck = async () => {
-    let data = await fetchDeck(sessionStorage.getItem('token'), searchParams.get('id'))
+    const data = await fetchDeck(sessionStorage.getItem('token'), searchParams.get('id'))
     setDeck(data.deck)
     setCards(JSON.parse(data.deck.cards))
   }

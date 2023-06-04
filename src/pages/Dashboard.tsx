@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom"
+import { Outlet, useLocation } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
   faArrowDown, 
@@ -10,9 +10,12 @@ import {
   faExpandAlt, 
   faHome, 
 } from "@fortawesome/free-solid-svg-icons";
+import StatisticPage from "./StatisticPage";
 
 export default function Dashboard() {
   const [isMinimized, setIsMinimized] = useState(JSON.parse(sessionStorage.getItem('sidebar') || 'true' ));
+  const location = useLocation()
+  const isDashboardPath = location.pathname === '/dashboard';
 
   const toggleSidebar = () => {
     sessionStorage.setItem('sidebar', JSON.stringify(!isMinimized))
@@ -91,7 +94,10 @@ export default function Dashboard() {
 
         {/* <!-- Main Content --> */}
         <div className="flex-1 max-h-screen overflow-auto">
-          <Outlet/>
+          {isDashboardPath ? 
+            <StatisticPage/> : 
+            <Outlet/>
+          }
         </div>
       </div>
     </div>

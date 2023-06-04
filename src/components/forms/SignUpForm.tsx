@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useState } from "react"
-import { useNavigate } from "react-router-dom";
 import { useToasty } from "../popupmsg/Toasty";
 import { userSignUp } from "../../helpers/api/api_auth";
 import { isLogInProps } from "../../helpers/props/properties";
@@ -9,7 +8,6 @@ const SignUpForm = ({ setIsLogin }: isLogInProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const navigate = useNavigate();
   const toasty = useToasty();
 
   const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {
@@ -23,8 +21,11 @@ const SignUpForm = ({ setIsLogin }: isLogInProps) => {
 
     if (password === confirmPassword) {
       await userSignUp(body)
+      setNickname('')
+      setEmail('')
+      setPassword('')
+      setConfirmPassword('')
       toasty('new user signup', false)
-      navigate('/account', {replace: true})
     }
   }
 

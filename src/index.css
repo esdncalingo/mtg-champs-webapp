@@ -57,6 +57,10 @@
   @apply border rounded-md px-4 py-2 focus:outline-none focus:border-blue-500 text-gray-300;
 }
 
+.stats-card {
+  @apply flex flex-1 flex-col max-w-md bg-white p-4 drop-shadow-lg rounded-lg;
+}
+
 .retract {
   @apply h-0;
 }
