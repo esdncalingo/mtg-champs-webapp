@@ -6,15 +6,16 @@ import {
   faBoxArchive, 
   faCalendarDays, 
   faComputer, 
+  faDoorOpen, 
   faExpandAlt, 
   faHome, 
-  faHomeAlt
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Dashboard() {
-  const [isMinimized, setIsMinimized] = useState(true);
+  const [isMinimized, setIsMinimized] = useState(JSON.parse(sessionStorage.getItem('sidebar') || 'true' ));
 
   const toggleSidebar = () => {
+    sessionStorage.setItem('sidebar', JSON.stringify(!isMinimized))
     setIsMinimized(!isMinimized);
   };
   return (
@@ -77,10 +78,19 @@ export default function Dashboard() {
               </a>
             </li>
           </ul> 
+          <a href="/" title="Logout" className={`block sidelink mt-auto ${isMinimized ? 'text-center' : ''}`}>
+            {isMinimized ? 
+              <FontAwesomeIcon icon={faDoorOpen} />  : 
+              <>
+                <FontAwesomeIcon icon={faDoorOpen} />  
+                <span className="ml-2">Exit</span>
+              </>
+            }
+          </a>
         </aside>
 
         {/* <!-- Main Content --> */}
-        <div className="flex-1">
+        <div className="flex-1 max-h-screen overflow-auto">
           <Outlet/>
         </div>
       </div>

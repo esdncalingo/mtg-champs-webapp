@@ -8,17 +8,18 @@ import Home from "./Home"
 function Main() {
   const location = useLocation();
   const isRootPath = location.pathname === '/';
+  const isDashboardPath = location.pathname.startsWith('/dashboard');
 
   return (
     <>
-      <Navbar/>
+      {isDashboardPath ?  '' : <Navbar/>}
       <Toasty/>
       <div className="flex flex-grow">
         {isRootPath ? 
           <Home/> : 
           <Outlet/>}
       </div>
-      <Footer/>
+      {isDashboardPath ? '' : <Footer/>}
     </>
   )
 }

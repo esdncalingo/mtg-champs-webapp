@@ -66,10 +66,10 @@ export const ParticipantComponent = ({ participant }: any) => {
   }
 
   return (
-    <div id={`participant-${participant.id}`} className={`participantcard p-1 ${ participant.status === 'pending' ? '' : 'participant-toggle' }`}>
+    <div id={`participant-${participant.id}`} className={`participantcard ${ participant.status === 'pending' ? '' : 'participant-toggle' }`}>
       <div className="flex flex-col">
         <div>
-          <img src={mainImg} alt="" />
+          <img className="rounded-t-xl" src={mainImg} alt="" />
         </div>
         <div className="flex flex-col ml-2 w-full">
           <span className="text-lg font-bold whitespace-nowrap">{participant.deck_name}</span>
