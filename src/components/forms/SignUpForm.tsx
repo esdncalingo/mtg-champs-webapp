@@ -92,7 +92,7 @@ const SignUpForm = ({ setIsLogin }: isLogInProps) => {
           placeholder="Confirm your password" required/>
       </div>
       <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Sign up</button>
-      <p className="text-gray-600 text-sm mt-4">Already have an account? <span onClick={handleOnClick} className="text-blue-500 hover:underline">Login</span></p>
+      <p className="text-gray-600 text-sm mt-4">Already have an account? <span onClick={handleOnClick} className="text-blue-500 hover:underline cursor-pointer">Login</span></p>
     </form>
   )
 }

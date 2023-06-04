@@ -63,7 +63,7 @@ export default function LoginForm({ setIsLogin }: isLogInProps) {
         />
       </div>
       <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Login</button>
-      <p className="text-gray-600 text-sm mt-4">Don't have an account? <span onClick={handleOnSignUp} className="text-blue-500 hover:underline">Sign up</span></p>
+      <p className="text-gray-600 text-sm mt-4">Don't have an account? <span onClick={handleOnSignUp} className="text-blue-500 hover:underline cursor-pointer">Sign up</span></p>
     </form>
   )
 }
