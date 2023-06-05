@@ -7,12 +7,12 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center bg-gray-100 w-full text-gray-800">
       {/*Sample Head Cover */}
-      <div className=' mb-4'>
-        <img className='absolute top-0 bottom-0 m-auto' src={sampleImageHeadOverlay} alt="" />
+      <div className='relative mb-4'>
+        <img className='absolute max-w-[10rem] sm:max-w-[15rem] md:max-w-md xl:max-w-2xl top-0 bottom-0 m-auto' src={sampleImageHeadOverlay} alt="" />
         <img src={sampleImageHead} alt="" />
       </div>
-      <div className='flex gap-4'>
-        <div className='grid grid-cols-2'>
+      <div className='flex flex-col-reverse gap-4 md:flex-row'>
+        <div className='grid grid-cols-1 md:grid-cols-2'>
           {/* Sample Article */}
           <div className='flex flex-col shadow-md drop-shadow-lg p-1'>
             <span className='text-2xl text-gray-200 font-semibold mb-4 p-1 bg-gray-700'>March of Machine</span>
