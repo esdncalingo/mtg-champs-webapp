@@ -15,7 +15,6 @@ export default function Events() {
 
   const showEvents = async () => {
     const data = await fetchEvents(sessionStorage.getItem('token'))
-    console.log('Event', data)
     setEventList(data.events)
   }
 
