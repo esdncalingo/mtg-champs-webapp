@@ -12,6 +12,14 @@ export type Matchup = {
   participants: Team[];
 };
 
+export type ParticipantProps = {
+  event_id: number | null
+  status: string
+  name: string
+  cards: any
+  game_format: string
+}
+
 export type EventProps = {
   id: string
   title: string

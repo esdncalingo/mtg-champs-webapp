@@ -7,21 +7,14 @@ import { dateString, timeString } from "../../../helpers/services/dateformats";
 import Lists from "../mydecks/Lists";
 import Cards from "../mydecks/Cards";
 import { useToasty } from "../../popupmsg/Toasty";
+import { ParticipantProps } from "../../../helpers/props/properties";
 
 type EventProp = {
-  id: any
+  id: number | null
   title: string
   game_format: string
-  schedule: any
+  schedule: string
   description: string
-}
-
-type ParticipantProps = {
-  event_id: any
-  status: string
-  name: string
-  cards: any
-  game_format: string
 }
 
 export default function JoinEvent() {
@@ -52,16 +45,16 @@ export default function JoinEvent() {
   }
 
   const handleOnChangeSelect = (event: any) => {
-    let id = event.currentTarget.value
-    let searchdeck: any = deckLists.find(deck => deck.id == id)
+    const id = event.currentTarget.value
+    const searchdeck: any = deckLists.find(deck => deck.id == id)
     setDeck(JSON.parse(searchdeck.cards))
   }
 
   const handleOnSubmit = async () => {
-    let selectedDeck = document.getElementById('decks') as HTMLSelectElement
-    let selectedText = selectedDeck.options[selectedDeck.selectedIndex].text
+    const selectedDeck = document.getElementById('decks') as HTMLSelectElement
+    const selectedText = selectedDeck.options[selectedDeck.selectedIndex].text
 
-    let params: ParticipantProps = {
+    const params: ParticipantProps = {
       event_id: event.id,
       status: 'pending',
       name: selectedText,
@@ -69,9 +62,9 @@ export default function JoinEvent() {
       game_format: event.game_format
     }
     if (selectedDeck.selectedIndex != 0) {  
-      let data = await joinEvent(sessionStorage.getItem('token'), params)
+      const data = await joinEvent(sessionStorage.getItem('token'), params)
       if (data.error) {
-        toasty(data.error['user_id'])
+        data.error['user_id'].map((error: string) => toasty(error))
       } else {
         toasty('You join the Event!!, waiting for Host approval', false)
       }
