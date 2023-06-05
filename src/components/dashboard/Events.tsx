@@ -93,7 +93,7 @@ export default function Events() {
                 
                 <span className="font-bold">Participants:</span>
                 <div className="flex flex-col flex-wrap overflow-auto">
-                  {event.participants.map((participant: string, index: number) => (
+                  {event.participants && event.participants.map((participant: string, index: number) => (
                     <span key={index} className="column-container ">
                       {participant.toUpperCase()}
                     </span>
