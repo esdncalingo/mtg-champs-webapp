@@ -1,13 +1,10 @@
 import axios from "axios";
-
-// const BASE_URL = "https://mtg-champs-api.onrender.com/api/v1/"
-const BASE_URL = "http://localhost:3000/api/v1/"
-const TOKEN = "d44050c4e18a75e2814cd92a9767b9bb4d674a45"
+import { environment } from "../../environment/developer";
 
 // GET All Events
 export const fetchEvents =async (access_token: any) => {
   try {
-    const response = await axios.get(`${BASE_URL}event?token=${TOKEN}`, {
+    const response = await axios.get(`${environment.API_URL}event?token=${environment.CLIENT_TOKEN}`, {
       headers: {
         'Authorization': access_token
       }
@@ -21,7 +18,7 @@ export const fetchEvents =async (access_token: any) => {
 // GET Event by id
 export const fetchEvent = async (access_token: any, id: any) => {
   try {
-    const response = await axios.get(`${BASE_URL}event/${id}/view?token=${TOKEN}`, {
+    const response = await axios.get(`${environment.API_URL}event/${id}/view?token=${environment.CLIENT_TOKEN}`, {
       headers: {
         'Authorization': access_token
       }
@@ -38,7 +35,7 @@ export const removeEvent = async (access_token: any, id: any) => {
     Authorization: access_token
   }
   try {
-    const response = await axios.delete(`${BASE_URL}event?id=${id}&token=${TOKEN}`, { headers })
+    const response = await axios.delete(`${environment.API_URL}event?id=${id}&token=${environment.CLIENT_TOKEN}`, { headers })
     return response.data
   } catch (error: any) {
     return error.response.data
@@ -58,7 +55,7 @@ export const postEvent = async (access_token: any, params: any) => {
   }
 
   try {
-    const response = await axios.post(`${BASE_URL}event?token=${TOKEN}`, body, { headers })
+    const response = await axios.post(`${environment.API_URL}event?token=${environment.CLIENT_TOKEN}`, body, { headers })
     return response.data
   } catch(error: any) {
     return error.response.data
@@ -68,7 +65,7 @@ export const postEvent = async (access_token: any, params: any) => {
 // GET Hosted Events
 export const fetchHostEvents = async (access_token: any) => {
   try {
-    const response = await axios.get(`${BASE_URL}event/host_event?token=${TOKEN}`, {
+    const response = await axios.get(`${environment.API_URL}event/host_event?token=${environment.CLIENT_TOKEN}`, {
       headers: {
         'Authorization': access_token
       }

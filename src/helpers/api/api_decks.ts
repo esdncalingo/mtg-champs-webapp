@@ -1,13 +1,10 @@
 import axios from "axios";
-
-// const BASE_URL = "https://mtg-champs-api.onrender.com/api/v1/"
-const BASE_URL = "http://localhost:3000/api/v1/"
-const TOKEN = "d44050c4e18a75e2814cd92a9767b9bb4d674a45"
+import { environment } from "../../environment/developer";
 
 // GET decklist
 export const fetchDeckList = async (access_token:any) => {
   try {
-    const response = await axios.get(`${BASE_URL}deck?token=${TOKEN}`, {
+    const response = await axios.get(`${environment.API_URL}deck?token=${environment.CLIENT_TOKEN}`, {
       headers: {
         'Authorization': access_token
       }
@@ -31,7 +28,7 @@ export const createDeck = async (access_token:any, params: any) => {
   }
 
   try {
-    const response = await axios.post(`${BASE_URL}deck?token=${TOKEN}`, body, { headers })
+    const response = await axios.post(`${environment.API_URL}deck?token=${environment.CLIENT_TOKEN}`, body, { headers })
     return response.data
   } catch(error: any) {
     return error.response.data
@@ -52,7 +49,7 @@ export const updateDeck =async (access_token: any ,params: any) => {
   }
 
   try {
-    const response = await axios.patch(`${BASE_URL}deck?token=${TOKEN}`, body, { headers })
+    const response = await axios.patch(`${environment.API_URL}deck?token=${environment.CLIENT_TOKEN}`, body, { headers })
     return response.data
   } catch(error:any) {
     return error.response.data
@@ -65,7 +62,7 @@ export const fetchDeck = async (access_token:any, id: any) => {
     Authorization: access_token
   }
   try {
-    const response = await axios.get(`${BASE_URL}deck/${id}/view?token=${TOKEN}`, { headers } )
+    const response = await axios.get(`${environment.API_URL}deck/${id}/view?token=${environment.CLIENT_TOKEN}`, { headers } )
     return response.data
   } catch(error) {
     console.log(error)
@@ -78,7 +75,7 @@ export const fetchDeckbyFormat = async (access_token: any,game_format: string) =
     Authorization: access_token
   }
   try {
-    const response = await axios.get(`${BASE_URL}deck/${game_format}?token=${TOKEN}`, { headers })
+    const response = await axios.get(`${environment.API_URL}deck/${game_format}?token=${environment.CLIENT_TOKEN}`, { headers })
     return response.data
   } catch (error: any) {
     return error.response.data

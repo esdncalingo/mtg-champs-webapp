@@ -58,7 +58,7 @@
 }
 
 .stats-card {
-  @apply flex flex-1 flex-col max-w-md bg-white p-4 drop-shadow-lg rounded-lg;
+  @apply flex flex-1 flex-col max-w-sm bg-white p-4 drop-shadow-lg rounded-lg;
 }
 
 .retract {

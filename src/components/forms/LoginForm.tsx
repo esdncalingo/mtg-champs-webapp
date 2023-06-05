@@ -3,6 +3,7 @@ import { useAccessContext } from '../../context/AccessContext'
 import { userSignIn } from '../../helpers/api/api_auth'
 import { useNavigate } from 'react-router-dom';
 import { isLogInProps } from '../../helpers/props/properties';
+import { useToasty } from '../popupmsg/Toasty';
 
 export default function LoginForm({ setIsLogin }: isLogInProps) {
 
@@ -10,17 +11,23 @@ export default function LoginForm({ setIsLogin }: isLogInProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const toast = useToasty();
 
   // Submit Email and Password Input to /api/v1/auth/signin
   const handleSignIn = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = await userSignIn(email, password)
-    setAccessData(data.token)
-    sessionStorage.setItem('token', data.token)
-    setEmail('')
-    setPassword('')
-    navigate('/', { replace: true })
+
+    if (data.error) {
+      data.error.map((error: string) => toast(error))
+    } else {
+      setAccessData(data.token)
+      sessionStorage.setItem('token', data.token)
+      setEmail('')
+      setPassword('')
+      navigate('/', { replace: true })
+    }
   }
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {

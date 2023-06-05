@@ -81,12 +81,12 @@ export default function Dashboard() {
               </a>
             </li>
           </ul> 
-          <a href="/" title="Logout" className={`block sidelink mt-auto ${isMinimized ? 'text-center' : ''}`}>
+          <a href="/" title="Back" className={`block sidelink mt-auto ${isMinimized ? 'text-center' : ''}`}>
             {isMinimized ? 
               <FontAwesomeIcon icon={faDoorOpen} />  : 
               <>
                 <FontAwesomeIcon icon={faDoorOpen} />  
-                <span className="ml-2">Exit</span>
+                <span className="ml-2">Back</span>
               </>
             }
           </a>

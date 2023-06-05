@@ -4,6 +4,8 @@ export default function StatisticPage() {
     <div className="statistics text-gray-700 p-4">
       <h1 className="text-2xl font-bold">Dashboard</h1>
       <div className="flex flex-col md:justify-center md:flex-row gap-4 md:mx-[5rem] mt-6">
+        
+        {/* Deck Statistic */}
         <div className="stats-card ">
           <div className="mb-6">
             <h2 className="text-lg font-bold mb-2">Deck Statistics</h2>
@@ -12,6 +14,8 @@ export default function StatisticPage() {
           </div>
           <button className="btn-start mt-auto">View</button>
         </div>
+
+        {/* Collection Statistic */}
         <div className="stats-card ">
           <div className="mb-6">
             <h2 className="text-lg font-bold mb-2">Collection Statistics</h2>
@@ -20,6 +24,8 @@ export default function StatisticPage() {
           </div>
           <button className="btn-start mt-auto">View</button>
         </div>
+
+        {/* Event Participation */}
         <div className="stats-card ">
           <div className="mb-6">
             <h2 className="text-lg font-bold mb-2">Event Participation</h2>

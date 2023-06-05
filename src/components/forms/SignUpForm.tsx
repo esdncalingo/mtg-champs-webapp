@@ -20,12 +20,17 @@ const SignUpForm = ({ setIsLogin }: isLogInProps) => {
     }
 
     if (password === confirmPassword) {
-      await userSignUp(body)
-      setNickname('')
-      setEmail('')
-      setPassword('')
-      setConfirmPassword('')
-      toasty('new user signup', false)
+      const data = await userSignUp(body)
+      
+      if (data.error) {
+        data.error.map((error: string) => toasty(error))
+      } else {
+        setNickname('')
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
+        toasty('Created new User', false)
+      }
     }
   }
 
