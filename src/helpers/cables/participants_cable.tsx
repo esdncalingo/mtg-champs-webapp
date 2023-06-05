@@ -5,7 +5,7 @@ type CableProps = {
 }
 
 export const useParticipantsActionCable = ( setParticipants: CableProps['setParticipants']) => {
-  const wsParticipants = new WebSocket("ws://54.254.162.138/cable")
+  const wsParticipants = new WebSocket("wss://54.254.162.138/cable")
 
   useEffect(() => {
     if (wsParticipants.readyState === WebSocket.OPEN) {
