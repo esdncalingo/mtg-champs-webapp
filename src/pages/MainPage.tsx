@@ -20,7 +20,7 @@ function MainPage() {
           <Home/> : 
           <Outlet/>}
       </div>
-      {isLogin || isDashboardPath ? '' : <Footer/>}
+      {isDashboardPath ? '' : <Footer/>}
     </>
   )
 }
