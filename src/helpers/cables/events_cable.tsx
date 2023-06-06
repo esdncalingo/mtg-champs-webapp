@@ -3,7 +3,7 @@ type CableProps = {
 }
 
 export const eventsActionCable = ( setEvents: CableProps['setEvents']) => {
-  const ws = new WebSocket("wss://18.142.128.26/cable")
+  const ws = new WebSocket("wss://mtg-champs-api.onrender.com/cable")
   ws.onopen = () => {
     console.log('Connected to websocket server')
     ws.send(
