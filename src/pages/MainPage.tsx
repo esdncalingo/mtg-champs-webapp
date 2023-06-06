@@ -5,22 +5,23 @@ import Toasty from "../components/popupmsg/Toasty"
 import { useLocation } from "react-router-dom"
 import Home from "./Home"
 
-function Main() {
+function MainPage() {
   const location = useLocation();
   const isRootPath = location.pathname === '/';
+  const isLogin = location.pathname === '/account';
   const isDashboardPath = location.pathname.startsWith('/dashboard');
 
   return (
     <>
-      {isDashboardPath ?  '' : <Navbar/>}
+      {isLogin || isDashboardPath ?  '' : <Navbar/>}
       <Toasty/>
       <div className="flex flex-grow">
         {isRootPath ? 
           <Home/> : 
           <Outlet/>}
       </div>
-      {isDashboardPath ? '' : <Footer/>}
+      {isLogin || isDashboardPath ? '' : <Footer/>}
     </>
   )
 }
-export default Main
+export default MainPage
