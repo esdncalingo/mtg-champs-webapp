@@ -12,7 +12,7 @@ import Host from './components/dashboard/Host'
 import ParticipantDeck from './components/dashboard/host/ParticipantDeck'
 import Tournament from './pages/Tournament'
 import LoginPage from './pages/LoginPage'
-import Main from './pages/Main'
+import MainPage from './pages/MainPage'
 
 function App() {
   const [accessData, setAccessData] = useState<string>('')
@@ -29,7 +29,7 @@ function App() {
     <AuthorizationContext.Provider value={{ accessData, setAccessData }}>
       <ToastyContext.Provider value={{ popupMsg, setPopupMsg }}>
           <Routes>
-            <Route path='/' element={<Main/>}>
+            <Route path='/' element={<MainPage/>}>
               <Route path='account' element={<LoginPage/>}/>
               <Route path='tournament' element={<Tournament/>}/>
               <Route path='dashboard' element={<Dashboard/>}>
