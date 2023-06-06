@@ -34,13 +34,11 @@ export const useParticipantsActionCable = ( setParticipants: CableProps['setPart
   }
 
   wsParticipants.onmessage = (e) => {
-    console.log(e)
     const data = JSON.parse(e.data)
     if (data.type === "ping") return;
     if (data.type === "welcome") return;
     if (data.type === "confirm_subscription") return;
 
-    
     const message = data.message;
     console.log(message)
     setParticipants((prev: any) => [ ...prev, message])
