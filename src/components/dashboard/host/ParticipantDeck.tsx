@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { fetchSubmittedDeck } from "../../../helpers/api/api_participants";
 import { dateString } from "../../../helpers/services/dateformats";
-import Cards from "../mydecks/Cards";
-import Lists from "../mydecks/Lists";
+import CardsView from "../mydecks/CardsView";
+import CardsTable from "../mydecks/CardsTable";
 
 type Deck = {
   id: any
@@ -28,7 +28,7 @@ export default function ParticipantDeck() {
   }, [])
 
   const loadDeck = async () => {
-    let data = await fetchSubmittedDeck(sessionStorage.getItem('token'), searchParams.get('id'))
+    const data = await fetchSubmittedDeck(sessionStorage.getItem('token'), searchParams.get('id'))
     setDeck(data.deck)
     setParticipant(data.participant)
     setCards(JSON.parse(data.deck.cards))
@@ -45,8 +45,8 @@ export default function ParticipantDeck() {
       </div>
 
       <div className="flex mt-2 gap-2 px-1">
-        <Lists cards={cards}/>
-        <Cards cards={cards}/>
+        <CardsTable cards={cards}/>
+        <CardsView cards={cards}/>
       </div>
     </div>
   )

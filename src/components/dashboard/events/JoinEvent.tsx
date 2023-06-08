@@ -4,10 +4,11 @@ import { fetchDeckbyFormat } from "../../../helpers/api/api_decks";
 import { joinEvent } from "../../../helpers/api/api_participants";
 import { useEffect, useState } from "react";
 import { dateString, timeString } from "../../../helpers/services/dateformats";
-import Lists from "../mydecks/Lists";
-import Cards from "../mydecks/Cards";
+import CardsTable from "../mydecks/CardsTable";
+import CardsView from "../mydecks/CardsView";
 import { useToasty } from "../../popupmsg/Toasty";
 import { ParticipantProps } from "../../../helpers/props/properties";
+
 
 type EventProp = {
   id: number | null
@@ -97,8 +98,8 @@ export default function JoinEvent() {
         <button className="btn-primary" onClick={handleOnSubmit}>Submit</button>
       </div>
       <div className="mt-4 flex">
-        <Lists cards={deck}/>
-        <Cards cards={deck}/>
+        <CardsTable cards={deck}/>
+        <CardsView cards={deck}/>
       </div>
     </div>
   )

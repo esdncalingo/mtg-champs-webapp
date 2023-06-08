@@ -4,7 +4,7 @@ type Props = {
   cards: any
 }
 
-export default function Cards({ cards }: Props) {
+export default function CardsView({ cards }: Props) {
 
   // ---------- Card Types ----------
   const [creatures, setCreatures] = useState([])
@@ -28,7 +28,7 @@ export default function Cards({ cards }: Props) {
     let lands:any = []
 
     cards.forEach((card:any) => {
-      let card_type: any = card.type_line.toLowerCase()
+      const card_type: any = card.type_line.toLowerCase()
       if (card_type.includes('creature')) {
         creatures = [...creatures, card]
       } else if (card_type.includes('planeswalker')) {

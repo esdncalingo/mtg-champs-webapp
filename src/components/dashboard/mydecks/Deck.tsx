@@ -31,7 +31,7 @@ export default function Deck({ deck }: Props) {
   }
 
   const colorIdentity = (cards:any) => {
-    let colorArrays: any = []
+    const colorArrays: any = []
     cards.forEach((card:any) => {
       colorArrays.push(card.color_identity)
     })

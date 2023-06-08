@@ -5,7 +5,7 @@ type Props = {
   cards: any
 }
 
-export default function Lists({ cards }: Props) {
+export default function CardsTable({ cards }: Props) {
 
   const [cardsTotal, setCardsTotal] = useState('');
   const [cardManaSymbol, setCardManaSymbol] = useState([]);

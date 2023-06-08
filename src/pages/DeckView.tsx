@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import { fetchDeck } from "../helpers/api/api_decks"
 import { useSearchParams } from "react-router-dom"
 import { dateString } from "../helpers/services/dateformats";
-import Cards from "../components/dashboard/mydecks/Cards";
-import Lists from "../components/dashboard/mydecks/Lists";
+import CardsView from "../components/dashboard/mydecks/CardsView";
+import CardsTable from "../components/dashboard/mydecks/CardsTable";
 
 type Deck = {
   id: any
@@ -43,8 +43,8 @@ export default function DeckView() {
       </div>
 
       <div className="flex mt-2 gap-2 px-1">
-        <Lists cards={cards}/>
-        <Cards cards={cards}/>
+        <CardsTable cards={cards}/>
+        <CardsView cards={cards}/>
       </div>
     </div>
   )

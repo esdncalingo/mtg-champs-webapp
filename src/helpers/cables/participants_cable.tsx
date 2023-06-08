@@ -1,11 +1,12 @@
 // import { useEffect } from "react";
+import { environment } from "../../environment/developer"
 
 type CableProps = {
   setParticipants: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 export const participantsActionCable = ( setParticipants: CableProps['setParticipants']) => {
-  const wsParticipants = new WebSocket("wss://mtg-champs-api.onrender.com/cable")
+  const wsParticipants = new WebSocket(environment.CABLE_URL)
 
   // useEffect(() => {
     

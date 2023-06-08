@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react"
 import { fetchDeck, updateDeck, createDeck } from "../helpers/api/api_decks"
 import { useToasty } from "../components/popupmsg/Toasty";
-import Lists from "../components/dashboard/mydecks/Lists";
-import DeckCardList from "../components/dashboard/mydecks/DeckCardList";
+import CardsTable from "../components/dashboard/mydecks/CardsTable";
+import ConstructionCardView from "../components/dashboard/mydecks/ConstructionCardView";
 import CardSearch from "../components/dashboard/mydecks/CardSearch";
 import { useSearchParams } from "react-router-dom";
 
@@ -79,7 +79,7 @@ export default function DeckBuilder() {
           <InputComponent name={'Commander'} />
           <InputComponent name={'Commander'} suffix={"Partner"} />
           <InputComponent name={'Signature Spell'} />
-          <Lists cards={cards}/>
+          <CardsTable cards={cards}/>
         </form>
         {/* Deck cards lists*/}
         <div className="flex flex-col w-full">
@@ -88,7 +88,7 @@ export default function DeckBuilder() {
             {/* Save Deck Button */}
             <button className="btn-primary ml-auto" onClick={handleSave}>Save</button>
           </div> 
-          <DeckCardList deck={cards} setDeck={setCards}/>
+          <ConstructionCardView deck={cards} setDeck={setCards}/>
         </div>
       </div>
     </div>

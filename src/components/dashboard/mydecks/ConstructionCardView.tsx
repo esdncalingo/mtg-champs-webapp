@@ -4,7 +4,7 @@ type DeckCardListProps = {
   setDeck: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export default function DeckCardList({ deck, setDeck }:DeckCardListProps) {
+export default function ConstructionCardView({ deck, setDeck }:DeckCardListProps) {
 
   const BASIC_LANDS: string[] = ['Plains', 'Island', 'Swamp', 'Forest', 'Mountain', 'Wastes']
   
