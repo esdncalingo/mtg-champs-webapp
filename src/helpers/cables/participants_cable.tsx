@@ -4,7 +4,7 @@ type CableProps = {
   setParticipants: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-export const useParticipantsActionCable = ( setParticipants: CableProps['setParticipants']) => {
+export const participantsActionCable = ( setParticipants: CableProps['setParticipants']) => {
   const wsParticipants = new WebSocket("wss://mtg-champs-api.onrender.com/cable")
 
   // useEffect(() => {
