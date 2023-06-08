@@ -22,6 +22,18 @@
   @apply flex flex-col min-h-screen;
 }
 
+body {
+  @apply text-gray-200;
+}
+
+input {
+  @apply bg-[#3B3B3B] text-gray-200;
+}
+
+select {
+  @apply bg-[#3B3B3B] text-gray-200;
+}
+
 .sidebar {
   @apply flex flex-col bg-gray-800 text-white p-2 min-w-[4rem];
 }
