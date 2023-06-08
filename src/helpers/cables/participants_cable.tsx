@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 type CableProps = {
   setParticipants: React.Dispatch<React.SetStateAction<any[]>>;
@@ -7,11 +7,12 @@ type CableProps = {
 export const useParticipantsActionCable = ( setParticipants: CableProps['setParticipants']) => {
   const wsParticipants = new WebSocket("wss://mtg-champs-api.onrender.com/cable")
 
-  useEffect(() => {
-    if (wsParticipants.readyState === WebSocket.OPEN) {
-      console.log('WebSocket connection is open');
-    }
-  }, [wsParticipants.readyState])
+  // useEffect(() => {
+    
+  //   if (wsParticipants.readyState === WebSocket.OPEN) {
+  //     console.log('WebSocket connection is open');
+  //   }
+  // }, [wsParticipants.readyState])
 
   wsParticipants.onopen = () => {
     console.log('Connected to websocket server')
@@ -41,8 +42,8 @@ export const useParticipantsActionCable = ( setParticipants: CableProps['setPart
 
     const message = data.message;
     console.log(message)
+    
     setParticipants((prev: any) => [ ...prev, message])
   }
-
   
 }
