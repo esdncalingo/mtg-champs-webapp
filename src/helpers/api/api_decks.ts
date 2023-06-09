@@ -1,10 +1,9 @@
 import axios from "axios";
-import { environment } from "../../environment/developer";
 
 // GET decklist
 export const fetchDeckList = async (access_token:any) => {
   try {
-    const response = await axios.get(`${environment.API_URL}deck?token=${environment.CLIENT_TOKEN}`, {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}deck?token=${import.meta.env.VITE_CLIENT_TOKEN}`, {
       headers: {
         'Authorization': access_token
       }
@@ -28,7 +27,7 @@ export const createDeck = async (access_token:any, params: any) => {
   }
 
   try {
-    const response = await axios.post(`${environment.API_URL}deck?token=${environment.CLIENT_TOKEN}`, body, { headers })
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}deck?token=${import.meta.env.VITE_CLIENT_TOKEN}`, body, { headers })
     return response.data
   } catch(error: any) {
     return error.response.data
@@ -49,7 +48,7 @@ export const updateDeck =async (access_token: any ,params: any) => {
   }
 
   try {
-    const response = await axios.patch(`${environment.API_URL}deck?token=${environment.CLIENT_TOKEN}`, body, { headers })
+    const response = await axios.patch(`${import.meta.env.VITE_API_URL}deck?token=${import.meta.env.VITE_CLIENT_TOKEN}`, body, { headers })
     return response.data
   } catch(error:any) {
     return error.response.data
@@ -62,7 +61,7 @@ export const fetchDeck = async (access_token:any, id: any) => {
     Authorization: access_token
   }
   try {
-    const response = await axios.get(`${environment.API_URL}deck/${id}/view?token=${environment.CLIENT_TOKEN}`, { headers } )
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}deck/${id}/view?token=${import.meta.env.VITE_CLIENT_TOKEN}`, { headers } )
     return response.data
   } catch(error) {
     console.log(error)
@@ -75,7 +74,7 @@ export const fetchDeckbyFormat = async (access_token: any,game_format: string) =
     Authorization: access_token
   }
   try {
-    const response = await axios.get(`${environment.API_URL}deck/${game_format}?token=${environment.CLIENT_TOKEN}`, { headers })
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}deck/${game_format}?token=${import.meta.env.VITE_CLIENT_TOKEN}`, { headers })
     return response.data
   } catch (error: any) {
     return error.response.data

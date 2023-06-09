@@ -1,5 +1,4 @@
 import axios from "axios";
-import { environment } from "../../environment/developer";
 
 // GET Event Participants
 export const fetchEventParticipants = async (access_token: any, id: any) => {
@@ -7,7 +6,7 @@ export const fetchEventParticipants = async (access_token: any, id: any) => {
     Authorization: access_token
   }
   try {
-    const response = await axios.get(`${environment.API_URL}event/participant?id=${id}&token=${environment.CLIENT_TOKEN}`, { headers })
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}event/participant?id=${id}&token=${import.meta.env.VITE_CLIENT_TOKEN}`, { headers })
     return response.data
   } catch (error: any) {
     return error.response.data
@@ -20,7 +19,7 @@ export const joinEvent = async (access_token: any, params: any) => {
     Authorization: access_token
   }
   try {
-    const response = await axios.post(`${environment.API_URL}event/participant?token=${environment.CLIENT_TOKEN}`, params ,{ headers })
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}event/participant?token=${import.meta.env.VITE_CLIENT_TOKEN}`, params ,{ headers })
     return response.data
   } catch (error: any) {
     return error.response.data
@@ -33,7 +32,7 @@ export const updateStatus = async (access_token: any, params: any)  => {
     Authorization: access_token
   }
   try {
-    const response = await axios.patch(`${environment.API_URL}event/participant?token=${environment.CLIENT_TOKEN}`, params, { headers })
+    const response = await axios.patch(`${import.meta.env.VITE_API_URL}event/participant?token=${import.meta.env.VITE_CLIENT_TOKEN}`, params, { headers })
     return response.data
   } catch (error: any) {
     return error.response.data
@@ -46,7 +45,7 @@ export const removeParticipant = async (access_token: any, id: number) => {
     Authorization: access_token
   }
   try {
-    const response = await axios.delete(`${environment.API_URL}event/participant?id=${id}&token=${environment.CLIENT_TOKEN}`, { headers })
+    const response = await axios.delete(`${import.meta.env.VITE_API_URL}event/participant?id=${id}&token=${import.meta.env.VITE_CLIENT_TOKEN}`, { headers })
     return response.data
   } catch (error: any) {
     return error.response.data
@@ -59,7 +58,7 @@ export const fetchSubmittedDeck = async (access_token: any, id: any) => {
     Authorization: access_token
   }
   try {
-    const response = await axios.get(`${environment.API_URL}event/participant/deck_submit?id=${id}&token=${environment.CLIENT_TOKEN}`, { headers })
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}event/participant/deck_submit?id=${id}&token=${import.meta.env.VITE_CLIENT_TOKEN}`, { headers })
     return response.data
   } catch (error: any) {
     return error.response.data
@@ -72,7 +71,7 @@ export const fetchApprovedParticipants = async (access_token: any, id: any) => {
     Authorization: access_token
   }
   try {
-    const response = await axios.get(`${environment.API_URL}event/participant/approved?id=${id}&token=${environment.CLIENT_TOKEN}`, { headers })
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}event/participant/approved?id=${id}&token=${import.meta.env.VITE_CLIENT_TOKEN}`, { headers })
     return response.data
   } catch (error: any) {
     return error.response.data
